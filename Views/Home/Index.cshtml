@@ -11,7 +11,7 @@
                     <h1 class="m-0">The <strong>$STRAT</strong> price in realtime.</h1>
                     <h1 class="align-middle">
                         <div class="d-inline-block align-middle">
-                            <span class="click-edit">1 STRAT</span> =
+                            <span class="click-edit" spellcheck="false">1</span> STRAT =
                         </div>
                         <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.UsdPrice.ToString("C2"))</span>
                         <span id="lastchange" class="text-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> @((Model.Last24Change > 0 ? "+":"-")) @(Model.Last24Change.ToString("P2"))</sup></span>
@@ -28,18 +28,33 @@
     <script type="text/javascript">
         $(document).ready(function() {
             var stratisPrice = @Model.UsdPrice;
-            var signalr = new signalR.HubConnectionBuilder().withUrl("/update").build();
-            signalr.on("UpdateTicker", function (message) {
-                $.getJSON("/api/price?stringify=true", function(e) {
+            var stratisAmount = 1;
+            function UpdateTicker() {
+                NProgress.start();
+                $.getJSON("/api/price?stringify=true&amount=" + stratisAmount, function(e) {
                     $("#amount").text(e.usdPrice);
                     $("#lastchange").text(e.last24Change);
+                    NProgress.done(); 
                 });
+            }
+            var signalr = new signalR.HubConnectionBuilder().withUrl("/update").build();
+            signalr.on("UpdateTicker", function (message) {
+                UpdateTicker();
             });
             signalr.start();
-            
+
             $(".click-edit").click(function() {
-                alert("ok");
-            })
+                $(this).prop('contenteditable', true).focus().select();
+            }).on("blur", function() {
+                if ($.isNumeric($(this).text())) {
+                    stratisAmount = $(this).text();
+                    UpdateTicker();
+                } else {
+                    $(this).text("1");
+                    //$(this).text($(this).text());
+                }
+                $div.prop('contenteditable', false);
+            });
         })
     </script>
 }

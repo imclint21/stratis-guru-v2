@@ -19,7 +19,7 @@ namespace Stratis.Guru.Controllers
         
         [HttpGet]
         [Route("price")]
-        public ActionResult<object> Price(bool stringify)
+        public ActionResult<object> Price(bool stringify, double amount = 1)
         {
             try
             {
@@ -28,13 +28,13 @@ namespace Stratis.Guru.Controllers
                 {
                     return new TickerApi
                     {
-                        UsdPrice = coinmarketcap.data.quotes.USD.price.ToString("C"),
+                        UsdPrice = (coinmarketcap.data.quotes.USD.price * amount).ToString("C"),
                         Last24Change = (coinmarketcap.data.quotes.USD.percent_change_24h / 100).ToString("P2")
                     };
                 }
                 return new Ticker
                 {
-                    UsdPrice = coinmarketcap.data.quotes.USD.price,
+                    UsdPrice = coinmarketcap.data.quotes.USD.price * amount,
                     Last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100
                 };
             }

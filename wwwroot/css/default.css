@@ -398,7 +398,8 @@ buttons
   cursor: pointer;
 }
 
-.btn-secondary-box:hover {
+.btn-secondary-box:hover,
+.btn-secondary-box:focus {
   border: 1px solid #fff;
   background: none;
   color: #fff;

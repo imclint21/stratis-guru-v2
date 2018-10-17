@@ -34,7 +34,7 @@ namespace Stratis.Guru.Services
                 var coinmarketCapApiRequest = new RestRequest(Method.GET);
                 var coinmarketcapApi = coinmarketCapApiClient.Execute(coinmarketCapApiRequest);
                 _memoryCache.Set("Coinmarketcap", coinmarketcapApi.Content);
-                updateTimer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
+                updateTimer.Interval = TimeSpan.FromMinutes(10).TotalMilliseconds;
                 await _hubContext.Clients.All.SendAsync("UpdateTicker", cancellationToken);
             };
             updateTimer.Start();

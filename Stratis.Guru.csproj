@@ -15,4 +15,24 @@
         <PackageReference Include="Stratis.Bitcoin.Networks" Version="1.2.2-beta" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\images\dark-top-right-bg.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\elliptical-bottom.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\elliptical-top.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logo.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logos\transparent-logo-blue.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logos\transparent-logo-dark.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logos\transparent-logo-green.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logos\transparent-logo-purple.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logos\white-logo-blue.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logos\white-logo-dark.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logos\white-logo-green.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\logos\white-logo-purple.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\prodnews-hero.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\qr.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\section-bg-bottom.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\section-bg-top.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\section-bg.png" />
+    </ItemGroup>
+
 </Project>

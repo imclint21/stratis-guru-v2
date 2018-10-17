@@ -75,7 +75,7 @@ header, nav, section, article, aside, footer, hgroup {
 html, body {
   font-family: "Raleway", sans-serif;
   font-weight: 400;
-  background-color: #fff;
+  background: #1b1d20;
   font-size: 16px;
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
@@ -1344,8 +1344,15 @@ header
 }
 
 @media (max-width: 991px) {
+  #crafted
+  {
+    position: relative;
+    background: #1b1d20;
+    padding: 20px 0 15px;
+    margin-top: 10px;
+  }
   .header-area {
-    background: #fff;
+    background: transparent;
     height: 80px;
     box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
   }

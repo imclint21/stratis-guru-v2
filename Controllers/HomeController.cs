@@ -12,7 +12,6 @@ using Microsoft.Extensions.Caching.Memory;
 using NBitcoin;
 using Newtonsoft.Json;
 using QRCoder;
-using NBitcoin;
 using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
 

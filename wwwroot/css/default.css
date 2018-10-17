@@ -3115,6 +3115,7 @@ header a:not(.logo) {
   position: relative;
   color: #0087ca;
 }
+
 header a:not(.logo)::after {
   content: '';
   position: absolute;
@@ -3127,6 +3128,7 @@ header a:not(.logo)::after {
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
+
 header a:not(.logo):hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;

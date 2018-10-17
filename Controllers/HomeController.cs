@@ -53,6 +53,12 @@ namespace Stratis.Guru.Controllers
             return View();
         }
 
+        [Route("vanity")]
+        public IActionResult Vanity()
+        {
+            return View();
+        }
+
         [Route("generator")]
         public IActionResult Generator()
         {

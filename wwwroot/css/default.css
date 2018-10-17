@@ -3191,6 +3191,16 @@ h2
   border-color: #1ae4ff;
 }
 
+.text-success
+{
+  color: #1ae4ff !important;  
+}
+
+.input-group-text
+{
+  border-color: transparent !important;
+}
+
 .input-group-text.bg-dark
 {
   background-color: #555555 !important;

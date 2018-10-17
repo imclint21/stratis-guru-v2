@@ -66,6 +66,7 @@ namespace Stratis.Guru.Controllers
         [Route("vanity")]
         public IActionResult Vanity(Vanity vanity)
         {
+            ViewBag.Succeed = true;
             return View();
         }
 

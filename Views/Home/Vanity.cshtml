@@ -10,25 +10,45 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
                     <h1><strong>Vanity </strong>Address Generator</h1>
                     <p>Generate a vanity address with a prefix that you define, by example <span class="text-warning">STRAT</span>nhRnMqJNoeDiCFUnaug7TKHJocwDd</p>
-                    <div class="row">
-                        <div class="col-md-8 offset-2">
-                            <div class="input-group mb-3 input-group-lg mt-4 pl-5 pr-5">
-                                <input type="text" class="form-control bg-dark" asp-for="Prefix" placeholder="Enter prefix">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-dark text-white" id="basic-addon1">SR2ZXnhRnMqJNoeDiCFUnaug7TKHJocwDd</span>
+                    @if (ViewBag.Succeed == null)
+                    {
+                        <div class="row">
+                            <div class="col-md-8 offset-2">
+                                <div class="form-group mt-4">
+                                    <label class="text-left extra small text-white">The actual process is unthreaded and will be update in some days.</label>
+                                    <div class="input-group mb-3 input-group-lg pl-5 pr-5">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-info text-white">Prefix</span>
+                                        </div>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-dark text-white">S</span>
+                                        </div>
+                                        <input type="text" class="form-control bg-dark" asp-for="Prefix" placeholder="Enter the first letters, without the begning 'S'" maxlength="4">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 offset-2">
-                            <div class="form-group mb-3 mt-4 pl-5 pr-5">
-                                <label class="text-left text-white">You will receive the private key by email.</label>
-                                <input type="text" class="form-control bg-dark" asp-for="Email" placeholder="Enter your email address"/>
+                        <div class="row">
+                            <div class="col-md-8 offset-2">
+                                <div class="form-group mb-3 mt-4 pl-5 pr-5">
+                                    <label class="text-left extra small text-white">You will receive the private key by email.</label>
+                                    <div class="input-group input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-info text-white">Recipient</span>
+                                        </div>
+                                        <input type="text" class="form-control bg-dark" asp-for="Email" placeholder="Enter your email address to receive the key"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button type="submit" href="https://github.com/clintnetwork/stratis-guru-v2" target="_blank" class="btn-secondary-box mt-4"><i class="fa fa-github"></i> Browse Source on Github</button>
+                        <button type="submit" href="https://github.com/clintnetwork/stratis-guru-v2" target="_blank" class="btn-secondary-box mt-4"><i class="fa fa-play-circle"></i> Start Vanity Process</button>
+                    }
+                    else
+                    {
+                        <i class="fa fa-check text-success fa-5x"></i>
+                        <h1>Process Started</h1>
+                        <p>The process has been taken in hand by our vanity service !</p>
+                    }
                 </div>
             </div>
         </div>

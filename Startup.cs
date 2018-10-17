@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Stratis.Guru.Modules;
 using Stratis.Guru.Services;
 
 namespace Stratis.Guru
@@ -40,6 +41,8 @@ namespace Stratis.Guru
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
             
             services.AddMemoryCache();
+
+            services.AddTransient<IAsk, Ask>();
 
             services.AddHostedService<TickerService>();
             services.AddHostedService<VanityService>();

@@ -14,16 +14,19 @@ using Newtonsoft.Json;
 using QRCoder;
 using Stratis.Bitcoin.Networks;
 using Stratis.Guru.Models;
+using Stratis.Guru.Modules;
 
 namespace Stratis.Guru.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IMemoryCache _memoryCache;
+        private IAsk _ask;
 
-        public HomeController(IMemoryCache memoryCache)
+        public HomeController(IMemoryCache memoryCache, IAsk ask)
         {
             _memoryCache = memoryCache;
+            _ask = ask;
         }
         
         public IActionResult Index()

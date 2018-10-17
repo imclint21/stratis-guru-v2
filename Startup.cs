@@ -43,6 +43,7 @@ namespace Stratis.Guru
             
             services.AddMemoryCache();
 
+            services.AddTransient<UpdateHub>();
             services.AddTransient<IAsk, Ask>();
 
             services.AddHostedService<TickerService>();

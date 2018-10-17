@@ -13,8 +13,8 @@
                         <div class="d-inline-block align-middle">
                             <span class="click-edit">1 STRAT</span> =
                         </div>
-                        <span class="align-middle display-1 font-weight-bold">@(Model.UsdPrice.ToString("C2"))</span>
-                        <span class="text-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> @((Model.Last24Change > 0 ? "+":"-")) @(Model.Last24Change.ToString("P2"))</sup></span>
+                        <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.UsdPrice.ToString("C2"))</span>
+                        <span id="lastchange" class="text-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> @((Model.Last24Change > 0 ? "+":"-")) @(Model.Last24Change.ToString("P2"))</sup></span>
                     </h1>
                     <a asp-controller="Home" asp-action="Generator" class="btn-secondary-box"><i class="fa fa-paper-plane"></i> Get a Stratis Address</a>
                 </div>
@@ -24,14 +24,15 @@
 </section>
 @section Scripts
 {
+    <script src="~/npm/@@aspnet/signalr/dist/browser/signalr.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             var stratisPrice = @Model.UsdPrice;
             
             var signalr = new signalR.HubConnectionBuilder().withUrl("/update").build();
 
-            signalr.on("ReceiveMessage", function (user, message) {
-                alert("ok");
+            signalr.on("UpdateTicker", function (message) {
+                
             });
 
             signalr.start();

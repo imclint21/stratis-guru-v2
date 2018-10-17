@@ -25,10 +25,11 @@
 						<img src="~/images/logos/white-logo-dark.svg" class="dark-logo" alt="Arda ICO"/>
 					</a>
 					<ul class="nav">
-						<li><a asp-action="About" asp-controller="Home"><i class="fa fa-info-circle"></i> ABOUT</a></li>
-						<li><a asp-action="Explorer" asp-controller="Home"><i class="fa fa-book"></i> BLOCK EXPLORER</a></li>
+						<li><a asp-action="Index" asp-controller="Home"><i class="fa fa-home"></i> HOME</a></li>
+						<li><a asp-action="Explorer" asp-controller="Home"><i class="fa fa-at"></i> VANITY</a></li>
 						<li><a asp-action="Generator" asp-controller="Home"><i class="fa fa-qrcode"></i> ADDRESS GENERATOR</a></li>
-						<li><a asp-action="Contact" asp-controller="Home"><i class="fa fa-envelope"></i> CONTACT</a></li>-code
+						<li><a asp-action="About" asp-controller="Home"><i class="fa fa-info-circle"></i> ABOUT</a></li>
+						<li><a asp-action="Contact" asp-controller="Home"><i class="fa fa-envelope"></i> CONTACT</a></li>
 					</ul>
 					<a class='menu-trigger'>
 						<span>Menu</span>
@@ -52,6 +53,7 @@
 <script src="~/js/owl.carousel.min.js"></script>
 <script src="~/js/particle-green.js"></script>
 <script src="~/js/custom.js"></script>
+@RenderSection("Scripts", false)
 </body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111742056-1"></script>
 <script>
@@ -61,68 +63,6 @@
 
 	gtag('config', 'UA-111742056-1');
 </script>
-
 <!--stratisguru-->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a48282c1ee2c396"></script>
 </html>
-@*<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Clint Mourlevat">
-    <link rel="icon" href="~/favicon.ico">
-
-    <title>Stratis.Guru | Online Stratis Tool</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="~/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="~/css/site.css" rel="stylesheet">
-  </head>
-
-<body>
-
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-transparent mt-4">
-    <div class="container">
-      <a class="navbar-brand mr-5 mt-0"  asp-controller="Home" asp-action="Index"><img class="logo" src="~/images/logo.png"/> Stratis.Guru</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="navbar-right">
-        <div class="collapse navbar-collapse ml-auto" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link ml-4" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link ml-4" href="#">Disabled</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
-</header>
-@RenderBody()
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111742056-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-
-  gtag('config', 'UA-111742056-1');
-</script>
-
-<!--stratisguru-->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a48282c1ee2c396"></script>
-</body>
-</html>
-*@

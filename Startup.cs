@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Stratis.Guru.Services;
 
 namespace Stratis.Guru
 {
@@ -32,6 +33,11 @@ namespace Stratis.Guru
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            
+            services.AddMemoryCache();
+
+            services.AddHostedService<TickerService>();
+            services.AddHostedService<VanityService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

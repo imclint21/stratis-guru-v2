@@ -8,10 +8,25 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
                     <h1>The <strong>$STRAT</strong> price in realtime.</h1>
-                    <p>Arda makes it easy creation and deployment of decentralized applications, that can be downloaded by end-users from the application store.</p>
+                    <h1 class="align-middle">
+                        <div>
+                            <span class="click-edit">1 STRAT</span> =
+                        </div>
+                        <span class="display-1 font-weight-bold">@(2.ToString("C2"))</span>
+                    </h1>
                     <a href="#" class="btn-secondary-box">Download Whitepaper</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".click-edit").click(function() {
+                alert("ok");
+            })
+        })
+    </script>
+}

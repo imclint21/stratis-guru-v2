@@ -23,11 +23,10 @@ namespace Stratis.Guru.Services
             updateTimer.Interval = 10000;
             updateTimer.Elapsed += (sender, args) =>
             {
-                var coinmarketCapApiClient = new RestSharp.RestClient("https://api.coinmarketcap.com/v2/ticker/1343/");
+                var coinmarketCapApiClient = new RestClient("https://api.coinmarketcap.com/v2/ticker/1343/");
                 var coinmarketCapApiRequest = new RestRequest(Method.GET);
                 var coinmarketcapApi = coinmarketCapApiClient.Execute(coinmarketCapApiRequest);
                 _memoryCache.Set("Coinmarketcap", coinmarketcapApi.Content);
-                //dynamic resultAPI = JsonConvert.DeserializeObject(coinmarketcapAPI.Content);
             };
             updateTimer.Start();
             return Task.CompletedTask;

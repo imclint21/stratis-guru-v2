@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Stratis.Guru.Controllers.Ticker
+@{
     ViewBag.Title = "Online ticker for Stratis";
     ViewData["Title"] = "Home Page";
 }
@@ -12,7 +13,7 @@
                         <div>
                             <span class="click-edit">1 STRAT</span> =
                         </div>
-                        <span class="display-1 font-weight-bold">@(2.ToString("C2"))</span>
+                        <span class="display-1 font-weight-bold">@(Model.UsdPrice.ToString("C2"))</span>
                     </h1>
                     <a href="#" class="btn-secondary-box">Download Whitepaper</a>
                 </div>

@@ -8,7 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using NBitcoin;
+using Newtonsoft.Json;
 using QRCoder;
 using Stratis.Bitcoin.Networks;
 
@@ -16,9 +18,20 @@ namespace Stratis.Guru.Controllers
 {
     public class HomeController : Controller
     {
+        private IMemoryCache _memoryCache;
+
+        public HomeController(IMemoryCache memoryCache)
+        {
+            _memoryCache = memoryCache;
+        }
+        
         public IActionResult Index()
         {
-            return View();
+            dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
+            return View(new Ticker()
+            {
+                UsdPrice = coinmarketcap.data.quotes.USD.price
+            });
         }
 
         [Route("about")]
@@ -60,6 +73,11 @@ namespace Stratis.Guru.Controllers
             qrCode.GetGraphic(20, Color.Black, Color.White, false).Save(memoryStream, ImageFormat.Png);
             return File(memoryStream.ToArray(), "image/png");
         }
+    }
+
+    public class Ticker
+    {
+        public double UsdPrice { get; set; }
     }
 
     public class StratisAddressPayload

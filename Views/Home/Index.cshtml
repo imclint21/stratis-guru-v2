@@ -28,13 +28,13 @@
     <script type="text/javascript">
         $(document).ready(function() {
             var stratisPrice = @Model.UsdPrice;
-            
             var signalr = new signalR.HubConnectionBuilder().withUrl("/update").build();
-
             signalr.on("UpdateTicker", function (message) {
-                
+                $.getJSON("/api/price?stringify=true", function(e) {
+                    $("#amount").text(e.usdPrice);
+                    $("#lastchange").text(e.last24Change);
+                });
             });
-
             signalr.start();
             
             $(".click-edit").click(function() {

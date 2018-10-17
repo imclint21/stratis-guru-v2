@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Stratis.Guru.Hubs;
 using Stratis.Guru.Modules;
 using Stratis.Guru.Services;
 
@@ -48,6 +49,8 @@ namespace Stratis.Guru
             services.AddHostedService<VanityService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +77,11 @@ namespace Stratis.Guru
                     Path.Combine(env.ContentRootPath, "node_modules")
                 ),
                 RequestPath = "/npm"
+            });
+            
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<UpdateHub>("/update");
             });
             
             app.UseMvc(routes =>

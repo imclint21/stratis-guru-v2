@@ -28,6 +28,14 @@
         $(document).ready(function() {
             var stratisPrice = @Model.UsdPrice;
             
+            var signalr = new signalR.HubConnectionBuilder().withUrl("/update").build();
+
+            signalr.on("ReceiveMessage", function (user, message) {
+                alert("ok");
+            });
+
+            signalr.start();
+            
             $(".click-edit").click(function() {
                 alert("ok");
             })

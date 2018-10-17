@@ -12,7 +12,7 @@ using Microsoft.Extensions.Caching.Memory;
 using NBitcoin;
 using Newtonsoft.Json;
 using QRCoder;
-using Stratis.Bitcoin.Networks;
+using NBitcoin;
 using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
 
@@ -75,8 +75,8 @@ namespace Stratis.Guru.Controllers
             var stratisAddress = new Key();
             return View(new StratisAddressPayload
             {
-                PrivateKey = stratisAddress.GetWif(Stratis.Bitcoin.Networks.StratisMain.Main).ToString(),
-                PublicKey = stratisAddress.PubKey.GetAddress(Stratis.Bitcoin.Networks.StratisMain.Main).ToString()
+                PrivateKey = stratisAddress.GetWif(Network.StratisMain).ToString(),
+                PublicKey = stratisAddress.PubKey.GetAddress(Network.StratisMain).ToString()
             });
         }
 

@@ -8,12 +8,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
-                    <h1>The <strong>$STRAT</strong> price in realtime.</h1>
+                    <h1 class="m-0">The <strong>$STRAT</strong> price in realtime.</h1>
                     <h1 class="align-middle">
-                        <div class="d-block">
+                        <div class="d-inline-block align-middle">
                             <span class="click-edit">1 STRAT</span> =
                         </div>
-                        <span class="display-1 font-weight-bold">@(Model.UsdPrice.ToString("C2"))</span>
+                        <span class="align-middle display-1 font-weight-bold">@(Model.UsdPrice.ToString("C2"))</span>
+                        <span class="text-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> @((Model.Last24Change > 0 ? "+":"-")) @(Model.Last24Change.ToString("P2"))</sup></span>
                     </h1>
                     <a asp-controller="Home" asp-action="Generator" class="btn-secondary-box"><i class="fa fa-paper-plane"></i> Get a Stratis Address</a>
                 </div>

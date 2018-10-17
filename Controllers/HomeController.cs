@@ -34,7 +34,8 @@ namespace Stratis.Guru.Controllers
             dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
             return View(new Ticker
             {
-                UsdPrice = coinmarketcap.data.quotes.USD.price
+                UsdPrice = coinmarketcap.data.quotes.USD.price,
+                Last24Change = coinmarketcap.data.quotes.USD.percent_change_24h/100
             });
         }
 

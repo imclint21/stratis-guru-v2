@@ -13,6 +13,7 @@ using NBitcoin;
 using Newtonsoft.Json;
 using QRCoder;
 using Stratis.Bitcoin.Networks;
+using Stratis.Guru.Models;
 
 namespace Stratis.Guru.Controllers
 {
@@ -28,7 +29,7 @@ namespace Stratis.Guru.Controllers
         public IActionResult Index()
         {
             dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
-            return View(new Ticker()
+            return View(new Ticker
             {
                 UsdPrice = coinmarketcap.data.quotes.USD.price
             });
@@ -73,16 +74,5 @@ namespace Stratis.Guru.Controllers
             qrCode.GetGraphic(20, Color.Black, Color.White, false).Save(memoryStream, ImageFormat.Png);
             return File(memoryStream.ToArray(), "image/png");
         }
-    }
-
-    public class Ticker
-    {
-        public double UsdPrice { get; set; }
-    }
-
-    public class StratisAddressPayload
-    {
-        public string PrivateKey { get; set; }
-        public string PublicKey { get; set; }
     }
 }

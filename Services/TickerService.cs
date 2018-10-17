@@ -20,13 +20,15 @@ namespace Stratis.Guru.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             var updateTimer = new System.Timers.Timer();
-            updateTimer.Interval = 10000;
+            updateTimer.Interval = 10;
+            updateTimer.Enabled = true;
             updateTimer.Elapsed += (sender, args) =>
             {
                 var coinmarketCapApiClient = new RestClient("https://api.coinmarketcap.com/v2/ticker/1343/");
                 var coinmarketCapApiRequest = new RestRequest(Method.GET);
                 var coinmarketcapApi = coinmarketCapApiClient.Execute(coinmarketCapApiRequest);
                 _memoryCache.Set("Coinmarketcap", coinmarketcapApi.Content);
+                updateTimer.Interval = TimeSpan.FromMinutes(10).TotalMilliseconds;
             };
             updateTimer.Start();
             return Task.CompletedTask;

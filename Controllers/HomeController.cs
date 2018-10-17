@@ -19,7 +19,7 @@ namespace Stratis.Guru.Controllers
 {
     public class HomeController : Controller
     {
-        private IMemoryCache _memoryCache;
+        private readonly IMemoryCache _memoryCache;
 
         public HomeController(IMemoryCache memoryCache)
         {

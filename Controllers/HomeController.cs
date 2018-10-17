@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NBitcoin;
 using QRCoder;
-using UnityEngine;
-using Color = System.Drawing.Color;
+using Stratis.Bitcoin.Networks;
 
 namespace Stratis.Guru.Controllers
 {
@@ -36,7 +36,12 @@ namespace Stratis.Guru.Controllers
         [Route("generator")]
         public IActionResult Generator()
         {
-            return View();
+            var stratisAddress = new Key();
+            return View(new StratisAddressPayload
+            {
+                PrivateKey = stratisAddress.GetWif(Stratis.Bitcoin.Networks.StratisMain.Main).ToString(),
+                PublicKey = stratisAddress.PubKey.GetAddress(Stratis.Bitcoin.Networks.StratisMain.Main).ToString()
+            });
         }
 
         [Route("qr/{value}")]
@@ -49,5 +54,11 @@ namespace Stratis.Guru.Controllers
             qrCode.GetGraphic(20, Color.Black, Color.White, false).Save(memoryStream, ImageFormat.Png);
             return File(memoryStream.ToArray(), "image/png");
         }
+    }
+
+    public class StratisAddressPayload
+    {
+        public string PrivateKey { get; set; }
+        public string PublicKey { get; set; }
     }
 }

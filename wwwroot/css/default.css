@@ -3133,3 +3133,59 @@ header a:not(.logo):hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+
+.qr
+{
+  border: 10px solid white;
+  width: 250px;
+  margin-bottom: 20px;
+}
+
+h2
+{
+  color: white;
+  margin-bottom: 20px;
+}
+
+.extra.small
+{
+  font-size: 9pt !important;
+  color: #AAAAAA;
+}
+
+.form-control,
+.form-control:focus
+{
+  color: #FFFFFF;
+  border: 1px solid #343a40 !important;
+}
+
+.input-group-lg .form-control
+{
+  font-size: 12pt;
+}
+
+.input-group-lg .btn-success
+{
+  font-size: 14pt !important;
+}
+
+.btn-success
+{
+  background: #12abab;
+  border-color: #12abab;
+}
+.btn-success:hover,
+.btn-success:active,
+.btn-success:focus
+{
+  background: #1ae4ff;
+  border-color: #1ae4ff;
+}
+
+.input-group-text.bg-dark
+{
+  background-color: #555555 !important;
+  border: 0;
+  font-size: 12pt !important;
+}

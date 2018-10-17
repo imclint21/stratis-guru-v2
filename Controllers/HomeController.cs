@@ -21,6 +21,12 @@ namespace Stratis.Guru.Controllers
             return View();
         }
 
+        [Route("about")]
+        public IActionResult About()
+        {
+            return View();
+        }
+
         [Route("contact")]
         public IActionResult Contact()
         {

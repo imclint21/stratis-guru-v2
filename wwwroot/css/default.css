@@ -1429,7 +1429,7 @@ welcome area
   position: relative;
   background-image: url("/images/prodnews-hero.png");
   background-size: cover;
-  box-shadow: inset 0px 0px 10em #0006;
+  box-shadow: inset 0px 0px 10em rgba(0, 0, 0, 0.6);
 }
 
 .welcome-area.bg-top-right:before {

@@ -13,6 +13,9 @@
 	<environment include="Development">
 		<link href="~/css/default.css" rel="stylesheet" type="text/css">
 	</environment>
+	<environment exclude="Development">
+		<link href="~/css/default.min.css" rel="stylesheet" type="text/css">
+	</environment>
 </head>
 <body>
 <header class="header-area">
@@ -52,7 +55,12 @@
 <script src="~/js/parallax.min.js"></script>
 <script src="~/js/owl.carousel.min.js"></script>
 <script src="~/js/particle-green.js"></script>
-<script src="~/js/custom.js"></script>
+<environment include="Development">
+	<script src="~/js/default.js"></script>
+</environment>
+<environment exclude="Development">
+	<script src="~/js/default.min.js"></script>
+</environment>
 @RenderSection("Scripts", false)
 </body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111742056-1"></script>

@@ -3202,3 +3202,13 @@ h2
   border-bottom: 1px dotted #EEEEEE;
   cursor: pointer;
 }
+
+
+#nprogress .bar {
+  background: #fff;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #fff;
+  border-left-color: #fff;
+}

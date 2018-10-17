@@ -1,6 +1,7 @@
 (function(_0x2f2ex1) {
     'use strict';
     _0x2f2ex1(document)['ready'](function() {
+        NProgress.start();
         _0x2f2exe();
         if (_0x2f2ex1('.menu-trigger')['length']) {
             _0x2f2ex1('.menu-trigger')['click'](function() {

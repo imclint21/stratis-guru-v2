@@ -10,6 +10,7 @@
 	<link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="~/css/owl.carousel.min.css" rel="stylesheet" type="text/css">
 	<link href="~/css/owl.theme.default.min.css" rel="stylesheet" type="text/css">
+	<link href="~/npm/nprogress/nprogress.css" rel="stylesheet" type="text/css">
 	<environment include="Development">
 		<link href="~/css/default.css" rel="stylesheet" type="text/css">
 	</environment>
@@ -54,6 +55,7 @@
 <script src="~/js/parallax.min.js"></script>
 <script src="~/js/owl.carousel.min.js"></script>
 <script src="~/js/particle-green.js"></script>
+<script src="~/npm/nprogress/nprogress.js"></script>
 <environment include="Development">
 	<script src="~/js/default.js"></script>
 </environment>
@@ -64,12 +66,17 @@
 </body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111742056-1"></script>
 <script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag() { dataLayer.push(arguments); }
-	gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-	gtag('config', 'UA-111742056-1');
+    gtag('config', 'UA-111742056-1');
 </script>
 <!--stratisguru-->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a48282c1ee2c396"></script>
+<script type="text/javascript">
+	$(document).ready(function(e) {
+		NProgress.done();
+	});
+</script>
 </html>

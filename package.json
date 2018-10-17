@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@aspnet/signalr": "^1.0.4",
-    "bootstrap": "^4.1.3"
+    "bootstrap": "^4.1.3",
+    "nprogress": "^0.2.0"
   }
 }

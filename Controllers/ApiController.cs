@@ -38,7 +38,7 @@ namespace Stratis.Guru.Controllers
                     Last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100
                 };
             }
-            catch (Exception e)
+            catch
             {
                 //TODO: implement errors / logging
                 return null;

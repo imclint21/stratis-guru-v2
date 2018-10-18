@@ -42,7 +42,12 @@
             });
             signalr.start();
 
-            $(".click-edit").click(function() {
+            $(".click-edit").bind("keypress",function(e) {
+                if (e.keyCode == 13) {
+                    stratisAmount = $(this).text();
+                    UpdateTicker();
+                }
+            }).click(function() {
                 $(this).prop('contenteditable', true).focus().select();
             }).on("blur", function() {
                 if ($.isNumeric($(this).text())) {

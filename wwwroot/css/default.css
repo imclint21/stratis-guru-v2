@@ -1,32 +1,5 @@
-/* ----------------------------------------------------------------------------------------
-Template: Arda - Bitcoin and Cryptocurrency ICO HTML Template
-Version: 1.3
-Author: tempload - support@tempload.com
- -----------------------------------------------------------------------------------------*/
-/* ---------------------------------------------
-Table of contents
-------------------------------------------------
-01. font & reset css
-02. pre-loader
-03. global styles
-04. buttons
-05. token box
-06. header
-07. welcome area
-08. services
-09. roadmap
-10. team
-11. parallax
-12. faq
-13. block explorer
-14. footer & contact
---------------------------------------------- */
-/* 
----------------------------------------------
-font & reset css
---------------------------------------------- 
-*/
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700");
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, div
 pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q,
 s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
@@ -35,6 +8,17 @@ figure, header, nav, section, article, aside, footer, figcaption {
   padding: 0;
   border: 0;
   outline: 0;
+}
+
+#crafted {
+  position: fixed;
+  bottom: 0;
+  color: #EEEEEE;
+  width: 100%;
+  z-index: 999;
+  padding: 20px 0;
+  position: sticky;
+  bottom: 0;
 }
 
 .clearfix:after {
@@ -1050,7 +1034,7 @@ header
   -o-transition: all 0.4s;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
-  background-color: #3B566E;
+  background-color: #FFFFFF;
   display: block;
   position: absolute;
   width: 30px;
@@ -1064,7 +1048,7 @@ header
   -o-transition: all 0.4s;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
-  background-color: #3B566E;
+  background-color: #CCCCCC;
   display: block;
   position: absolute;
   width: 30px;
@@ -1345,11 +1329,15 @@ header
 }
 
 @media (max-width: 991px) {
+  .welcome-area {
+    /*min-height: calc(100vh - 90px) !important;*/
+  }
   #crafted
   {
-    position: relative;
+    height: 80px;
+    position: fixed;
     background: #1b1d20;
-    padding: 20px 0 15px;
+    padding: 10px 0 15px;
     margin-top: 10px;
   }
   .header-area {
@@ -3103,28 +3091,18 @@ footer .footer-bottom .copyright {
   margin-right: 5px;
 }
 
-
-#crafted
-{
-  position: fixed;
-  bottom: 0;
-  color: #EEEEEE;
-  width: 100%;
-  z-index: 999;
-}
-
 a, a:hover, a:focus, a:active
 {
   color: inherit;
 }
 
-header a:not(.logo) {
+header .nav a {
   display: inline-block;
   position: relative;
   color: #0087ca;
 }
 
-header a:not(.logo)::after {
+header .nav a::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -3137,7 +3115,7 @@ header a:not(.logo)::after {
   transition: transform 0.25s ease-out;
 }
 
-header a:not(.logo):hover::after {
+header .nav a:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
@@ -3232,4 +3210,19 @@ h2
 .change-danger
 {
   color: orangered;
+}
+
+[contenteditable="true"] {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+[contenteditable="true"] br {
+  display: none;
+
+}
+
+[contenteditable="true"] * {
+  display: inline;
+  white-space: nowrap;
 }

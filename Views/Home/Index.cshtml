@@ -10,10 +10,10 @@
                     <h1 class="m-0">The <strong>$STRAT</strong> price in realtime.</h1>
                     <h1 class="align-middle">
                         <div class="d-inline-block align-middle">
-                            <span class="click-edit" spellcheck="false">1</span> STRAT =
+                            <span class="click-edit" spellcheck="false">1</span> STRAT <span class="d-none d-lg-inline-block">=</span>
                         </div>
                         <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.UsdPrice.ToString("C2"))</span>
-                        <span id="lastchange" class="change-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> @((Model.Last24Change > 0 ? "+":"-")) @(Model.Last24Change.ToString("P2"))</sup></span>
+                        <span id="lastchange" class="d-block d-lg-inline-block change-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> <span class="d-none d-lg-inline-block">@((Model.Last24Change > 0 ? "+":"-"))</span> @(Model.Last24Change.ToString("P2"))</sup></span>
                     </h1>
                     <a asp-controller="Home" asp-action="Generator" class="btn-secondary-box"><i class="fa fa-paper-plane"></i> Get a Stratis Address</a>
                 </div>

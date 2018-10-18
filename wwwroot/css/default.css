@@ -3223,3 +3223,13 @@ h2
   border-top-color: #fff;
   border-left-color: #fff;
 }
+
+.change-success
+{
+  color: lawngreen;
+}
+
+.change-danger
+{
+  color: orangered;
+}

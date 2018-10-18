@@ -14,7 +14,7 @@
                             <span class="click-edit" spellcheck="false">1</span> STRAT =
                         </div>
                         <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.UsdPrice.ToString("C2"))</span>
-                        <span id="lastchange" class="text-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> @((Model.Last24Change > 0 ? "+":"-")) @(Model.Last24Change.ToString("P2"))</sup></span>
+                        <span id="lastchange" class="change-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> @((Model.Last24Change > 0 ? "+":"-")) @(Model.Last24Change.ToString("P2"))</sup></span>
                     </h1>
                     <a asp-controller="Home" asp-action="Generator" class="btn-secondary-box"><i class="fa fa-paper-plane"></i> Get a Stratis Address</a>
                 </div>

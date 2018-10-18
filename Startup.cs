@@ -44,7 +44,7 @@ namespace Stratis.Guru
             services.AddMemoryCache();
 
             services.AddHostedService<TickerService>();
-            services.AddHostedService<VanityService>();
+            //services.AddHostedService<VanityService>();
             services.AddTransient<UpdateHub>();
             services.AddSingleton<IAsk, Ask>();
 

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using RestSharp;
 using Stratis.Guru.Hubs;
 
@@ -15,17 +14,18 @@ namespace Stratis.Guru.Services
         private readonly IMemoryCache _memoryCache;
         private readonly IHubContext<UpdateHub> _hubContext;
         private readonly UpdateHub _hub;
+        private readonly System.Timers.Timer updateTimer;
 
         public TickerService(IMemoryCache memoryCache, UpdateHub hub, IHubContext<UpdateHub> hubContext)
         {
             _memoryCache = memoryCache;
             _hub = hub;
             _hubContext = hubContext;
+            updateTimer = new System.Timers.Timer();
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var updateTimer = new System.Timers.Timer();
             updateTimer.Interval = 10;
             updateTimer.Enabled = true;
             updateTimer.Elapsed += async (sender, args) =>
@@ -48,6 +48,8 @@ namespace Stratis.Guru.Services
 
         public void Dispose()
         {
+            updateTimer?.Stop();
+            updateTimer?.Dispose();;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Stratis.Guru
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://localhost:1989")
                 .UseStartup<Startup>();
     }
 }

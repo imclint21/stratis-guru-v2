@@ -20,7 +20,7 @@ namespace Stratis.Guru.Controllers
     public class HomeController : Controller
     {
         private readonly IMemoryCache _memoryCache;
-        private IAsk _ask;
+        private readonly IAsk _ask;
 
         public HomeController(IMemoryCache memoryCache, IAsk ask)
         {
@@ -66,8 +66,11 @@ namespace Stratis.Guru.Controllers
         [Route("vanity")]
         public IActionResult Vanity(Vanity vanity)
         {
-            _ask.NewVanity(vanity);
-            ViewBag.Succeed = true;
+            if (ModelState.IsValid)
+            {
+                _ask.NewVanity(vanity);
+                ViewBag.Succeed = true;
+            }
             return View();
         }
 

@@ -43,11 +43,10 @@ namespace Stratis.Guru
             
             services.AddMemoryCache();
 
-            services.AddTransient<UpdateHub>();
-            services.AddTransient<IAsk, Ask>();
-
             services.AddHostedService<TickerService>();
             services.AddHostedService<VanityService>();
+            services.AddTransient<UpdateHub>();
+            services.AddSingleton<IAsk, Ask>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             

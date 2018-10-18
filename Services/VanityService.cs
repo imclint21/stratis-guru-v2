@@ -10,28 +10,38 @@ namespace Stratis.Guru.Services
 {
     public class VanityService : IHostedService, IDisposable
     {
-        private IMemoryCache _memoryCache;
-        private IAsk _ask;
+        private readonly IAsk _ask;
 
-        public VanityService(IMemoryCache memoryCache, IAsk ask)
+        public VanityService(IAsk ask)
         {
-            _memoryCache = memoryCache;
             _ask = ask;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            /*while (true)
+            Task.Run(() =>
             {
-                var stratisKey = new Key();
-                var stratisAddress = stratisKey.GetWif(Network.StratisMain).PubKey.GetAddress(Network.StratisMain).ToString();
-                
-                if (stratisAddress.ToLower().StartsWith("stra"))
+                while (true)
                 {
-                    Console.WriteLine(stratisAddress);
-                }
+                    if (_ask.GetVanities().Count > 0)
+                    {
+                        var getVanity = _ask.GetVanities().Dequeue();
+                        
+                        while (true)
+                        {
+                            var stratisKey = new Key();
+                            var stratisAddress = stratisKey.GetWif(Network.StratisMain).PubKey.GetAddress(Network.StratisMain).ToString();
                 
-                //Thread.Sleep((int) TimeSpan.FromSeconds(10).TotalMilliseconds);
-            }*/
+                            if (stratisAddress.ToLower().StartsWith(string.Concat("s", getVanity.Prefix)))
+                            {
+                                Console.WriteLine(stratisAddress + " - " + getVanity.Email);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    Thread.Sleep((int) TimeSpan.FromSeconds(10).TotalMilliseconds);
+                }
+            }, cancellationToken);
             return Task.CompletedTask;
         }
 
@@ -42,7 +52,6 @@ namespace Stratis.Guru.Services
 
         public void Dispose()
         {
-            
         }
     }
 }

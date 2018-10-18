@@ -7,4 +7,3 @@ install:
 
 script:
 - dotnet build
-- dotnet test Stratis.Guru.csproj

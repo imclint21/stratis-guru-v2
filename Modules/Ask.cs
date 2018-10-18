@@ -5,6 +5,16 @@ namespace Stratis.Guru.Modules
 {
     public class Ask : IAsk
     {
-        public Queue<Vanity> VanityAsking = new Queue<Vanity>();
+        private Queue<Vanity> VanityAsking = new Queue<Vanity>();
+        
+        public void NewVanity(Vanity vanity)
+        {
+            VanityAsking.Enqueue(vanity);
+        }
+
+        public Queue<Vanity> GetVanities()
+        {
+            return VanityAsking;
+        }
     }
 }

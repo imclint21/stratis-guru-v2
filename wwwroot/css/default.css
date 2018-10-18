@@ -17,8 +17,6 @@ figure, header, nav, section, article, aside, footer, figcaption {
   width: 100%;
   z-index: 999;
   padding: 20px 0;
-  position: sticky;
-  bottom: 0;
 }
 
 .clearfix:after {

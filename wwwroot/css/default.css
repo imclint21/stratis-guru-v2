@@ -3201,12 +3201,12 @@ h2
 
 .change-success
 {
-  color: lawngreen;
+    color: lawngreen !important;
 }
 
 .change-danger
 {
-  color: orangered;
+    color: orangered !important;
 }
 
 [contenteditable="true"] {

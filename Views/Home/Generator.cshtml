@@ -16,7 +16,7 @@
                         </div>
                         <input type="text" class="form-control bg-dark" value="@Model.PublicKey">
                         <div class="input-group-append">
-                            <button class="btn btn-success" type="button"><i class="fa fa-copy"></i> Copy</button>
+                            <button class="btn btn-success click-copy" type="button"><i class="fa fa-copy"></i> Copy</button>
                         </div>
                     </div>
                     <p class="m-0">This is the adress than you share with others.</p>
@@ -30,7 +30,7 @@
                         </div>
                         <input type="text" class="form-control bg-dark" value="@Model.PrivateKey">
                         <div class="input-group-append">
-                            <button class="btn btn-success" type="button"><i class="fa fa-copy"></i> Copy</button>
+                            <button class="btn btn-success click-copy" type="button"><i class="fa fa-copy"></i> Copy</button>
                         </div>
                     </div>
                     <p class="m-0 danger">This is your spent key that you keep in safety.</p>
@@ -45,3 +45,14 @@
         </div>
     </div>
 </section>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".click-copy").click(function() {
+                $(this).parent().parent().find("input").select();
+                document.execCommand("copy");
+            });
+        });
+    </script>
+}

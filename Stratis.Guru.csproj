@@ -5,8 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
-        
         <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />

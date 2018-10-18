@@ -1260,13 +1260,7 @@ header
   transition: all 0.3s ease 0s;
 }
 
-.header-area.header-sticky {
-  background: #fff;
-  height: 80px;
-  box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
-}
-
-.header-area.header-sticky .logo {
+/*.header-area.header-sticky .logo {
   margin-top: 26px;
 }
 
@@ -1306,7 +1300,7 @@ header
 .header-area.header-sticky .nav li a.btn-nav-box:hover {
   background: none;
   color: #0EB8D9;
-}
+}*/
 
 .header-area.header-sticky .lang {
   margin-top: 22px !important;
@@ -1330,15 +1324,20 @@ header
 
 @media (max-width: 991px) {
   .welcome-area {
-    /*min-height: calc(100vh - 90px) !important;*/
+
+  }
+
+  .header-area.header-sticky {
+    background: rgb(33, 37, 41);
+    height: 80px;
+    box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.6);
   }
   #crafted
   {
     height: 80px;
-    position: fixed;
+    position: relative;
     background: #1b1d20;
     padding: 10px 0 15px;
-    margin-top: 10px;
   }
   .header-area {
     background: transparent;

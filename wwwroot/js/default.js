@@ -8,16 +8,16 @@
                 _0x2f2ex1(this)['toggleClass']('active');
                 _0x2f2ex1('.header-area .nav')['slideToggle'](200)
             })
-        };
+        }
         _0x2f2ex1('body')['click'](function(_0x2f2ex4) {
             var _0x2f2ex5 = _0x2f2ex4['target'];
             if (_0x2f2ex1(_0x2f2ex5)['parents']('.flag-list')['length'] || _0x2f2ex1(_0x2f2ex5)['hasClass']('flag-list')) {
                 return
-            };
+            }
             if (_0x2f2ex1('.flag-list')['css']('display') === 'block') {
                 _0x2f2ex1('.flag-list')['css']('display', 'none');
                 return
-            };
+            }
             if (_0x2f2ex1(_0x2f2ex5)['hasClass']('selected') || _0x2f2ex1(_0x2f2ex5)['parents']('.selected')['length']) {
                 _0x2f2ex1('.flag-list')['css']('display', 'block')
             }
@@ -27,14 +27,14 @@
                 date: '09/29/2018 12:00:00',
                 offset: +10
             })
-        };
+        }
         if (_0x2f2ex1('.token .token-input')['length']) {
             _0x2f2ex1('.token .token-input .fa-plus')['click'](function() {
                 var _0x2f2ex6 = _0x2f2ex1(this)['parent']()['find']('input')['val']();
                 var _0x2f2ex7 = _0x2f2ex1(this)['parent']()['find']('input')['data']('step');
                 if (_0x2f2ex6 == '') {
                     _0x2f2ex6 = 0
-                };
+                }
                 var _0x2f2ex8 = parseInt(_0x2f2ex6, 10) + parseInt(_0x2f2ex7, 10);
                 _0x2f2ex1(this)['parent']()['find']('input')['val'](_0x2f2ex8)
             });
@@ -43,14 +43,14 @@
                 var _0x2f2ex7 = _0x2f2ex1(this)['parent']()['find']('input')['data']('step');
                 if (_0x2f2ex6 == '') {
                     _0x2f2ex6 = 0
-                };
+                }
                 var _0x2f2ex8 = parseInt(_0x2f2ex6, 10) - parseInt(_0x2f2ex7, 10);
                 if (_0x2f2ex8 <= 0) {
                     _0x2f2ex8 = _0x2f2ex7
-                };
+                }
                 _0x2f2ex1(this)['parent']()['find']('input')['val'](_0x2f2ex8)
             })
-        };
+        }
         window['sr'] = new scrollReveal();
         _0x2f2ex1('a[href*=\#]:not([href=\#])')['click'](function() {
             if (location['pathname']['replace'](/^\//, '') == this['pathname']['replace'](/^\//, '') && location['hostname'] == this['hostname']) {
@@ -61,7 +61,7 @@
                     if (_0x2f2exa < 991) {
                         _0x2f2ex1('.menu-trigger')['removeClass']('active');
                         _0x2f2ex1('.header-area .nav')['slideUp'](200)
-                    };
+                    }
                     _0x2f2ex1('html,body')['animate']({
                         scrollTop: (_0x2f2ex9['offset']()['top']) - 30
                     }, 700);
@@ -75,12 +75,12 @@
             });
             var _0x2f2exc = _0x2f2ex1('.token-progress ul .progress-active')['data']('progress');
             _0x2f2ex1('.token-progress ul .progress-active')['css']('width', _0x2f2exc)
-        };
+        }
         if (_0x2f2ex1('.table-progress')['length']) {
             _0x2f2ex1('.table-latests')['find']('.table-progress')['each'](function(_0x2f2exb) {
                 _0x2f2ex1('.table-progress:eq(' + [_0x2f2exb] + ') .progress-line')['css']('width', parseInt(_0x2f2ex1('.table-progress:eq(' + [_0x2f2exb] + ') .progress-line')['data']('value'), 10) + parseInt(70, 10) + '%')
             })
-        };
+        }
         if (_0x2f2ex1('.roadmap-modern-wrapper')['length']) {
             _0x2f2ex1('.roadmap-modern-wrapper')['owlCarousel']({
                 loop: true,
@@ -98,7 +98,7 @@
                     }
                 }
             })
-        };
+        }
         if (_0x2f2ex1('.roadmap-lux-wrapper')['length']) {
             _0x2f2ex1('.roadmap-lux-wrapper')['owlCarousel']({
                 loop: true,
@@ -135,7 +135,7 @@
     });
     _0x2f2ex1(window)['scroll'](function() {
         var _0x2f2exa = _0x2f2ex1(window)['width']();
-        if (_0x2f2exa > 991) {
+        if (_0x2f2exa < 991) {
             var _0x2f2exd = _0x2f2ex1(window)['scrollTop']();
             if (_0x2f2exd >= 30) {
                 _0x2f2ex1('.header-area')['addClass']('header-sticky');
@@ -164,4 +164,4 @@
             particlesJS('home', welcome1Settings)
         }*/
     }
-})(jQuery)
+})(jQuery);

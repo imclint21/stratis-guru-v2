@@ -35,12 +35,16 @@
                                 <td>@Model.blockSize kB</td>
                             </tr>
                             <tr>
-                                <td><strong>Total Received</strong></td>
-                                <td>@Model.blockIndex</td>
+                                <td><strong>Previous Block Hash</strong></td>
+                                <td>
+                                    <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.previousBlockHash">@(Model.previousBlockHash??"-")</a>
+                                </td>
                             </tr>
                             <tr>
-                                <td><strong>Total Sent</strong></td>
-                                <td>@Model.blockIndex</td>
+                                <td><strong>Next Block Hash</strong></td>
+                                <td>
+                                    <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.nextBlockHash">@(Model.nextBlockHash??"-")</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -60,15 +64,22 @@
                     <table class="table table-striped table-latests">
                         <thead>
                             <tr>
-                                <th>Hash</th>
-                                <th>Block</th>
-                                <th>Date/Time</th>
-                                <th>Amount</th>
-                                <th>Balance</th>
+                                <th>Index</th>
+                                <th>Transaction ID</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            @{ int i = 0;}
+                            @foreach (var transaction in Model.transactions)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>
+                                        <a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@transaction">@transaction</a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
                         </tbody>
                     </table>
                 </div>

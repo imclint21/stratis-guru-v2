@@ -78,16 +78,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var transaction in Model.transactions)
-                            {
-                                <tr>
-                                    <td><a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@transaction.transactionHash">@transaction.transactionHash.ToString().Substring(0, 25)...</a></td>
-                                    <td><a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@transaction.blockIndex">@transaction.blockIndex</a></td>
-                                    <td>2018-04-13 10:14:27</td>
-                                    <td><span class="@(transaction.value > 0 ? "green":"red")">@transaction.value.ToString("N8") STRAT</span></td>
-                                    <td>@Model.balance.ToString("N8") STRAT</td>
-                                </tr>
-                            }
+                        @{
+                            double total = 0;
+                        }
+                        @foreach (var transaction in Model.transactions)
+                        {
+                            total += (double)transaction.value;
+                            <tr>
+                                <td><a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@transaction.transactionHash">@transaction.transactionHash.ToString().Substring(0, 25)...</a></td>
+                                <td><a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@transaction.blockIndex">@transaction.blockIndex</a></td>
+                                <td>-</td>
+                                <td><span class="@(transaction.value > 0 ? "green" : "red")">@transaction.value.ToString("N8") STRAT</span></td>
+                                <td>@total.ToString("N8") STRAT</td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>

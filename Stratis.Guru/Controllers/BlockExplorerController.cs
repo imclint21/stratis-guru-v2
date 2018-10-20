@@ -25,7 +25,7 @@ namespace Stratis.Guru.Controllers
             _stats = JsonConvert.DeserializeObject(_memoryCache.Get("BlockchainStats").ToString());
         }
         
-        [ResponseCache(Duration = 60, NoStore = true)]
+        //[ResponseCache(Duration = 60, NoStore = true)]
         public IActionResult Index()
         {
             var latestBlockClient = new RestClient($"{_nakoApiSettings.Endpoint}query/block/Latest/transactions");

@@ -1351,7 +1351,7 @@ header
 */
 
 .header-area.header-sticky {
-    background: rgba(33, 37, 41, 0.90);
+    background: rgba(33, 37, 41, 1);
     box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.6);
 }
 

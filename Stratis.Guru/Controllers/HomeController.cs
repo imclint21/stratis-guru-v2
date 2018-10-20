@@ -44,12 +44,6 @@ namespace Stratis.Guru.Controllers
             return View();
         }
 
-        [Route("contact")]
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
         [Route("vanity")]
         public IActionResult Vanity()
         {

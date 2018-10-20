@@ -49,6 +49,12 @@ namespace Stratis.Guru
             //services.AddHostedService<VanityService>();
             services.AddTransient<UpdateHub>();
             services.AddSingleton<IAsk, Ask>();
+            
+            services.AddResponseCaching(options =>
+            {
+                options.UseCaseSensitivePaths = true;
+                options.MaximumBodySize = 1024;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             

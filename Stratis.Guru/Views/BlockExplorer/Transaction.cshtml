@@ -35,20 +35,20 @@
                             <tr>
                                 <td><strong>Transaction ID</strong></td>
                                 <td>
-                                    <a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@Model.address">@Model.transactionId</a>
+                                    <a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@Model.transactionId">@Model.transactionId</a>
                                     <a href="#" class="copy-me"><i class="fa fa-copy"></i></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><strong>Block Hash</strong></td>
                                 <td>
-                                    @Model.blockHash
+                                    <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.blockHash">@Model.blockHash</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><strong>Block Height</strong></td>
                                 <td>
-                                    @Model.blockIndex
+                                    <a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@Model.blockIndex">@Model.blockIndex</a>
                                 </td>
                             </tr>
                             <tr>

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
@@ -13,14 +14,19 @@ namespace Stratis.Guru.Controllers
     public class BlockExplorerController : Controller
     {
         private readonly NakoApiSettings _nakoApiSettings;
+        private readonly IMemoryCache _memoryCache;
+        private readonly dynamic _stats;
 
-        public BlockExplorerController(IOptions<NakoApiSettings> nakoApiSettings)
+        public BlockExplorerController(IMemoryCache memoryCache, IOptions<NakoApiSettings> nakoApiSettings)
         {
             _nakoApiSettings = nakoApiSettings.Value;
+            _memoryCache = memoryCache;
+            _stats = JsonConvert.DeserializeObject(_memoryCache.Get("BlockchainStats").ToString());
         }
         
         public IActionResult Index()
         {
+            ViewBag.BlockchainHeight = _stats.syncBlockIndex;
             return View();
         }
 
@@ -35,18 +41,20 @@ namespace Stratis.Guru.Controllers
             {
                 return RedirectToAction("Transaction", new {transactionId = searchBlockExplorer.Query});
             }
-            return Content("oh yeay");
+            return RedirectToAction("Index");
         }
 
         [Route("block/{block}")]
         public IActionResult Block(string block)
         {
+            ViewBag.BlockchainHeight = _stats.syncBlockIndex;
             return View();
         }
 
         [Route("address/{address}")]
         public IActionResult Address(string address)
         {
+            ViewBag.BlockchainHeight = _stats.syncBlockIndex;
             var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/address/{address}/transactions");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
@@ -56,6 +64,7 @@ namespace Stratis.Guru.Controllers
         [Route("transaction/{transactionId}")]
         public IActionResult Transaction(string transactionId)
         {
+            ViewBag.BlockchainHeight = _stats.syncBlockIndex;
             var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/transaction/{transactionId}");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);

@@ -64,6 +64,7 @@ html, body {
   background: #1b1d20 url("/images/prodnews-hero.png") fixed;
   background-size: cover;
   box-shadow: inset 0px 0px 10em rgba(0, 0, 0, 0.6);
+  height: 100vh;
 }
 
 a {

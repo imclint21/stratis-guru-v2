@@ -4,24 +4,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using RestSharp;
 using Stratis.Guru.Hubs;
+using Stratis.Guru.Settings;
 
 namespace Stratis.Guru.Services
 {
-    public class TickerService : IHostedService, IDisposable
+    public class UpdateInfosService : IHostedService, IDisposable
     {
         private readonly IMemoryCache _memoryCache;
         private readonly IHubContext<UpdateHub> _hubContext;
         private readonly UpdateHub _hub;
         private readonly System.Timers.Timer updateTimer;
+        private readonly NakoApiSettings _nakoApiSettings;
 
-        public TickerService(IMemoryCache memoryCache, UpdateHub hub, IHubContext<UpdateHub> hubContext)
+        public UpdateInfosService(IMemoryCache memoryCache, UpdateHub hub, IHubContext<UpdateHub> hubContext, IOptions<NakoApiSettings> nakoApiSettings)
         {
             _memoryCache = memoryCache;
             _hub = hub;
             _hubContext = hubContext;
             updateTimer = new System.Timers.Timer();
+            _nakoApiSettings = nakoApiSettings.Value;
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
@@ -37,6 +41,10 @@ namespace Stratis.Guru.Services
                 _memoryCache.Set("Coinmarketcap", coinmarketcapApi.Content);
                 Console.WriteLine(DateTime.Now + " - Ticker Updated");
                 await _hubContext.Clients.All.SendAsync("UpdateTicker", cancellationToken);
+
+                var blockchainStatsClient = new RestClient($"{_nakoApiSettings.Endpoint}stats");
+                var blockchainStatsRequest = new RestRequest(Method.GET);
+                _memoryCache.Set("BlockchainStats", blockchainStatsClient.Execute(blockchainStatsRequest).Content);
             };
             updateTimer.Start();
             return Task.CompletedTask;

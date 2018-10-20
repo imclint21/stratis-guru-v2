@@ -47,7 +47,7 @@ namespace Stratis.Guru.Controllers
         [Route("address/{address}")]
         public IActionResult Address(string address)
         {
-            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}address/{address}/transactions");
+            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/address/{address}/transactions");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return View(JsonConvert.DeserializeObject(endpointResponse.Content));
@@ -56,7 +56,7 @@ namespace Stratis.Guru.Controllers
         [Route("transaction/{transactionId}")]
         public IActionResult Transaction(string transactionId)
         {
-            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}transaction/{transactionId}");
+            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/transaction/{transactionId}");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return View(JsonConvert.DeserializeObject(endpointResponse.Content));

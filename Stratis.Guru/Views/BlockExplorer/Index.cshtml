@@ -1,116 +1,46 @@
+@model dynamic
 @{
     ViewBag.Title = "Stratis Block Explorer";
     Layout = "_Layout";
 }
 <partial name="SearchBlock" />
 <section class="block-explorer-section section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="center-heading">
-						<h2 class="section-title">Latest Blocks</h2>
-					</div>
-				</div>
-			</div>			
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="table-responsive">
-						<table class="table table-striped table-latests">
-							<thead>
-								<tr>
-									<td>Block Height</td>
-									<td>Age</td>
-									<td>Transactions</td>
-									<td>Value Out</td>
-									<td>Difficulty</td>
-									<td>Extracted by</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883451</a></td>
-									<td>26 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>4.00000000 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883450</a></td>
-									<td>26 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>78.56148997 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883449</a></td>
-									<td>26 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>16.26147900 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883448</a></td>
-									<td>32 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>1.00000000 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883447</a></td>
-									<td>32 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>8.12343216 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883446</a></td>
-									<td>32 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>32.94581285 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883445</a></td>
-									<td>53 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>0.27650932 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883444</a></td>
-									<td>53 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>2.16841398 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883443</a></td>
-									<td>53 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>43.06734912 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-								<tr>
-									<td><a href="green-block-explorer-address-detail.html">1883442</a></td>
-									<td>58 minutes</td>
-									<td>1 - 0.3 kB</td>
-									<td>1.6590157 ARD</td>
-									<td>2487.2 </td>
-									<td><a href="green-block-explorer-address-detail.html">EKnqTC9XEuucZEhD3miDGnbJxBptcxhByA</a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="center-heading">
+                    <h2 class="section-title">Latest Blocks</h2>
+                </div>
+            </div>
+        </div>			
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-latests">
+                        <thead>
+                            <tr>
+                                <td>Block Height</td>
+                                <td>Age</td>
+                                <td>No. Transactions</td>
+                                <td>Block Size</td>
+                                <td>Block Hash</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var block in ViewBag.Blocks)
+                            {
+                                <tr>
+                                    <td><a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@block.blockIndex">@block.blockIndex</a></td>
+                                    <td>@((DateTime.Now - DateTimeOffset.FromUnixTimeSeconds((long)block.blockTime)).TotalMinutes.ToString("N0")) Minutes</td>
+                                    <td>@block.transactionCount</td>
+                                    <td>@block.blockSize Kb</td>
+                                    <td><a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@block.blockHash">@block.blockHash</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

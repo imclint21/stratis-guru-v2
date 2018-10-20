@@ -1333,7 +1333,7 @@ header
 .header-area.header-sticky .nav li a.btn-nav-box:hover {
   background: none;
   color: #0EB8D9;
-}*/
+}
 
 .header-area.header-sticky .lang {
     margin-top: 22px !important;
@@ -1348,6 +1348,12 @@ header
     font-weight: 600;
     font-size: 12px;
 }
+*/
+
+.header-area.header-sticky {
+    background: rgba(33, 37, 41, 0.90);
+    box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.6);
+}
 
 @media (max-width: 1200px) {
     .header-area .main-nav .nav li {
@@ -1360,11 +1366,6 @@ header
 
     }
 
-    .header-area.header-sticky {
-        background: rgb(33, 37, 41);
-        height: 80px;
-        box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.6);
-    }
 
     #crafted {
         height: 80px;

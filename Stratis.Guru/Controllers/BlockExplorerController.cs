@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -24,10 +25,30 @@ namespace Stratis.Guru.Controllers
             _stats = JsonConvert.DeserializeObject(_memoryCache.Get("BlockchainStats").ToString());
         }
         
+        [ResponseCache(Duration = 60)]
         public IActionResult Index()
         {
-            ViewBag.BlockchainHeight = _stats.syncBlockIndex;
+            var latestBlockClient = new RestClient($"{_nakoApiSettings.Endpoint}query/block/Latest/transactions");
+            var latestBlockRequest = new RestRequest(Method.GET);
+            var latestBlockResponse = latestBlockClient.Execute(latestBlockRequest);
+            ViewBag.LatestBlock = JsonConvert.DeserializeObject(latestBlockResponse.Content);
+            
+            ViewBag.BlockchainHeight = ViewBag.LatestBlock.blockIndex;
+
+            var x = new List<dynamic>();
+
+            for (int i = (int)ViewBag.LatestBlock.blockIndex; i >= (int)ViewBag.LatestBlock.blockIndex-5; i--)
+            {
+                var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/block/index/{i}/transactions");
+                var enpointRequest = new RestRequest(Method.GET);
+                var endpointResponse = endpointClient.Execute(enpointRequest);
+                x.Add(JsonConvert.DeserializeObject(endpointResponse.Content));
+            }
+
+            ViewBag.Blocks = x;
+            
             return View();
+
         }
 
         [Route("search")]
@@ -41,6 +62,10 @@ namespace Stratis.Guru.Controllers
             {
                 return RedirectToAction("Transaction", new {transactionId = searchBlockExplorer.Query});
             }
+            else if (searchBlockExplorer.Query.Length <= 8)
+            {
+                return RedirectToAction("Block", new {block = searchBlockExplorer.Query});
+            }
             return RedirectToAction("Index");
         }
 
@@ -48,7 +73,20 @@ namespace Stratis.Guru.Controllers
         public IActionResult Block(string block)
         {
             ViewBag.BlockchainHeight = _stats.syncBlockIndex;
-            return View();
+            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/block/index/{block}/transactions");
+            var enpointRequest = new RestRequest(Method.GET);
+            var endpointResponse = endpointClient.Execute(enpointRequest);
+            return View(JsonConvert.DeserializeObject(endpointResponse.Content));
+        }
+
+        [Route("block/hash/{hash}")]
+        public IActionResult BlockHash(string hash)
+        {
+            ViewBag.BlockchainHeight = _stats.syncBlockIndex;
+            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/block/{hash}/transactions");
+            var enpointRequest = new RestRequest(Method.GET);
+            var endpointResponse = endpointClient.Execute(enpointRequest);
+            return View("Block", JsonConvert.DeserializeObject(endpointResponse.Content));
         }
 
         [Route("address/{address}")]

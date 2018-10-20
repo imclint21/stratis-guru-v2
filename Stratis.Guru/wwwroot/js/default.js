@@ -3,6 +3,10 @@
     _0x2f2ex1(document)['ready'](function () {
         NProgress.start();
         $('[data-toggle="tooltip"]').tooltip();
+        $(".copy-me").click(function () {
+            $(this).parent().find(".to-copy").select();
+            document.execCommand("copy");
+        });
         _0x2f2exe();
         if (_0x2f2ex1('.menu-trigger')['length']) {
             _0x2f2ex1('.menu-trigger')['click'](function () {
@@ -136,7 +140,7 @@
     });
     _0x2f2ex1(window)['scroll'](function () {
         var _0x2f2exa = _0x2f2ex1(window)['width']();
-        if (_0x2f2exa < 991) {
+        if (_0x2f2exa < 9910) {
             var _0x2f2exd = _0x2f2ex1(window)['scrollTop']();
             if (_0x2f2exd >= 30) {
                 _0x2f2ex1('.header-area')['addClass']('header-sticky');

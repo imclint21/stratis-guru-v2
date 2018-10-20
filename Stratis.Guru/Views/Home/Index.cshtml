@@ -15,7 +15,7 @@
                         <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.UsdPrice.ToString("C2"))</span>
                         <span id="lastchange" class="d-block d-lg-inline-block change-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> <span class="d-none d-lg-inline-block">@((Model.Last24Change > 0 ? "+":""))</span> @(Model.Last24Change.ToString("P2"))</sup></span>
                     </h1>
-                    <a asp-controller="Home" asp-action="Generator" class="btn-secondary-box"><i class="fa fa-paper-plane"></i> Get a Stratis Address</a>
+                    <a asp-controller="BlockExplorer" asp-action="Index" class="btn-secondary-box"><i class="fa fa-cube"></i> Go to Block Explorer</a>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             }).click(function() {
                 $(this).prop('contenteditable', true).focus().select();
             }).on("blur", function() {
-                if ($.isNumeric($(this).text())) {
+                if ($.isNumeric($(this).text()) && parseFloat($(this).text()) > 1) {
                     stratisAmount = $(this).text();
                     UpdateTicker();
                 } else {

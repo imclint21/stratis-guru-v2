@@ -4,6 +4,14 @@
     Layout = "_Layout";
     ViewBag.Query = Model.transactionId;
 }
+@section Style
+{
+    <style>
+        #crafted {
+            position: relative;
+        }
+    </style>
+}
 <partial name="SearchBlock" model="@(new SearchBlockExplorer())" />
 <section class="block-explorer-section">
     <div class="container">

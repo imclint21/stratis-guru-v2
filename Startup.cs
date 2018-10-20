@@ -16,6 +16,7 @@ using Microsoft.Extensions.FileProviders;
 using Stratis.Guru.Hubs;
 using Stratis.Guru.Modules;
 using Stratis.Guru.Services;
+using Stratis.Guru.Settings;
 
 namespace Stratis.Guru
 {
@@ -37,6 +38,7 @@ namespace Stratis.Guru
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.Configure<NakoApiSettings>(Configuration.GetSection("NakoApi"));
             
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");

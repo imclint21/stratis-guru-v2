@@ -57,11 +57,13 @@ header, nav, section, article, aside, footer, hgroup {
 html, body {
   font-family: "Raleway", sans-serif;
   font-weight: 400;
-  background: #1b1d20;
   font-size: 16px;
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #1b1d20 url("/images/prodnews-hero.png") fixed;
+  background-size: cover;
+  box-shadow: inset 0px 0px 10em rgba(0, 0, 0, 0.6);
 }
 
 a {
@@ -198,7 +200,13 @@ global styles
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background: #F3F8FF;
+  background: rgba(95, 96, 99, 0.6);
+}
+
+.table td, .table th,
+.table thead th {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
 }
 
 .section {
@@ -239,7 +247,7 @@ global styles
 .center-heading .section-title {
   font-weight: 400;
   font-size: 30px;
-  color: #3B566E;
+  color: #EEEEEE;
   letter-spacing: 1.30px;
   line-height: 40px;
   margin-bottom: 20px;
@@ -306,7 +314,7 @@ global styles
   text-align: center;
   font-weight: 400;
   font-size: 16px;
-  color: #6F8BA4;
+  color: #EEEEEE;
   line-height: 28px;
   letter-spacing: 1px;
   margin-bottom: 50px;
@@ -1420,9 +1428,6 @@ welcome area
 .welcome-area {
   min-height: 100vh;
   position: relative;
-  background-image: url("/images/prodnews-hero.png");
-  background-size: cover;
-  box-shadow: inset 0px 0px 10em rgba(0, 0, 0, 0.6);
 }
 
 .welcome-area.bg-top-right:before {
@@ -2542,7 +2547,6 @@ block explorer
   height: 100%;
   left: 0px;
   top: 0px;
-  background: url(../images/dark-top-right-bg.png) top right no-repeat;
   z-index: 3;
 }
 
@@ -2553,7 +2557,6 @@ block explorer
   height: 100%;
   left: 0px;
   top: 0px;
-  background: url(../images/section-bg-bottom.png) bottom center no-repeat;
   z-index: 3;
 }
 
@@ -2564,7 +2567,7 @@ block explorer
   height: 100%;
   left: 0px;
   top: 0px;
-  background-image: linear-gradient(134deg, #0EB8D9 0%, #2CDDC9 100%);
+  /*background-image: linear-gradient(134deg, #0EB8D9 0%, #2CDDC9 100%);*/
   z-index: 2;
 }
 
@@ -2617,7 +2620,7 @@ block explorer
 
 .block-explorer-wrapper .search .input-wrapper {
   padding: 40px;
-  background: #fff;
+  background: #44464a99;
   box-shadow: 0 0 34px 0 rgba(63, 66, 87, 0.1);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -2637,8 +2640,11 @@ block explorer
   width: 100%;
   height: 100%;
   outline: none;
+  background: transparent;
   border: none;
-  border: 1px solid #e6ecf5;
+  /*border: 1px solid #e6ecf5;*/
+  border: 1px solid #0EB8D9;
+  color: #ffffff;
   padding-left: 20px;
   padding-right: 20px;
   -webkit-transition: all 0.3s ease 0s;
@@ -2781,11 +2787,12 @@ block explorer
 
 .block-explorer-section {
   padding-top: 130px;
+  padding-bottom: 70px;
 }
 
 .block-explorer-section .table-latests {
-  background: #fff;
-  border: 1px solid #CEE1F8;
+  background: #44464a99;
+  border: 0;
 }
 
 .block-explorer-section .table-latests.table-detail td {
@@ -2795,31 +2802,31 @@ block explorer
 .block-explorer-section .table-latests.table-detail strong {
   font-weight: 600;
   font-size: 14px;
-  color: #3B566E;
+  color: #EEEEEE;
   letter-spacing: 1px;
 }
 
 .block-explorer-section .table-latests td {
   padding: 15px 15px;
-  border-top: 1px solid #CEE1F8;
 }
 
 .block-explorer-section .table-latests thead {
   font-weight: 600;
   font-size: 14px;
-  color: #3B566E;
+  color: #EEEEEE;
   letter-spacing: 1px;
 }
 
 .block-explorer-section .table-latests tbody {
   font-weight: 400;
   font-size: 14px;
-  color: #3B566E;
+  color: #EEEEEE;
   letter-spacing: 0.78px;
 }
 
-.block-explorer-section .table-latests tbody a {
-  color: #256592;
+.block-explorer-section .table-latests tbody a:not(.copy-me) {
+  color: #EEEEEE;
+  border-bottom: 1px dotted #EEEEEE;
 }
 
 .block-explorer-section .table-latests tbody .table-progress {
@@ -2853,18 +2860,23 @@ block explorer
 }
 
 .block-explorer-section .table-latests tbody span.red {
-  color: #c7254e;
+  color: orangered;
 }
 
 .block-explorer-section .table-latests tbody span.green {
-  color: #23A236;
+  color: lawngreen;
 }
 
 .block-explorer-section .qr {
-  border: 1px solid #CEE1F8;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  /*border: 1px solid #CEE1F8;
   background: #fff;
+  padding-top: 25px;*/
+  padding-bottom: 25px;
+}
+
+.block-explorer-section .qr img {
+  width: 250px;
+  border: 20px solid white;
 }
 
 @media (max-width: 991px) {
@@ -3117,7 +3129,7 @@ header .nav a:hover::after {
   transform-origin: bottom left;
 }
 
-.qr
+img.qr
 {
   border: 10px solid white;
   width: 250px;
@@ -3222,4 +3234,10 @@ h2
 [contenteditable="true"] * {
   display: inline;
   white-space: nowrap;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1250px;
+  }
 }

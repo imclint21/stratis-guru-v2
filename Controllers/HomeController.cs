@@ -50,12 +50,6 @@ namespace Stratis.Guru.Controllers
             return View();
         }
 
-        [Route("block-explorer")]
-        public IActionResult Explorer()
-        {
-            return View();
-        }
-
         [Route("vanity")]
         public IActionResult Vanity()
         {

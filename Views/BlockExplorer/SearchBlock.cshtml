@@ -1,0 +1,31 @@
+@model SearchBlockExplorer
+<section class="block-explorer-wrapper" id="welcome-1">
+    <div class="block-explorer text">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-lg-12 align-self-center">
+                    <h1>Stratis Blockchain Explorer</h1>
+                </div>
+                <div class="offset-lg-3 col-lg-6">
+                    <p>Actual Stratis Blocks Height: 1039459</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="search">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="input-wrapper">
+                        <form method="post" asp-controller="BlockExplorer" asp-action="Search" class="input">
+                            <input type="text" asp-for="Query" value="@ViewBag.Query" placeholder="Enter for a block, hash, transaction, etc...">
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	
+</section>

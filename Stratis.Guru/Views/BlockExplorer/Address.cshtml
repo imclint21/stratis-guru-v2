@@ -1,6 +1,6 @@
 @model dynamic
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = $"Address {Model.address}";
     Layout = "_Layout";
     ViewBag.Query = Model.address;
 }

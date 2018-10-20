@@ -1,6 +1,6 @@
 @model dynamic
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = $"Transaction {Model.transactionId}";
     Layout = "_Layout";
     ViewBag.Query = Model.transactionId;
 }

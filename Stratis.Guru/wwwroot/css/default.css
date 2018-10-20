@@ -1128,7 +1128,7 @@ header
     -ms-transform: translateY(6px) translateX(1px) rotate(45deg);
     -webkit-transform: translateY(6px) translateX(1px) rotate(45deg);
     transform: translateY(6px) translateX(1px) rotate(45deg);
-    background-color: #3B566E;
+    background-color: #CCCCCC;
 }
 
 .header-area .main-nav .menu-trigger.active span:after {
@@ -1136,7 +1136,7 @@ header
     -ms-transform: translateY(-6px) translateX(1px) rotate(-45deg);
     -webkit-transform: translateY(-6px) translateX(1px) rotate(-45deg);
     transform: translateY(-6px) translateX(1px) rotate(-45deg);
-    background-color: #3B566E;
+    background-color: #CCCCCC;
 }
 
 .header-area .main-nav .lang {
@@ -1351,7 +1351,7 @@ header
 */
 
 .header-area.header-sticky {
-    background: rgba(33, 37, 41, 1);
+    background: rgb(38, 39, 42);
     box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.6);
 }
 

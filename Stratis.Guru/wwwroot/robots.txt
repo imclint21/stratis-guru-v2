@@ -1,2 +1,7 @@
 User-Agent: *
 Disallow: /generator
+Disallow: /update/negotiate
+Disallow: /block-explorer/address
+Disallow: /block-explorer/block
+Disallow: /block-explorer/transaction
+Disallow: /api/

@@ -1,6 +1,7 @@
 @model StratisAddressPayload
 @{
     ViewBag.Title = "Stratis Address Generator";
+    ViewBag.Description = "Generate a Stratis address with a public address to receive your coins and a private key that spends your coins.";
     Layout = "_Layout";
 }
 <section class="welcome-area pb-4" id="welcome-1">
@@ -19,7 +20,7 @@
                             <button class="btn btn-success click-copy" type="button"><i class="fa fa-copy"></i> Copy</button>
                         </div>
                     </div>
-                    <p class="m-0 change-success">This is the adress than you share with others.</p>
+                    <p class="m-0 change-success">This is your address to receive coins, it's public.</p>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 pt-5 align-self-center text-center">
                     <h2>Stratis Private Address</h2>
@@ -33,7 +34,7 @@
                             <button class="btn btn-success click-copy" type="button"><i class="fa fa-copy"></i> Copy</button>
                         </div>
                     </div>
-                    <p class="m-0 change-danger">This is your spent key that you keep in safety.</p>
+                    <p class="m-0 change-danger">This is your private key that spends your coins, keep it secure.</p>
                 </div>
             </div>
             <div class="row mt-5">

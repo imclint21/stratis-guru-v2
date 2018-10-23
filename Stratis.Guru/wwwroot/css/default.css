@@ -65,8 +65,8 @@ html, body {
 }
 
 body {
-    background-size: cover;
     background: #1b1d20 url("/images/prodnews-hero.png") fixed;
+    background-size: cover;
 }
 
 .shadow-inset {

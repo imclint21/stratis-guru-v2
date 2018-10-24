@@ -62,19 +62,22 @@
                                 <td><strong>Block Date/Time</strong></td>
                                 <td>@Model.timestamp.ToString("F")</td>
                             </tr>
-                            <tr>
-                                <td><strong>Total Output</strong></td>
-                                <td>
-                                    @{
-                                        double totalOutpus = 0; 
-                                    }
-                                    @foreach (var t in Model.outputs)
-                                    {
-                                        totalOutpus += (double)t.balance;
-                                    }
-                                    @totalOutpus.ToString("N8") STRAT
-                                </td>
-                            </tr>
+                            @if (Model.outputs != null)
+                            {
+                                <tr>
+                                    <td><strong>Total Output</strong></td>
+                                    <td>
+                                        @{
+                                            double totalOutpus = 0;
+                                        }
+                                        @foreach (var t in Model.outputs)
+                                        {
+                                            totalOutpus += (double) t.balance;
+                                        }
+                                        @totalOutpus.ToString("N8") STRAT
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

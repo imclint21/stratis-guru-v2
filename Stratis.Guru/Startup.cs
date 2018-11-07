@@ -87,6 +87,15 @@ namespace Stratis.Guru
                 RequestPath = "/npm"
             });
             
+            app.UseFileServer(new FileServerOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Documentation/site/")),
+                RequestPath = "/documentation",
+                EnableDirectoryBrowsing = false,
+                EnableDefaultFiles = true,
+                DefaultFilesOptions = { DefaultFileNames = {"index.html"}}
+            });
+            
             app.UseSignalR(routes =>
             {
                 routes.MapHub<UpdateHub>("/update");

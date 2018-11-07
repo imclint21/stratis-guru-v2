@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using RestSharp;
 using Stratis.Guru.Models;
 using Stratis.Guru.Settings;
-using RestClient = NBitcoin.RPC.RestClient;
 
 namespace Stratis.Guru.Controllers
 {
@@ -66,7 +65,7 @@ namespace Stratis.Guru.Controllers
         [Route("address/{address}")]
         public ActionResult<object> Address(string address)
         {
-            var endpointClient = new RestSharp.RestClient($"{_nakoApiSettings.Endpoint}query/address/{address}/transactions");
+            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/address/{address}/transactions");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);
@@ -76,7 +75,7 @@ namespace Stratis.Guru.Controllers
         [Route("transaction/{transaction}")]
         public ActionResult<object> Transaction(string transaction)
         {
-            var endpointClient = new RestSharp.RestClient($"{_nakoApiSettings.Endpoint}query/transaction/{transaction}");
+            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/transaction/{transaction}");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);
@@ -86,7 +85,7 @@ namespace Stratis.Guru.Controllers
         [Route("block/{block}")]
         public ActionResult<object> Block(string block)
         {
-            var endpointClient = new RestSharp.RestClient($"{_nakoApiSettings.Endpoint}query/block/index/{block}/transactions");
+            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/block/index/{block}/transactions");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);

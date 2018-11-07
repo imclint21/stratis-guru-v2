@@ -83,5 +83,10 @@ namespace Stratis.Guru.Controllers
             qrCode.GetGraphic(20, Color.Black, Color.White, false).Save(memoryStream, ImageFormat.Png);
             return File(memoryStream.ToArray(), "image/png");
         }
+
+        public IActionResult Documentation()
+        {
+            return Redirect("/documentation");
+        }
     }
 }

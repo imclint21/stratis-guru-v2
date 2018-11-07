@@ -1,6 +1,6 @@
 @model dynamic
 @{
-    ViewBag.Title = $"Block {5}";
+    ViewBag.Title = $"Block {Model.blockIndex}";
     Layout = "_Layout";
     ViewBag.Query = Model.blockHash;
 }

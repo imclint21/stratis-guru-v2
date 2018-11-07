@@ -1,9 +1,9 @@
 # Stratis.Guru Documentation
 
-This documentation describe how to use the Stratis.Guru API Endpoints.
+This documentation describes how to use the Stratis.Guru API.
 
 ## Create Stratis Key Pair
-This endpoint generate a new Stratis Address, and return a public and private key pair.    
+This endpoint generate a new Stratis Address and returns a public and private key pair.    
 ```
 GET https://stratis.guru/api/create-address
 ```
@@ -17,7 +17,7 @@ GET https://stratis.guru/api/create-address
 
 
 ## Get Price (in USD)
-Get the $STRAT Price, this API query [CoinMarkCap](https://coinmarketcap.com/fr/currencies/stratis/) API.
+Get the $STRAT Price, this API query [CoinMarketCap](https://coinmarketcap.com/fr/currencies/stratis/) API.
 ```
 GET https://stratis.guru/api/price
 ```

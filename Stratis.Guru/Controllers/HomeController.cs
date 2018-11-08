@@ -46,6 +46,9 @@ namespace Stratis.Guru.Controllers
             
             if (rqf.RequestCulture.UICulture.ThreeLetterISOLanguageName.Equals("eng"))
             {
+                var x = new CultureInfo("en-US");
+                x.NumberFormat.CurrencySymbol = "$";
+                Thread.CurrentThread.CurrentCulture = x;
                 displayPrice = coinmarketcap.data.quotes.USD.price;
             }
             else

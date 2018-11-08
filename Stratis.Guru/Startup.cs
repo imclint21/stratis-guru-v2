@@ -93,10 +93,6 @@ namespace Stratis.Guru
                 EnableDefaultFiles = true,
                 DefaultFilesOptions = { DefaultFileNames = {"index.html"}}
             });
-
-            var x = new CultureInfo("en-US");
-            x.NumberFormat.CurrencySymbol = "$";
-            Thread.CurrentThread.CurrentCulture = x;
             
             var supportedCultures = new[]
             {

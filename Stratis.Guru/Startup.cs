@@ -93,6 +93,10 @@ namespace Stratis.Guru
                 EnableDefaultFiles = true,
                 DefaultFilesOptions = { DefaultFileNames = {"index.html"}}
             });
+
+            var x = new CultureInfo("en-US");
+            x.NumberFormat.CurrencySymbol = "$";
+            Thread.CurrentThread.CurrentCulture = x;
             
             var supportedCultures = new[]
             {
@@ -108,9 +112,7 @@ namespace Stratis.Guru
             {
                 DefaultRequestCulture = new RequestCulture("en-US"),
                 SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures,
-                FallBackToParentCultures = true,
-                FallBackToParentUICultures = true
+                SupportedUICultures = supportedCultures
             });
             
             app.UseSignalR(routes =>

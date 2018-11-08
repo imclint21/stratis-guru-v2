@@ -28,6 +28,8 @@ namespace Stratis.Guru
         
         public Startup(IConfiguration configuration)
         {
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+            
             Configuration = configuration;
         }
 

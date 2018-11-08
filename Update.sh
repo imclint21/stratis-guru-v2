@@ -1,4 +1,5 @@
 #!/bin/bash
 git pull
+systemctl stop stratis-guru.service
 dotnet publish -c Release
-systemctl restart stratis-guru.service
+systemctl start stratis-guru.service

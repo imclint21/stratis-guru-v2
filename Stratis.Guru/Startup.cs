@@ -29,6 +29,7 @@ namespace Stratis.Guru
         public Startup(IConfiguration configuration)
         {
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
             
             Configuration = configuration;
         }
@@ -98,17 +99,21 @@ namespace Stratis.Guru
             
             var supportedCultures = new[]
             {
-                new CultureInfo("en"),
+                new CultureInfo("en-US"),
+                new CultureInfo("en-GB"),
                 new CultureInfo("fr-FR"),
-                new CultureInfo("ru"),
-                new CultureInfo("it"),
-                new CultureInfo("de"),
-                new CultureInfo("cn")
+                new CultureInfo("ru-RU"),
+                new CultureInfo("it-IT"),
+                new CultureInfo("de-DE"),
+                new CultureInfo("cn-CN")
             };
+
+            var defaultCulture = new RequestCulture("en-US");
+            defaultCulture.UICulture.NumberFormat.CurrencySymbol = "$";
             
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture("en-US"),
+                DefaultRequestCulture = defaultCulture,
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             });

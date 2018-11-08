@@ -88,6 +88,7 @@ namespace Stratis.Guru
                 RequestPath = "/npm"
             });
             
+            // Add Documentation (MkDocs) Support
             app.UseFileServer(new FileServerOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Documentation/site/")),
@@ -96,12 +97,11 @@ namespace Stratis.Guru
                 EnableDefaultFiles = true,
                 DefaultFilesOptions = { DefaultFileNames = {"index.html"}}
             });
-            
-            var allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => !x.IsNeutralCulture).ToList();
 
+            // Add Culture Detection Support
+            var allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => !x.IsNeutralCulture).ToList();
             var defaultCulture = new RequestCulture("en-US");
             defaultCulture.UICulture.NumberFormat.CurrencySymbol = "$";
-            
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = defaultCulture,
@@ -109,6 +109,7 @@ namespace Stratis.Guru
                 SupportedUICultures = allCultures
             });
             
+            // Add SignalR support for automatically update ticker price
             app.UseSignalR(routes =>
             {
                 routes.MapHub<UpdateHub>("/update");

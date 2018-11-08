@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Stratis.Guru.Hubs;
+using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
 using Stratis.Guru.Services;
 using Stratis.Guru.Settings;
@@ -39,23 +40,20 @@ namespace Stratis.Guru
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.Configure<NakoApiSettings>(Configuration.GetSection("NakoApi"));
+            services.Configure<FixerApiSettings>(Configuration.GetSection("FixerApi"));
             
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
             
             services.AddMemoryCache();
-
-            services.AddHostedService<UpdateInfosService>();
-            //services.AddHostedService<VanityService>();
+            
             services.AddTransient<UpdateHub>();
             services.AddSingleton<IAsk, Ask>();
-            
-            /*services.AddResponseCaching(options =>
-            {
-                options.UseCaseSensitivePaths = true;
-                options.MaximumBodySize = 1024;
-            });*/
 
+            services.AddHostedService<UpdateInfosService>();
+            services.AddHostedService<FixerService>();
+            services.AddHostedService<VanityService>();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
             services.AddSignalR();

@@ -16,7 +16,7 @@ namespace Stratis.Guru.Services
         private readonly IMemoryCache _memoryCache;
         private readonly IHubContext<UpdateHub> _hubContext;
         private readonly UpdateHub _hub;
-        private readonly System.Timers.Timer updateTimer;
+        private readonly System.Timers.Timer _updateTimer;
         private readonly NakoApiSettings _nakoApiSettings;
 
         public UpdateInfosService(IMemoryCache memoryCache, UpdateHub hub, IHubContext<UpdateHub> hubContext, IOptions<NakoApiSettings> nakoApiSettings)
@@ -24,17 +24,17 @@ namespace Stratis.Guru.Services
             _memoryCache = memoryCache;
             _hub = hub;
             _hubContext = hubContext;
-            updateTimer = new System.Timers.Timer();
+            _updateTimer = new System.Timers.Timer();
             _nakoApiSettings = nakoApiSettings.Value;
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            updateTimer.Interval = 10;
-            updateTimer.Enabled = true;
-            updateTimer.Elapsed += async (sender, args) =>
+            _updateTimer.Interval = 10;
+            _updateTimer.Enabled = true;
+            _updateTimer.Elapsed += async (sender, args) =>
             {
-                updateTimer.Interval = TimeSpan.FromMinutes(10).TotalMilliseconds;
+                _updateTimer.Interval = TimeSpan.FromMinutes(10).TotalMilliseconds;
                 var coinmarketCapApiClient = new RestClient("https://api.coinmarketcap.com/v2/ticker/1343/");
                 var coinmarketCapApiRequest = new RestRequest(Method.GET);
                 var coinmarketcapApi = coinmarketCapApiClient.Execute(coinmarketCapApiRequest);
@@ -46,7 +46,7 @@ namespace Stratis.Guru.Services
                 var blockchainStatsRequest = new RestRequest(Method.GET);
                 _memoryCache.Set("BlockchainStats", blockchainStatsClient.Execute(blockchainStatsRequest).Content);
             };
-            updateTimer.Start();
+            _updateTimer.Start();
             return Task.CompletedTask;
         }
 
@@ -57,8 +57,8 @@ namespace Stratis.Guru.Services
 
         public void Dispose()
         {
-            updateTimer?.Stop();
-            updateTimer?.Dispose();;
+            _updateTimer?.Stop();
+            _updateTimer?.Dispose();
         }
     }
 }

@@ -103,7 +103,7 @@ namespace Stratis.Guru
                 new CultureInfo("de"),
                 new CultureInfo("cn")
             };
-
+            
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture("en-US"),

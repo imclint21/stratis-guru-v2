@@ -53,6 +53,8 @@ namespace Stratis.Guru
             services.AddHostedService<FixerService>();
             services.AddHostedService<VanityService>();
             
+            services.AddLocalization();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
             services.AddSignalR();
@@ -95,7 +97,7 @@ namespace Stratis.Guru
             var supportedCultures = new[]
             {
                 new CultureInfo("en"),
-                new CultureInfo("fr"),
+                new CultureInfo("fr-FR"),
                 new CultureInfo("ru"),
                 new CultureInfo("it"),
                 new CultureInfo("de"),

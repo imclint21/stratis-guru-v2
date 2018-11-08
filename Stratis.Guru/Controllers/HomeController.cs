@@ -36,7 +36,7 @@ namespace Stratis.Guru.Controllers
         {
             var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
 
-            Console.WriteLine(JsonConvert.SerializeObject(rqf.RequestCulture, Formatting.None));
+            Console.WriteLine(JsonConvert.SerializeObject(rqf.RequestCulture.Culture.NumberFormat, Formatting.None));
             
             double displayPrice = 0;
             double last24Change = 0;

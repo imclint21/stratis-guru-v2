@@ -108,7 +108,9 @@ namespace Stratis.Guru
             {
                 DefaultRequestCulture = new RequestCulture("en-US"),
                 SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
+                SupportedUICultures = supportedCultures,
+                FallBackToParentCultures = true,
+                FallBackToParentUICultures = true
             });
             
             app.UseSignalR(routes =>

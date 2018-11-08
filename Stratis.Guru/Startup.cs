@@ -97,16 +97,7 @@ namespace Stratis.Guru
                 DefaultFilesOptions = { DefaultFileNames = {"index.html"}}
             });
             
-            var supportedCultures = new[]
-            {
-                new CultureInfo("en-US"),
-                new CultureInfo("en-GB"),
-                new CultureInfo("fr-FR"),
-                new CultureInfo("ru-RU"),
-                new CultureInfo("it-IT"),
-                new CultureInfo("de-DE"),
-                new CultureInfo("cn-CN")
-            };
+            var allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => !x.IsNeutralCulture).ToList();
 
             var defaultCulture = new RequestCulture("en-US");
             defaultCulture.UICulture.NumberFormat.CurrencySymbol = "$";
@@ -114,8 +105,8 @@ namespace Stratis.Guru
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = defaultCulture,
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
+                SupportedCultures = allCultures,
+                SupportedUICultures = allCultures
             });
             
             app.UseSignalR(routes =>

@@ -34,13 +34,10 @@ namespace Stratis.Guru.Controllers
         
         public IActionResult Index()
         {
-            var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-
             double displayPrice = 0;
-            double last24Change = 0;
-            
+            var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
             dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
-            last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100;
+            var last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100;
             
             if (rqf.RequestCulture.UICulture.Name.Equals("en-US"))
             {

@@ -42,7 +42,7 @@ namespace Stratis.Guru.Controllers
             dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
             last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100;
             
-            if (rqf.RequestCulture.UICulture.ThreeLetterISOLanguageName.Equals("eng"))
+            if (rqf.RequestCulture.UICulture.Name.Equals("en-US"))
             {
                 displayPrice = coinmarketcap.data.quotes.USD.price;
             }

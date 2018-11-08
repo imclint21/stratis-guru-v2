@@ -1,4 +1,5 @@
-﻿@model Ticker
+﻿@using System.Globalization
+@model Ticker
 @{
     ViewBag.Title = "Online Stratis ($STRAT) price ticker";
 }
@@ -12,8 +13,8 @@
                         <div class="d-inline-block align-middle">
                             <span class="click-edit" spellcheck="false">1</span> STRAT <span class="d-none d-lg-inline-block">=</span>
                         </div>
-                        <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.UsdPrice.ToString("C2"))</span>
-                        <span id="lastchange" class="d-block d-lg-inline-block change-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> <span class="d-none d-lg-inline-block">@((Model.Last24Change > 0 ? "+":""))</span> @(Model.Last24Change.ToString("P2"))</sup></span>
+                        <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.DisplayPrice.ToString("C2"))</span>
+                        <span id="lastchange" class="d-block d-lg-inline-block change-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> <span class="d-none d-lg-inline-block">@((Model.Last24Change > 0 ? "+":""))</span> <span class="inner">@(Model.Last24Change.ToString("P2"))</span></sup></span>
                     </h1>
                     <a asp-controller="BlockExplorer" asp-action="Index" class="btn-secondary-box"><i class="fa fa-cube"></i> Go to Block Explorer</a>
                 </div>
@@ -26,13 +27,13 @@
     <script src="~/npm/@@aspnet/signalr/dist/browser/signalr.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            var stratisPrice = @Model.UsdPrice;
+            var stratisPrice = @Model.DisplayPrice.ToString("N", new CultureInfo("en-US"));
             var stratisAmount = 1;
             function UpdateTicker() {
                 NProgress.start();
-                $.getJSON("/api/price?stringify=true&amount=" + stratisAmount, function(e) {
+                $.getJSON("/api/price?notApi=true&amount=" + stratisAmount, function(e) {
                     $("#amount").text(e.usdPrice);
-                    $("#lastchange").text(e.last24Change);
+                    $("#lastchange").find(".inner").text(e.last24Change);
                     NProgress.done(); 
                 });
             }

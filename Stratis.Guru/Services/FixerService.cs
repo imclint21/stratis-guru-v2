@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -12,14 +13,14 @@ namespace Stratis.Guru.Services
 {
     public class FixerService : IHostedService, IDisposable
     {
-        private FixerApiSettings _options;
-        private IDistributedCache _distributedCache;
         private Timer _timer;
+        private readonly FixerApiSettings _options;
+        private readonly IMemoryCache _memoryCache;
 
-        public FixerService(IOptions<FixerApiSettings> options, IDistributedCache distributedCache)
+        public FixerService(IOptions<FixerApiSettings> options, IMemoryCache memoryCache)
         {
             _options = options.Value;
-            _distributedCache = distributedCache;
+            _memoryCache = memoryCache;
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
@@ -34,7 +35,7 @@ namespace Stratis.Guru.Services
             var rq = new RestRequest(Method.GET);
             rs.ExecuteAsync(rq, delegate(IRestResponse response)
             {
-                _distributedCache.SetString("Fixer", response.Content);
+                _memoryCache.Set("Fixer", response.Content);
             });
         }
 

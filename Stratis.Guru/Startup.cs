@@ -7,8 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,32 +18,31 @@ using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
 using Stratis.Guru.Services;
 using Stratis.Guru.Settings;
+using static Microsoft.AspNetCore.Http.SameSiteMode;
 
 namespace Stratis.Guru
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
         
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = None;
             });
             services.Configure<NakoApiSettings>(Configuration.GetSection("NakoApi"));
             services.Configure<FixerApiSettings>(Configuration.GetSection("FixerApi"));
             
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+            /*Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");*/
             
             services.AddMemoryCache();
             
@@ -59,7 +58,6 @@ namespace Stratis.Guru
             services.AddSignalR();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -92,6 +90,23 @@ namespace Stratis.Guru
                 EnableDirectoryBrowsing = false,
                 EnableDefaultFiles = true,
                 DefaultFilesOptions = { DefaultFileNames = {"index.html"}}
+            });
+            
+            var supportedCultures = new[]
+            {
+                new CultureInfo("en"),
+                new CultureInfo("fr"),
+                new CultureInfo("ru"),
+                new CultureInfo("it"),
+                new CultureInfo("de"),
+                new CultureInfo("cn")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
             });
             
             app.UseSignalR(routes =>

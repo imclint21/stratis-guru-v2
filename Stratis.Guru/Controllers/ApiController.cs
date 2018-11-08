@@ -1,11 +1,14 @@
 using System;
+using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using NBitcoin;
 using NBitcoin.Networks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using Stratis.Guru.Models;
 using Stratis.Guru.Settings;
@@ -27,22 +30,46 @@ namespace Stratis.Guru.Controllers
         
         [HttpGet]
         [Route("price")]
-        public ActionResult<object> Price(bool stringify, double amount = 1)
+        public ActionResult<object> Price(bool notApi = false, double amount = 1)
         {
             try
             {
                 dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
-                if (stringify)
+                if (notApi)
                 {
+                    var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+            
+                    double displayPrice = 0;
+            
+                    if (rqf.RequestCulture.UICulture.ThreeLetterISOLanguageName.Equals("eng"))
+                    {
+                        displayPrice = coinmarketcap.data.quotes.USD.price;
+                    }
+                    else
+                    {
+                        dynamic fixerApiResponse = JsonConvert.DeserializeObject(_memoryCache.Get("Fixer").ToString());
+                        var dollarRate = fixerApiResponse.rates.USD;
+                        try
+                        {
+                            var regionInfo = new RegionInfo(rqf.RequestCulture.UICulture.Name.ToUpper());
+                            var browserCurrencyRate = (double) ((JObject) fixerApiResponse.rates)[regionInfo.ISOCurrencySymbol];
+                            displayPrice = 1 / (double) dollarRate * (double) coinmarketcap.data.quotes.USD.price * browserCurrencyRate;
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
+                    }
+                    
                     return new TickerApi
                     {
-                        UsdPrice = (coinmarketcap.data.quotes.USD.price * amount).ToString("C"),
+                        UsdPrice = (displayPrice * amount).ToString("C"),
                         Last24Change = (coinmarketcap.data.quotes.USD.percent_change_24h / 100).ToString("P2")
                     };
                 }
                 return new Ticker
                 {
-                    UsdPrice = coinmarketcap.data.quotes.USD.price * amount,
+                    DisplayPrice = coinmarketcap.data.quotes.USD.price * amount,
                     Last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100
                 };
             }

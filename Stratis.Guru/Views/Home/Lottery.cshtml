@@ -1,0 +1,40 @@
+@{
+    ViewBag.Title = "Stratis Lottery";
+    Layout = "_Layout";
+}
+@section Style
+{
+    <style>
+        body {
+            background-image: url(/images/Slider_Landing-1920x650.webp.jpg);
+        }
+    </style>
+}
+<section class="welcome-area pb-4" id="welcome-1">
+    <div class="header-token">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
+                    <h1 class="m-0">The Next <strong>Stratis</strong> Lottery Draw in:</h1>
+                    <h1 class="align-middle">
+                        <span class="align-middle display-1 font-weight-bold" id="amount">
+                            <span id="clock"></span>
+                        </span>
+                    </h1>
+                    <a asp-controller="BlockExplorer" asp-action="Index" class="btn-secondary-box"><i class="fa fa-ticket"></i> Buy a lottery ticket</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+    <script src="/npm/jquery-countdown/dist/jquery.countdown.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#clock').countdown('2020/10/10', function(event) {
+                $(this).html(event.strftime('%Hh %Mm %Ss'));
+            });
+        })
+    </script>
+}

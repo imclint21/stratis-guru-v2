@@ -66,6 +66,12 @@ namespace Stratis.Guru.Controllers
             });
         }
 
+        [Route("lottery")]
+        public IActionResult Lottery()
+        {
+            return View();
+        }
+
         [Route("about")]
         public IActionResult About()
         {

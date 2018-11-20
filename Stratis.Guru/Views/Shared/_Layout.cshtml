@@ -41,12 +41,13 @@
 						<img src="~/images/logo.png" class="" alt="Stratis.guru"/> <span class="text-white">Stratis</span><span class="text-muted">.guru</span> <span class="text-info text-hide">v2</span>
 					</a>
 					<ul class="nav">
-						<li><a asp-action="Index" asp-controller="Home"><i class="fa fa-home"></i> HOME</a></li>
-						<li><a asp-action="Index" asp-controller="BlockExplorer"><i class="fa fa-cube"></i> BLOCK EXPLORER</a></li>
-						<li><a asp-action="Vanity" asp-controller="Home"><i class="fa fa-at"></i> VANITY</a></li>
-						<li><a asp-action="Generator" asp-controller="Home"><i class="fa fa-qrcode"></i> ADDRESS GENERATOR</a></li>
-						<li><a asp-action="Documentation" asp-controller="Home"><i class="fa fa-book"></i> API</a></li>
-						<li><a asp-action="About" asp-controller="Home"><i class="fa fa-info-circle"></i> ABOUT</a></li>
+						<li class="@(Context.Request.Path.Equals(Url.Action("Index", "Home")) ? "active":"")"><a asp-action="Index" asp-controller="Home"><i class="fa fa-home"></i> HOME</a></li>
+						<li class="@(Context.Request.Path.Equals(Url.Action("Lottery", "Home")) ? "active":"")"><a asp-action="Lottery" asp-controller="Home"><i class="fa fa-trophy"></i> LOTTERY</a></li>
+						<li class="@(Context.Request.Path.Equals(Url.Action("Index", "BlockExplorer")) ? "active":"")"><a asp-action="Index" asp-controller="BlockExplorer"><i class="fa fa-cube"></i> BLOCK EXPLORER</a></li>
+						<li class="@(Context.Request.Path.Equals(Url.Action("Vanity", "Home")) ? "active":"")"><a asp-action="Vanity" asp-controller="Home"><i class="fa fa-at"></i> VANITY</a></li>
+						<li class="@(Context.Request.Path.Equals(Url.Action("Generator", "Home")) ? "active":"")"><a asp-action="Generator" asp-controller="Home"><i class="fa fa-qrcode"></i> GENERATOR</a></li>
+						<li class="@(Context.Request.Path.Equals(Url.Action("Documentation", "Home")) ? "active":"")"><a asp-action="Documentation" asp-controller="Home"><i class="fa fa-book"></i> API</a></li>
+						<li class="@(Context.Request.Path.Equals(Url.Action("About", "Home")) ? "active":"")"><a asp-action="About" asp-controller="Home"><i class="fa fa-info-circle"></i> ABOUT</a></li>
 						@*<li><a asp-action="Contact" asp-controller="Home"><i class="fa fa-envelope"></i> CONTACT</a></li>*@
 					</ul>
 					<a class='menu-trigger'>

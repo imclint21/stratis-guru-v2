@@ -993,6 +993,9 @@ header
     margin-left: 35px;
 }
 
+.header-area .main-nav .nav li.active {
+}
+
 .header-area .main-nav .nav li a {
     display: block;
     font-weight: 600;
@@ -3173,7 +3176,8 @@ header .nav a::after {
     transition: transform 0.25s ease-out;
 }
 
-header .nav a:hover::after {
+header .nav a:hover::after,
+header .nav .active a::after {
     transform: scaleX(1);
     transform-origin: bottom left;
 }

@@ -8,11 +8,12 @@
     <style>
         #crafted {
             position: relative;
+            color: #111111;
         }
     </style>
 }
 <partial name="SearchBlock" />
-<section class="block-explorer-section section">
+<section class="block-explorer-section section bg-bottom">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -41,7 +42,7 @@
                                     <td><a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@block.blockIndex">@block.blockIndex</a></td>
                                     <td>@((DateTime.Now - DateTimeOffset.FromUnixTimeSeconds((long)block.blockTime)).TotalMinutes.ToString("N0")) Minutes</td>
                                     <td class="text-center">@block.transactionCount</td>
-                                    <td>@block.blockSize kB</td>
+                                    <td>@block.blockSize bytes</td>
                                     <td><a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@block.blockHash">@block.blockHash</a></td>
                                 </tr>
                             }

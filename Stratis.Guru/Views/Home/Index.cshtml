@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Online Stratis ($STRAT) price ticker";
 }
+<div class="shadow-inset"></div>
 <section class="welcome-area pb-4" id="welcome-1">
     <div class="header-token">
         <div class="container">
@@ -23,7 +24,7 @@
 </section>
 @section Scripts
 {
-    <script src="~/npm/@@aspnet/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/lib/@@aspnet/signalr/dist/browser/signalr.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             var stratisPrice = @Model.DisplayPrice.ToString("N", new CultureInfo("en-US"));

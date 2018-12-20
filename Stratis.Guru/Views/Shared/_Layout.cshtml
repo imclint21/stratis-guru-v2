@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Stratis.Guru | @ViewBag.Title</title>
 	<meta name="Content-Language" content="en">
-	<meta name="Description" content="@(ViewBag.Description??"Stratis.Guru is a Simple and Free $STRAT ticker, an Stratis Address Generator and a Vanity Address service.")">
+	<meta name="Description" content="@(ViewBag.Description ?? "Stratis.Guru is a Simple and Free $STRAT ticker, an Stratis Address Generator and a Vanity Address service.")">
 	<meta name="Keywords" content="stratis,bitcoin,cryptos,cryptocurrencies,coins,$STRAT,ticker,explorer,block explorer,vanity address,stratis block explorer,$strat block explorer,stratis generator,stratis price ticker,stratis preev,stratis vanity address,clint.network,SR2ZXnhRnMqJNoeDiCFUnaug7TKHJocwDd,">
 	<meta name="Author" content="Clint.Network">
 	<meta name="Identifier-Url" content="http://stratis.guru">
@@ -21,7 +21,7 @@
 	<link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="~/css/owl.carousel.min.css" rel="stylesheet" type="text/css">
 	<link href="~/css/owl.theme.default.min.css" rel="stylesheet" type="text/css">
-	<link href="~/npm/nprogress/nprogress.css" rel="stylesheet" type="text/css">
+	<link href="~/lib/nprogress/nprogress.css" rel="stylesheet" type="text/css">
 	<environment include="Development">
 		<link href="~/css/default.css" rel="stylesheet" type="text/css">
 	</environment>
@@ -31,7 +31,6 @@
 	@RenderSection("Style", false)
 </head>
 <body>
-<div class="shadow-inset"></div>
 <header class="header-area">
 	<div class="container">
 		<div class="row">
@@ -42,13 +41,12 @@
 					</a>
 					<ul class="nav">
 						<li class="@(Context.Request.Path.Equals(Url.Action("Index", "Home")) ? "active":"")"><a asp-action="Index" asp-controller="Home"><i class="fa fa-home"></i> HOME</a></li>
-						<li class="@(Context.Request.Path.Equals(Url.Action("Lottery", "Home")) ? "active":"")"><a asp-action="Lottery" asp-controller="Home"><i class="fa fa-trophy"></i> LOTTERY</a></li>
+						@*<li class="@(Context.Request.Path.Equals(Url.Action("Lottery", "Home")) ? "active":"")"><a asp-action="Lottery" asp-controller="Home"><i class="fa fa-trophy"></i> LOTTERY</a></li>*@
 						<li class="@(Context.Request.Path.Equals(Url.Action("Index", "BlockExplorer")) ? "active":"")"><a asp-action="Index" asp-controller="BlockExplorer"><i class="fa fa-cube"></i> BLOCK EXPLORER</a></li>
 						<li class="@(Context.Request.Path.Equals(Url.Action("Vanity", "Home")) ? "active":"")"><a asp-action="Vanity" asp-controller="Home"><i class="fa fa-at"></i> VANITY</a></li>
-						<li class="@(Context.Request.Path.Equals(Url.Action("Generator", "Home")) ? "active":"")"><a asp-action="Generator" asp-controller="Home"><i class="fa fa-qrcode"></i> GENERATOR</a></li>
+						<li class="@(Context.Request.Path.Equals(Url.Action("Generator", "Home")) ? "active":"")"><a asp-action="Generator" asp-controller="Home"><i class="fa fa-qrcode"></i> ADDRESS GENERATOR</a></li>
 						<li class="@(Context.Request.Path.Equals(Url.Action("Documentation", "Home")) ? "active":"")"><a asp-action="Documentation" asp-controller="Home"><i class="fa fa-book"></i> API</a></li>
 						<li class="@(Context.Request.Path.Equals(Url.Action("About", "Home")) ? "active":"")"><a asp-action="About" asp-controller="Home"><i class="fa fa-info-circle"></i> ABOUT</a></li>
-						@*<li><a asp-action="Contact" asp-controller="Home"><i class="fa fa-envelope"></i> CONTACT</a></li>*@
 					</ul>
 					<a class='menu-trigger'>
 						<span>Menu</span>
@@ -60,7 +58,7 @@
 </header>
 @RenderBody()
 <div id="crafted">
-	<p class="text-center small">Proudly Crafted with 💖 by <a href="https://twitter.com/clint_network" target="_blank">Clint.Network</a> — Help me to maintain by sending some $STRAT at <a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="SRCzydu7yjS2VGv2YuHZS83Nekx42PVPdy">SRCzydu7yjS2VGv2YuHZS83Nekx42PVPdy</a>.</p>
+	<p class="text-center small">Proudly Crafted with 💖 by <a href="https://twitter.com/clint_network" target="_blank">Clint.Network</a> — Help me to maintain by sending some $STRAT at <a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="ScpLCfbtbgiYEuGrBYJ9e2Pp171ZEWNWNt">ScpLCfbtbgiYEuGrBYJ9e2Pp171ZEWNWNt</a>.</p>
 </div>
 <script src="~/js/jquery-2.1.0.min.js"></script>
 <script src="~/js/popper.js"></script>
@@ -71,7 +69,7 @@
 <script src="~/js/parallax.min.js"></script>
 <script src="~/js/owl.carousel.min.js"></script>
 <script src="~/js/particle-green.js"></script>
-<script src="~/npm/nprogress/nprogress.js"></script>
+<script src="~/lib/nprogress/nprogress.js"></script>
 <environment include="Development">
 	<script src="~/js/default.js"></script>
 </environment>

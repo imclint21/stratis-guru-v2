@@ -44,9 +44,6 @@ namespace Stratis.Guru
             services.Configure<NakoApiSettings>(Configuration.GetSection("NakoApi"));
             services.Configure<FixerApiSettings>(Configuration.GetSection("FixerApi"));
             
-            /*Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");*/
-            
             services.AddMemoryCache();
             
             services.AddTransient<UpdateHub>();
@@ -58,7 +55,7 @@ namespace Stratis.Guru
             
             services.AddLocalization();
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
             
             services.AddSignalR();
         }
@@ -78,15 +75,6 @@ namespace Stratis.Guru
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
-            // Node.js Modules Directory Access
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(env.ContentRootPath, "node_modules")
-                ),
-                RequestPath = "/npm"
-            });
             
             // Add Documentation (MkDocs) Support
             app.UseFileServer(new FileServerOptions

@@ -59,6 +59,7 @@ namespace Stratis.Guru
             services.AddTransient<DatabaseContext>();
             services.AddSingleton<ISettings, Models.Settings>();
             services.AddSingleton<IDraws, Draws>();
+            services.AddSingleton<IParticipation, Participations>();
 
             services.AddHostedService<UpdateInfosService>();
             services.AddHostedService<FixerService>();

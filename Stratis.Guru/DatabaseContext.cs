@@ -23,5 +23,6 @@ namespace Stratis.Guru
 
         public IMongoCollection<Draw> Draws => _database.GetCollection<Draw>("draws");
         public IMongoCollection<Setting> Settings => _database.GetCollection<Setting>("lottery");
+        public IMongoCollection<Participation> Participations => _database.GetCollection<Participation>("participations");
     }
 }

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 
 namespace Stratis.Guru.Models
 {
@@ -12,8 +13,13 @@ namespace Stratis.Guru.Models
             _databaseContext = databaseContext;
         }
 
-        public int GetIterator() => _databaseContext.Settings.Find(x => true).FirstOrDefault().PublicKeyIterator;
+        public uint GetIterator() => _databaseContext.Settings.Find(x => true).FirstOrDefault().PublicKeyIterator;
 
+        public void IncrementIterator()
+        {
+            var itemId =_databaseContext.Settings.Find(x => true).FirstOrDefault().Id;
+            _databaseContext.Settings.FindOneAndUpdate(Builders<Setting>.Filter.Eq("_id", itemId), Builders<Setting>.Update.Inc(c => c.PublicKeyIterator, (uint)1), new FindOneAndUpdateOptions<Setting> { IsUpsert = true});
+        }
 
         public async Task InitAsync()
         {

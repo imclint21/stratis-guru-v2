@@ -7,6 +7,6 @@ namespace Stratis.Guru.Models
     {
         [BsonId]
         public ObjectId Id { get; set; }
-        public int PublicKeyIterator { get; set; }
+        public uint PublicKeyIterator { get; set; }
     }
 }

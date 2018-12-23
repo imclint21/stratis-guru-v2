@@ -7,6 +7,7 @@ namespace Stratis.Guru.Models
     public interface ISettings
     {
         Task InitAsync();
-        int GetIterator();
+        uint GetIterator();
+        void IncrementIterator();
     }
 }

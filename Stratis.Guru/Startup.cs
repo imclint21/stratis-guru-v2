@@ -56,6 +56,9 @@ namespace Stratis.Guru
             
             services.AddTransient<UpdateHub>();
             services.AddSingleton<IAsk, Ask>();
+            services.AddTransient<DatabaseContext>();
+            services.AddSingleton<ISettings, Models.Settings>();
+            services.AddSingleton<IDraws, Draws>();
 
             services.AddHostedService<UpdateInfosService>();
             services.AddHostedService<FixerService>();

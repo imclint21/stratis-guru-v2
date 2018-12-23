@@ -3,11 +3,10 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Stratis.Guru.Models
 {
-    public class LotteryDraw
+    public class Setting
     {
         [BsonId]
         public ObjectId Id { get; set; }
-        public long DrawDate { get; set; }
-        public bool Passed { get; set; }
+        public int PublicKeyIterator { get; set; }
     }
 }

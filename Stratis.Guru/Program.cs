@@ -20,6 +20,7 @@ namespace Stratis.Guru
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://localhost:1989")
+                .UseSentry("https://ed8ea72e1f6341ae901d96691d9e58a0@sentry.io/1359208")
                 .UseStartup<Startup>();
     }
 }

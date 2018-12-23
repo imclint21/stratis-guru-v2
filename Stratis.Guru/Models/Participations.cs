@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using MongoDB.Driver;
 
 namespace Stratis.Guru.Models
 {
@@ -12,6 +15,8 @@ namespace Stratis.Guru.Models
             _databaseContext = databaseContext;
             _draws = draws;
         }
+
+        public List<string> GetPlayers(string draw) => _databaseContext.Participations.Find(x => x.Draw.Equals(draw)).ToList().Select(x => x.Nickname).Distinct().ToList();
 
         public void StoreParticipation(string ticket, string nickname, string address)
         {

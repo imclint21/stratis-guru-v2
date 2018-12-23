@@ -3,43 +3,60 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using NBitcoin;
+using Newtonsoft.Json;
+using RestSharp;
 using Stratis.Guru.Models;
+using Stratis.Guru.Settings;
 
 namespace Stratis.Guru.Services
 {
     public class LotteryService : IHostedService, IDisposable
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly ISettings _settings;
+        private readonly IDraws _draws;
+        private readonly DrawSettings _drawSettings;
         private DateTime _nextDraw;
 
-        public LotteryService(IMemoryCache memoryCache)
+        public LotteryService(IMemoryCache memoryCache, ISettings settings, IDraws draws, IOptions<DrawSettings> drawSettings)
         {
             _memoryCache = memoryCache;
+            _settings = settings;
+            _draws = draws;
+            _drawSettings = drawSettings.Value;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await InitLottery();
+            JackpotCounter();
+            await InitLotteryAsync();
             await CalculateNextDrawAsync();
         }
 
-        private async Task InitLottery()
+        private void JackpotCounter()
         {
-            #region use DI
-            var client = new MongoClient("mongodb://localhost:27017");
-            var database = client.GetDatabase("stratis-guru");
-            var collection = database.GetCollection<LotterySetting>("lottery");
-            if(!collection.Find(x => true).Any())
+            Task.Run(() => 
             {
-                await collection.InsertOneAsync(new LotterySetting()
+                var totalJackpot = 0.0;
+                var pubkey = ExtPubKey.Parse(_drawSettings.PublicKey);
+                for(int i=0; i<=_settings.GetIterator(); i++)
                 {
-                    PublicKeyIterator = 0
-                });
-            }
-            #endregion
+                    var depositAddress = pubkey.Derive(0).Derive((uint)i).PubKey.GetAddress(Network.StratisMain).ToString();
+                    var rc = new RestClient($"https://stratis.guru/api/address/{depositAddress}");
+                    var rq = new RestRequest(Method.GET);
+                    var response = rc.Execute(rq);
+                    dynamic stratisAdressRequest = JsonConvert.DeserializeObject(response.Content);
+                    totalJackpot += (double)stratisAdressRequest.balance;
+                }
+                _memoryCache.Set("Jackpot", totalJackpot);
+            });
         }
+
+        private async Task InitLotteryAsync() => await _settings.InitAsync();
 
         private async Task CalculateNextDrawAsync()
         {
@@ -47,20 +64,9 @@ namespace Stratis.Guru.Services
             int daysUntilFriday = ((int)DayOfWeek.Friday - (int)today.DayOfWeek + 7) % 7;
             _nextDraw = today.AddDays(daysUntilFriday);
             var nextDrawTimestamp = ((DateTimeOffset)_nextDraw).ToUnixTimeSeconds();
+            //TODO: set to 8pm
 
-            #region use DI
-            var client = new MongoClient("mongodb://localhost:27017");
-            var database = client.GetDatabase("stratis-guru");
-            var collection = database.GetCollection<LotteryDraw>("draws");
-            if(!collection.Find(x => x.DrawDate.Equals(nextDrawTimestamp)).Any())
-            {
-                await collection.InsertOneAsync(new LotteryDraw()
-                {
-                    DrawDate = nextDrawTimestamp,
-                    Passed = false
-                });
-            }
-            #endregion
+            await _draws.InitDrawAsync(nextDrawTimestamp);
 
             _memoryCache.Set("NextDraw", nextDrawTimestamp);
         }

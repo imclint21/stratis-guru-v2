@@ -51,12 +51,31 @@
             <div class="modal-body text-center py-4">
                 <h2 class="text-dark mb-1">Send Some $STRAT</h2>
                 <p>Your participation will be considered after 1 confirmation.</p>
-                <img class="my-4" src="@Url.Action("Qr", "Home", new {value="SfXZxGJWnq3aP8hDmGKWJxJbtbEXYtba86"})" style="width: 250px;" />
-                <h4>Send to this address: <code>SfXZxGJWnq3aP8hDmGKWJxJbtbEXYtba86</code></h4>
+                <img class="my-4" src="@Url.Action("Qr", "Home", new {value=ViewBag.DepositAddress})" style="width: 250px;" />
+                <h4>Send to this address: <code>@ViewBag.DepositAddress</code></h4>
+                <p class="d-none mt-3 text-danger" id="not-received">We don't have received $STRAT.</p>
             </div>
             <div class="modal-footer">
-                <a asp-controller="Home" asp-action="CheckPayment" data-ajax-method="POST" asp-route-address="SfXZxGJWnq3aP8hDmGKWJxJbtbEXYtba86" data-ajax-success="alert('yeah');" data-ajax-failure="alert('failure');" data-ajax="true" class="btn btn-info btn-lg btn-block"><i class="fa fa-check-circle"></i> Check Payment</a>
+                <a asp-controller="Home" asp-action="CheckPayment" data-ajax-method="POST" data-ajax-success="PaymentSuccess" data-ajax-failure="PaymentFailed" data-ajax="true" class="btn btn-info btn-lg btn-block"><i class="fa fa-check-circle"></i> Check Payment</a>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ticket-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" asp-controller="Home" asp-action="SaveParticipation" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-ticket"></i> Lottery Participation</h5>
+                    <a asp-controller="Home" asp-action="Lottery" type="button" class="close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body content text-center py-4"></div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-lg btn-block"><i class="fa fa-check-circle"></i> Submit Participation</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -72,7 +91,7 @@
                             <span id="clock"></span>
                         </span>
                     </h1>
-                    <h2 class="mb-5">Actual Jackpot: @(257.89.ToString("C"))</h2>
+                    <h2 class="mb-5">Actual Jackpot: @((ViewBag.Jackpot ?? 0).ToString("N0")) STRAT</h2>
                     <button data-toggle="modal" data-target="#participate-modal" class="btn-secondary-box"><i class="fa fa-ticket"></i> Buy a lottery ticket</button>
                     <button data-toggle="modal" data-target="#players-modal" class="btn-secondary-box"><i class="fa fa-user-o"></i> See Players</button>
                 </div>
@@ -86,15 +105,30 @@
     <script src="~/lib/jquery-countdown/dist/jquery.countdown.min.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            @if(ViewBag.Participate == true)
-            {
-                <text>$("#deposit-modal").modal({backdrop: 'static', keyboard: false});</text>
-            }
+    function PaymentSuccess()
+    {
+        $("#deposit-modal").modal("hide");
+        $.get("/lottery/new-participation", function(data)
+        {
+            $("#ticket-modal").find(".content").html(data);
+            $("#ticket-modal").modal("show");
+        });
+    }
 
-            $('#clock').countdown('@((DateTimeOffset.FromUnixTimeSeconds((long)ViewBag.NextDraw)).ToString("yyyy/MM/dd HH:mm:ss"))', function(event) {
-                $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
-            });
-        })
+    function PaymentFailed()
+    {
+        $("#not-received").removeClass("d-none");
+    }
+
+    $(document).ready(function() {
+        @if(ViewBag.Participate == true)
+        {
+            <text>$("#deposit-modal").modal({backdrop: 'static', keyboard: false});</text>
+        }
+
+        $('#clock').countdown('@((DateTimeOffset.FromUnixTimeSeconds((long)ViewBag.NextDraw)).ToString("yyyy/MM/dd HH:mm:ss"))', function(event) {
+            $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+        });
+    })
     </script>
 }

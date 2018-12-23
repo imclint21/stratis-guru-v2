@@ -16,9 +16,9 @@ namespace Stratis.Guru.Models
             _draws = draws;
         }
 
-        public List<string> GetPlayers(string draw) => _databaseContext.Participations.Find(x => x.Draw.Equals(draw)).ToList().Select(x => x.Nickname).Distinct().ToList();
+        public List<Participation> GetPlayers(string draw) => _databaseContext.Participations.Find(x => x.Draw.Equals(draw)).ToList();
 
-        public void StoreParticipation(string ticket, string nickname, string address)
+        public void StoreParticipation(string ticket, string nickname, string address, double amount)
         {
             _databaseContext.Participations.InsertOne(new Participation
             {
@@ -26,7 +26,8 @@ namespace Stratis.Guru.Models
                 Ticket = ticket,
                 Nickname = nickname,
                 WithdrawAddress = address,
-                Draw = _draws.GetLastDraw()
+                Draw = _draws.GetLastDraw(),
+                Amount = amount
             });
         }
     }

@@ -12,5 +12,6 @@ namespace Stratis.Guru.Models
         public BsonDateTime CreationDate { get; set; }
         public string Nickname { get; internal set; }
         public string Draw { get; internal set; }
+        public double Amount { get; internal set; }
     }
 }

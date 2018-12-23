@@ -21,7 +21,24 @@ namespace Stratis.Guru.Services
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            await InitLottery();
             await CalculateNextDrawAsync();
+        }
+
+        private async Task InitLottery()
+        {
+            #region use DI
+            var client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("stratis-guru");
+            var collection = database.GetCollection<LotterySetting>("lottery");
+            if(!collection.Find(x => true).Any())
+            {
+                await collection.InsertOneAsync(new LotterySetting()
+                {
+                    PublicKeyIterator = 0
+                });
+            }
+            #endregion
         }
 
         private async Task CalculateNextDrawAsync()

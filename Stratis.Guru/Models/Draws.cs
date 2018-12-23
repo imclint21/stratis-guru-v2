@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -15,6 +16,11 @@ namespace Stratis.Guru.Models
         public Draws(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
+        }
+
+        public string GetLastDraw()
+        {
+            return _databaseContext.Draws.Find(x => true).ToList().OrderByDescending(x => x.DrawDate).FirstOrDefault().Id.ToString();
         }
 
         public async Task InitDrawAsync(long nextDrawTimestamp)

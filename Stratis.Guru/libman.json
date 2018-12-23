@@ -7,16 +7,20 @@
       "destination": "wwwroot\\lib\\bootstrap"
     },
     {
-      "library": "jquery-countdown@2.2.0",
-      "destination": "wwwroot\\lib\\jquery-countdown"
-    },
-    {
       "library": "nprogress@0.2.0",
       "destination": "wwwroot\\lib\\nprogress"
     },
     {
       "library": "@aspnet/signalr@1.1.0",
       "destination": "wwwroot\\lib\\@aspnet/signalr"
+    },
+    {
+      "library": "jquery-countdown@2.2.0",
+      "destination": "wwwroot\\lib\\jquery-countdown"
+    },
+    {
+      "library": "jquery-ajax-unobtrusive@3.2.6",
+      "destination": "wwwroot\\lib\\jquery-ajax-unobtrusive"
     }
   ]
 }

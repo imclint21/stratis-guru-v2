@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using Stratis.Guru.Hubs;
 using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
@@ -41,6 +43,12 @@ namespace Stratis.Guru
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = None;
             });
+
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true;
+            });
+
             services.Configure<NakoApiSettings>(Configuration.GetSection("NakoApi"));
             services.Configure<FixerApiSettings>(Configuration.GetSection("FixerApi"));
             
@@ -51,11 +59,18 @@ namespace Stratis.Guru
 
             services.AddHostedService<UpdateInfosService>();
             services.AddHostedService<FixerService>();
+            services.AddHostedService<LotteryService>();
             services.AddHostedService<VanityService>();
             
             services.AddLocalization();
             
             services.AddMvc();
+
+            services.AddRecaptcha(new RecaptchaOptions
+            {
+                SiteKey = "6LfmOIQUAAAAAIEsH2nG6kEiL-bpLhvm0ibhHnol",    //Configuration["Recaptcha:SiteKey"],
+                SecretKey = "6LfmOIQUAAAAAO06PpD8MmndjrjfBr7x-fgnDt2G"  //Configuration["Recaptcha:SecretKey"]
+            });
             
             services.AddSignalR();
         }
@@ -70,9 +85,10 @@ namespace Stratis.Guru
             {
                 app.UseExceptionHandler("/Home/Error");
                 //app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseSession();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             

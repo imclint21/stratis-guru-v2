@@ -15,6 +15,7 @@ using Microsoft.Extensions.Caching.Memory;
 using NBitcoin;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using QRCoder;
 using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
@@ -69,7 +70,41 @@ namespace Stratis.Guru.Controllers
         [Route("lottery")]
         public IActionResult Lottery()
         {
+            ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
             return View();
+        }
+
+        [ValidateRecaptcha]
+        [HttpPost]
+        [Route("lottery/participate")]
+        public IActionResult Participate()
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Participate", new{id="5c1ef60f09f5754c34ba3010"});
+            }
+            ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Participate = true;
+            return View("Lottery");
+        }
+
+        [HttpGet]
+        [Route("lottery/participate/{id}")]
+        public IActionResult Participate(string id)
+        {
+            ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Participate = true;
+            return View("Lottery");
+        }
+
+        [HttpPost]
+        [Route("lottery/check-payment/{address}")]
+        public IActionResult CheckPayment(string address)
+        {
+            var pubkey = ExtPubKey.Parse("xpub6Bfq1wKQ64UUzW2HzQ6aZmoxkMYVq6DNifiTU1A1d9UEe16qSGnyqSAbFr42XAMXSXi3kcMXQJseXcgyTGQeDpBvHYt5m1HCH74Q52C4kkZ");
+            var newAddress = pubkey.Derive(0).Derive(0).PubKey.GetAddress(Network.StratisMain);
+            Console.WriteLine(newAddress);
+            return Json(true);
         }
 
         [Route("about")]

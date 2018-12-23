@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using NBitcoin;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -84,6 +85,7 @@ namespace Stratis.Guru.Controllers
         {
             ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
             ViewBag.Jackpot = _memoryCache.Get("Jackpot");
+            ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
             return View();
         }
 
@@ -98,6 +100,8 @@ namespace Stratis.Guru.Controllers
                 return RedirectToAction("Participate", new{id=lastDraw});
             }
             ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Jackpot = _memoryCache.Get("Jackpot");
+            ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
             ViewBag.Participate = true;
             return View("Lottery");
         }
@@ -107,6 +111,8 @@ namespace Stratis.Guru.Controllers
         public IActionResult Participate(string id)
         {
             ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Jackpot = _memoryCache.Get("Jackpot");
+            ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
             ViewBag.Participate = true;
             
             var pubkey = ExtPubKey.Parse(_drawSettings.PublicKey);
@@ -130,6 +136,7 @@ namespace Stratis.Guru.Controllers
             if(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance > 0)
             {
                 HttpContext.Session.SetString("Deposited", depositAddress);
+                HttpContext.Session.SetString("DepositedAmount", ((double)(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance)).ToString());
                 return Json(true);
             }
             return BadRequest();
@@ -148,7 +155,7 @@ namespace Stratis.Guru.Controllers
         public IActionResult SaveParticipation(string nickname, string address)
         {
             _settings.IncrementIterator();
-            _participation.StoreParticipation(HttpContext.Session.GetString("Ticket"), nickname, address);
+            _participation.StoreParticipation(HttpContext.Session.GetString("Ticket"), nickname, address, double.Parse(HttpContext.Session.GetString("DepositedAmount")));
 
             return RedirectToAction("Lottery");
         }

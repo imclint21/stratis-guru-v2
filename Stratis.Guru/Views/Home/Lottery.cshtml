@@ -79,6 +79,41 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="players-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" asp-controller="Home" asp-action="SaveParticipation" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-user-circle"></i> Lottery Players</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">Nickname</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Montant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var player in ViewBag.Players)
+                            {
+                                <tr>
+                                    <td>@player.Nickname</td>
+                                    <td>@(player.CreationDate.AsDateTime.ToString("G"))</td>
+                                    <td>@player.Amount STRAT</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="shadow-inset"></div>
 <section class="welcome-area pb-4" id="welcome-1">
     <div class="header-token">

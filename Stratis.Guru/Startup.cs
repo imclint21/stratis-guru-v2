@@ -51,6 +51,7 @@ namespace Stratis.Guru
 
             services.Configure<NakoApiSettings>(Configuration.GetSection("NakoApi"));
             services.Configure<FixerApiSettings>(Configuration.GetSection("FixerApi"));
+            services.Configure<DrawSettings>(Configuration.GetSection("Draw"));
             
             services.AddMemoryCache();
             

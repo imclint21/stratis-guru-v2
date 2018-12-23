@@ -16,7 +16,7 @@ namespace Stratis.Guru.Models
             _draws = draws;
         }
 
-        public List<Participation> GetPlayers(string draw) => _databaseContext.Participations.Find(x => x.Draw.Equals(draw)).ToList();
+        public List<Participation> GetPlayers(string draw) => _databaseContext.Participations.Find(x => x.Draw.Equals(draw)).ToList().OrderByDescending(x => x.CreationDate).ToList();
 
         public void StoreParticipation(string ticket, string nickname, string address, double amount)
         {

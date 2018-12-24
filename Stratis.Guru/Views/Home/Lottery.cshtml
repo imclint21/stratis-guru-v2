@@ -90,25 +90,32 @@
                     </button>
                 </div>
                 <div class="modal-body text-center py-4">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">Nickname</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Montant</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach(var player in ViewBag.Players)
-                            {
+                    @if(ViewBag.Players.Count == 0)
+                    {
+                        <p>There no players for now.</p>
+                    }
+                    else
+                    {
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>@player.Nickname</td>
-                                    <td>@(player.CreationDate.AsDateTime.ToString("G"))</td>
-                                    <td>@player.Amount STRAT</td>
+                                <th scope="col">Nickname</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Montant</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach(var player in ViewBag.Players)
+                                {
+                                    <tr>
+                                        <td>@player.Nickname</td>
+                                        <td>@(player.CreationDate.AsDateTime.ToString("G"))</td>
+                                        <td>@player.Amount STRAT</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
             </form>
         </div>
@@ -167,7 +174,6 @@
         $('#clock').countdown(nextYear.toDate(), function(event) {
             $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
         });
-        @*'@((DateTimeOffset.FromUnixTimeSeconds((long)ViewBag.NextDraw)).ToString("yyyy/MM/dd HH:mm:ss"))'*@
     })
     </script>
 }

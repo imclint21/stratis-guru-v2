@@ -157,7 +157,17 @@ namespace Stratis.Guru.Controllers
             _settings.IncrementIterator();
             _participation.StoreParticipation(HttpContext.Session.GetString("Ticket"), nickname, address, double.Parse(HttpContext.Session.GetString("DepositedAmount")));
 
-            return RedirectToAction("Lottery");
+            return RedirectToAction("Participated");
+        }
+
+        [Route("lottery/participated")]
+        public IActionResult Participated()
+        {
+            ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Jackpot = _memoryCache.Get("Jackpot");
+            ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
+            ViewBag.Participated = true;
+            return View("Lottery");
         }
 
         [Route("about")]

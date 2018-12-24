@@ -97,8 +97,10 @@ namespace Stratis.Guru.Controllers
             if (ModelState.IsValid)
             {
                 var lastDraw = _draws.GetLastDraw();
+                HttpContext.Session.SetString("HaveBeginParticipation", "true");
                 return RedirectToAction("Participate", new{id=lastDraw});
             }
+
             ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
             ViewBag.Jackpot = _memoryCache.Get("Jackpot");
             ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
@@ -106,10 +108,13 @@ namespace Stratis.Guru.Controllers
             return View("Lottery");
         }
 
-        [HttpGet]
         [Route("lottery/participate/{id}")]
         public IActionResult Participate(string id)
         {
+            if(HttpContext.Session.GetString("HaveBeginParticipation") == null)
+            {
+                return RedirectToAction("Lottery");
+            }
             ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
             ViewBag.Jackpot = _memoryCache.Get("Jackpot");
             ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());

@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -20,6 +21,7 @@ namespace Stratis.Guru.Services
         private readonly ISettings _settings;
         private readonly IDraws _draws;
         private readonly DrawSettings _drawSettings;
+        private readonly System.Timers.Timer _updateTimer;
         private DateTime _nextDraw;
 
         public LotteryService(IMemoryCache memoryCache, ISettings settings, IDraws draws, IOptions<DrawSettings> drawSettings)
@@ -28,14 +30,23 @@ namespace Stratis.Guru.Services
             _settings = settings;
             _draws = draws;
             _drawSettings = drawSettings.Value;
+            _updateTimer = new System.Timers.Timer();
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            Console.WriteLine(TimeZone.CurrentTimeZone.StandardName.ToString());
             JackpotCounter();
             await InitLotteryAsync();
             await CalculateNextDrawAsync();
+
+            _updateTimer.Interval = 10;
+            _updateTimer.Enabled = true;
+            _updateTimer.Elapsed += async (sender, args) =>
+            {
+                JackpotCounter();
+                await CalculateNextDrawAsync();
+            };
+            _updateTimer.Start();
         }
 
         private void JackpotCounter()
@@ -64,7 +75,7 @@ namespace Stratis.Guru.Services
             DateTime today = DateTime.UtcNow;
             int daysUntilFriday = ((int)DayOfWeek.Friday - (int)today.DayOfWeek + 7) % 7;
             _nextDraw = today.AddDays(daysUntilFriday);
-            _nextDraw = DateTime.UtcNow;
+            //_nextDraw = DateTime.UtcNow;
 
             var nextDrawTimestamp = ((DateTimeOffset)_nextDraw).ToUnixTimeSeconds();
 
@@ -80,6 +91,8 @@ namespace Stratis.Guru.Services
 
         public void Dispose()
         {
+            _updateTimer?.Stop();
+            _updateTimer?.Dispose();
         }
     }
 }

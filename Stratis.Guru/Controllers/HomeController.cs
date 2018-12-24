@@ -9,15 +9,21 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using NBitcoin;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using QRCoder;
+using RestSharp;
 using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
+using Stratis.Guru.Settings;
 
 namespace Stratis.Guru.Controllers
 {
@@ -25,11 +31,19 @@ namespace Stratis.Guru.Controllers
     {
         private readonly IMemoryCache _memoryCache;
         private readonly IAsk _ask;
+        private readonly ISettings _settings;
+        private readonly IParticipation _participation;
+        private readonly IDraws _draws;
+        private readonly DrawSettings _drawSettings;
 
-        public HomeController(IMemoryCache memoryCache, IAsk ask)
+        public HomeController(IMemoryCache memoryCache, IAsk ask, ISettings settings, IParticipation participation, IDraws draws, IOptions<DrawSettings> drawSettings)
         {
             _memoryCache = memoryCache;
             _ask = ask;
+            _settings = settings;
+            _participation = participation;
+            _draws = draws;
+            _drawSettings = drawSettings.Value;
         }
         
         public IActionResult Index()
@@ -69,7 +83,96 @@ namespace Stratis.Guru.Controllers
         [Route("lottery")]
         public IActionResult Lottery()
         {
+            ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Jackpot = _memoryCache.Get("Jackpot");
+            ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
             return View();
+        }
+
+        [ValidateRecaptcha]
+        [HttpPost]
+        [Route("lottery/participate")]
+        public IActionResult Participate()
+        {
+            if (ModelState.IsValid)
+            {
+                var lastDraw = _draws.GetLastDraw();
+                HttpContext.Session.SetString("HaveBeginParticipation", "true");
+                return RedirectToAction("Participate", new{id=lastDraw});
+            }
+
+            ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Jackpot = _memoryCache.Get("Jackpot");
+            ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
+            ViewBag.Participate = true;
+            return View("Lottery");
+        }
+
+        [Route("lottery/participate/{id}")]
+        public IActionResult Participate(string id)
+        {
+            if(HttpContext.Session.GetString("HaveBeginParticipation") == null)
+            {
+                return RedirectToAction("Lottery");
+            }
+            ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Jackpot = _memoryCache.Get("Jackpot");
+            ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
+            ViewBag.Participate = true;
+            
+            var pubkey = ExtPubKey.Parse(_drawSettings.PublicKey);
+            ViewBag.DepositAddress = pubkey.Derive(0).Derive(_settings.GetIterator()).PubKey.GetAddress(Network.StratisMain);
+
+            return View("Lottery");
+        }
+
+        [HttpPost]
+        [Route("lottery/check-payment")]
+        public IActionResult CheckPayment()
+        {
+            var pubkey = ExtPubKey.Parse(_drawSettings.PublicKey);
+            var depositAddress = pubkey.Derive(0).Derive(_settings.GetIterator()).PubKey.GetAddress(Network.StratisMain).ToString();
+            ViewBag.DepositAddress = depositAddress;
+
+            var rc = new RestClient($"https://stratis.guru/api/address/{depositAddress}");
+            var rq = new RestRequest(Method.GET);
+            var response = rc.Execute(rq);
+            dynamic stratisAdressRequest = JsonConvert.DeserializeObject(response.Content);
+            if(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance > 0)
+            {
+                HttpContext.Session.SetString("Deposited", depositAddress);
+                HttpContext.Session.SetString("DepositedAmount", ((double)(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance)).ToString());
+                return Json(true);
+            }
+            return BadRequest();
+        }
+
+        [Route("lottery/new-participation")]
+        public IActionResult NewParticipation()
+        {
+            var ticket = Guid.NewGuid().ToString();
+            HttpContext.Session.SetString("Ticket", ticket);
+            ViewBag.Ticket = ticket;
+            return PartialView();
+        }
+
+        [Route("lottery/save-participation")]
+        public IActionResult SaveParticipation(string nickname, string address)
+        {
+            _settings.IncrementIterator();
+            _participation.StoreParticipation(HttpContext.Session.GetString("Ticket"), nickname, address, double.Parse(HttpContext.Session.GetString("DepositedAmount")));
+
+            return RedirectToAction("Participated");
+        }
+
+        [Route("lottery/participated")]
+        public IActionResult Participated()
+        {
+            ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
+            ViewBag.Jackpot = _memoryCache.Get("Jackpot");
+            ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
+            ViewBag.Participated = true;
+            return View("Lottery");
         }
 
         [Route("about")]

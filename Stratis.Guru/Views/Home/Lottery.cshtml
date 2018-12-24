@@ -5,24 +5,155 @@
 @section Style
 {
     <style>
-        body {
+        .shadow-inset {
             background-image: url(/images/Slider_Landing-1920x650.webp.jpg);
+        }
+
+        .modal-content
+        {
+            border-radius: 3px;
         }
     </style>
 }
+<div class="modal fade" id="participate-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" asp-controller="Home" asp-action="Participate">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-ticket"></i> Buy a Lottery Ticket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>The <strong>Stratis.Guru</strong> lottery is drawn every week at 8 PM UTC, you can easily participate, get a ticket and play some $STRAT.</p>
+                    <p class="mt-3"><strong>How it Works: </strong>A ticket has no price and you can bet the amount that you want, the sum will be added to the total jackpot and will be given to the winner once the draw is made at the end of the countdown.</p>
+                    <br />
+                    <center>
+                        <recaptcha/>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-lg btn-block">Get a Ticket</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deposit-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-ticket"></i> Buy a Lottery Ticket</h5>
+                <a asp-controller="Home" asp-action="Lottery" type="button" class="close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body text-center py-4">
+                <h2 class="text-dark mb-1">Send Some $STRAT</h2>
+                <p>Your participation will be considered after 1 confirmation.</p>
+                <img class="my-4" src="@Url.Action("Qr", "Home", new {value=ViewBag.DepositAddress})" style="width: 250px;" />
+                <h4>Send to this address: <code>@ViewBag.DepositAddress</code></h4>
+                <p class="d-none mt-3 text-danger" id="not-received">We don't have received $STRAT.</p>
+            </div>
+            <div class="modal-footer">
+                <a asp-controller="Home" asp-action="CheckPayment" data-ajax-method="POST" data-ajax-success="PaymentSuccess" data-ajax-failure="PaymentFailed" data-ajax="true" class="btn btn-info btn-lg btn-block"><i class="fa fa-check-circle"></i> Check Payment</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ticket-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" asp-controller="Home" asp-action="SaveParticipation" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-ticket"></i> Lottery Participation</h5>
+                    <a asp-controller="Home" asp-action="Lottery" type="button" class="close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body content text-center py-4"></div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-lg btn-block"><i class="fa fa-check-circle"></i> Submit Participation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="players-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" asp-controller="Home" asp-action="SaveParticipation" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-user-circle"></i> Stratis.Guru Lottery Players</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    @if(ViewBag.Players.Count == 0)
+                    {
+                        <p>There no players for now.</p>
+                    }
+                    else
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">Nickname</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var player in ViewBag.Players)
+                                {
+                                    <tr>
+                                        <td>@player.Nickname</td>
+                                        <td>@(player.CreationDate.AsDateTime.ToString("G"))</td>
+                                        <td>@player.Amount STRAT</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="participated-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-check"></i> Participation Confirmed</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <h2 class="text-dark mb-1">Thank You !</h2>
+                <p>Thank you for your participation and wish you good luck!.</p>
+                <img class="mt-3" src="~/images/check.png" style="width: 250px;" />
+            </div>
+        </div>
+    </div>
+</div>
 <div class="shadow-inset"></div>
 <section class="welcome-area pb-4" id="welcome-1">
     <div class="header-token">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
-                    <h1 class="m-0">The Next <strong>Stratis</strong> Lottery Draw in:</h1>
-                    <h1 class="align-middle">
+                    <h1 class="m-0">The Next <strong>Stratis.Guru</strong> Lottery Draw in:</h1>
+                    <h1 class="mb-3 align-middle">
                         <span class="align-middle display-1 font-weight-bold" id="amount">
                             <span id="clock"></span>
                         </span>
                     </h1>
-                    <a asp-controller="BlockExplorer" asp-action="Index" class="btn-secondary-box"><i class="fa fa-ticket"></i> Buy a lottery ticket</a>
+                    <h2 class="mb-5">Actual Jackpot: @((ViewBag.Jackpot ?? 0).ToString("N0")) STRAT</h2>
+                    <button data-toggle="modal" data-target="#participate-modal" class="btn-secondary-box"><i class="fa fa-ticket"></i> Buy a lottery ticket</button>
+                    <button data-toggle="modal" data-target="#players-modal" class="btn-secondary-box"><i class="fa fa-user-o"></i> See Players</button>
                 </div>
             </div>
         </div>
@@ -30,12 +161,41 @@
 </section>
 @section Scripts
 {
-    <script src="/npm/jquery-countdown/dist/jquery.countdown.min.js"></script>
+    <recaptcha-script/>
+    <script src="~/lib/jquery-countdown/dist/jquery.countdown.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.0/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#clock').countdown('2020/10/10', function(event) {
-                $(this).html(event.strftime('%Hh %Mm %Ss'));
-            });
-        })
+    function PaymentSuccess()
+    {
+        $("#deposit-modal").modal("hide");
+        $.get("/lottery/new-participation", function(data)
+        {
+            $("#ticket-modal").find(".content").html(data);
+            $("#ticket-modal").modal("show");
+        });
+    }
+
+    function PaymentFailed()
+    {
+        $("#not-received").removeClass("d-none");
+    }
+
+    $(document).ready(function() {
+        @if(ViewBag.Participate == true)
+        {
+            <text>$("#deposit-modal").modal({backdrop: 'static', keyboard: false});</text>
+        }
+        @if(ViewBag.Participated == true)
+        {
+            <text>$("#participated-modal").modal("show"); setTimeout(function() {$("#participated-modal").modal("hide");}, 5000);</text>
+        }
+
+        var nextYear = moment.tz("@((DateTimeOffset.FromUnixTimeSeconds((long)ViewBag.NextDraw)).ToString("yyyy-MM-dd 20:00"))", "Europe/London");
+        $('#clock').countdown(nextYear.toDate(), function(event) {
+            $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+        });
+    })
     </script>
 }

@@ -12,10 +12,12 @@ namespace Stratis.Guru.Models
     public class Draws : IDraws
     {
         private DatabaseContext _databaseContext;
+        private ISettings _settings;
 
-        public Draws(DatabaseContext databaseContext)
+        public Draws(DatabaseContext databaseContext, ISettings settings)
         {
             _databaseContext = databaseContext;
+            _settings = settings;
         }
 
         public string GetLastDraw()
@@ -30,6 +32,7 @@ namespace Stratis.Guru.Models
                 await _databaseContext.Draws.InsertOneAsync(new Draw()
                 {
                     DrawDate = nextDrawTimestamp,
+                    BeginIterator = _settings.GetIterator(),
                     Passed = false
                 });
             }

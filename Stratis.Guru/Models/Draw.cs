@@ -9,5 +9,6 @@ namespace Stratis.Guru.Models
         public ObjectId Id { get; set; }
         public long DrawDate { get; set; }
         public bool Passed { get; set; }
+        public uint BeginIterator { get; set; }
     }
 }

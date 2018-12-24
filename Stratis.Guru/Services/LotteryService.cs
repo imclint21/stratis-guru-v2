@@ -39,7 +39,7 @@ namespace Stratis.Guru.Services
             await InitLotteryAsync();
             await CalculateNextDrawAsync();
 
-            _updateTimer.Interval = 10;
+            _updateTimer.Interval = TimeSpan.FromMinutes(5).TotalMilliseconds;
             _updateTimer.Enabled = true;
             _updateTimer.Elapsed += async (sender, args) =>
             {
@@ -72,10 +72,9 @@ namespace Stratis.Guru.Services
 
         private async Task CalculateNextDrawAsync()
         {
-            DateTime today = DateTime.UtcNow;
+            DateTime today = DateTime.UtcNow.Date;
             int daysUntilFriday = ((int)DayOfWeek.Friday - (int)today.DayOfWeek + 7) % 7;
             _nextDraw = today.AddDays(daysUntilFriday);
-            //_nextDraw = DateTime.UtcNow;
 
             var nextDrawTimestamp = ((DateTimeOffset)_nextDraw).ToUnixTimeSeconds();
 

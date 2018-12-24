@@ -32,6 +32,7 @@ namespace Stratis.Guru.Services
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine(TimeZone.CurrentTimeZone.StandardName.ToString());
             JackpotCounter();
             await InitLotteryAsync();
             await CalculateNextDrawAsync();
@@ -60,11 +61,12 @@ namespace Stratis.Guru.Services
 
         private async Task CalculateNextDrawAsync()
         {
-            DateTime today = DateTime.Today;
+            DateTime today = DateTime.UtcNow;
             int daysUntilFriday = ((int)DayOfWeek.Friday - (int)today.DayOfWeek + 7) % 7;
             _nextDraw = today.AddDays(daysUntilFriday);
+            _nextDraw = DateTime.UtcNow;
+
             var nextDrawTimestamp = ((DateTimeOffset)_nextDraw).ToUnixTimeSeconds();
-            //TODO: set to 8pm
 
             await _draws.InitDrawAsync(nextDrawTimestamp);
 

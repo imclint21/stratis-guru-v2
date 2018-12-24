@@ -139,8 +139,8 @@
     <recaptcha-script/>
     <script src="~/lib/jquery-countdown/dist/jquery.countdown.min.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
-    <script src="~/lib/moment/min/moment.min.js"></script>
-    <script src="~/lib/moment/min/moment-with-locales.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.0/moment-timezone-with-data-2010-2020.min.js"></script>
     <script type="text/javascript">
     function PaymentSuccess()
     {
@@ -163,9 +163,11 @@
             <text>$("#deposit-modal").modal({backdrop: 'static', keyboard: false});</text>
         }
 
-        $('#clock').countdown('@((DateTimeOffset.FromUnixTimeSeconds((long)ViewBag.NextDraw)).ToString("yyyy/MM/dd HH:mm:ss"))', function(event) {
+        var nextYear = moment.tz("@((DateTimeOffset.FromUnixTimeSeconds((long)ViewBag.NextDraw)).ToString("yyyy-MM-dd 20:00"))", "Europe/London");
+        $('#clock').countdown(nextYear.toDate(), function(event) {
             $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
         });
+        @*'@((DateTimeOffset.FromUnixTimeSeconds((long)ViewBag.NextDraw)).ToString("yyyy/MM/dd HH:mm:ss"))'*@
     })
     </script>
 }

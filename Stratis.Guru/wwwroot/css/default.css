@@ -371,6 +371,12 @@ global styles
     .mobile-bottom-fix {
         margin-bottom: 60px;
     }
+    #countdown {
+        font-size: 1.7rem;
+    }
+    [data-target="#participate-modal"] {
+        margin-bottom: 10px;
+    }
 }
 
 /* 

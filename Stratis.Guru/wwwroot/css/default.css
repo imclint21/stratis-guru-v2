@@ -368,10 +368,6 @@ global styles
 }
 
 @media (max-width: 991px) {
-    html, body {
-        overflow-x: hidden;
-    }
-
     .mobile-bottom-fix {
         margin-bottom: 60px;
     }

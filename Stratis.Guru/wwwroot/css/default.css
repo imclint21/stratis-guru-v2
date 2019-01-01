@@ -377,6 +377,9 @@ global styles
     [data-target="#participate-modal"] {
         margin-bottom: 10px;
     }
+    #crafted p {
+        color: white;
+    }
 }
 
 /* 
@@ -1631,6 +1634,7 @@ welcome area
         margin-top: 60px;
         margin-bottom: 90px;
     }
+
 }
 
 /* 

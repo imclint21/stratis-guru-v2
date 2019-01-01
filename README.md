@@ -20,4 +20,5 @@ You will find a $STRAT Price Ticker, an address generator, a block explorer, a c
 For now it's a very simple process, you make a deposit with the amount that you want, and you put your nickname/withdraw address, when the lotery countdown end, I manually choose a winner by using random.org (this system will change in the future)
 All $STRAT coins are stored in cold wallet, by using an xpub.
 
+## About the Author
 Proudly Crafted with 💖 by Clint.Network — Help me to maintain by sending $STRAT at [SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ](https://chainz.cryptoid.info/strat/address.dws?SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ.htm).

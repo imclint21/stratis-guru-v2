@@ -1,7 +1,6 @@
 # Stratis.Guru | A Stratis Price Ticker
 
 ![](https://travis-ci.org/clintnetwork/stratis-guru-v2.svg?branch=master)
-![](https://img.shields.io/badge/NStratis-4.0.0.60-blue.svg)
 
 Stratis.Guru reborn from his [Version 1](https://github.com/clintnetwork/Stratis.guru) with some new features, completely rebuild in .Net Core, and supported by the Stratis community.
 You will find a $STRAT Price Ticker, an address generator, a block explorer, a community lottery and an API.

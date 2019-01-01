@@ -3,12 +3,21 @@
 ![](https://travis-ci.org/clintnetwork/stratis-guru-v2.svg?branch=master)
 ![](https://img.shields.io/badge/NStratis-4.0.0.60-blue.svg)
 
-Stratis.guru reborn from the first version developed in ASP.Net MVC, the new version is made with Microsoft® .Net Core and use the NStratis Library.
+Stratis.Guru reborn from his [Version 1](https://github.com/clintnetwork/Stratis.guru) with some new features, completely rebuild in .Net Core, and supported by the Stratis community.
+You will find a $STRAT Price Ticker, an address generator, a block explorer, a community lottery and an API.
 
-![](https://pix.watch/ev46ED/Xq4Zxb.png)
+![](https://i.imgur.com/rOKYCvr.png)
 
 ![](https://pix.watch/8SpQJe/xxERbX.png)
 
+![](https://pix.watch/tVEuE0/ezGVMC.png)
+
+![](https://pix.watch/BpSo4r/Jwv-h6.jpeg)
+
 ![](https://pix.watch/fTHGnh/vUUJsT.png)
 
-Proudly Crafted with 💖 by Clint.Network — Help me to maintain by sending $STRAT at [SR2ZXnhRnMqJNoeDiCFUnaug7TKHJocwDd](https://chainz.cryptoid.info/strat/address.dws?SR2ZXnhRnMqJNoeDiCFUnaug7TKHJocwDd.htm).
+## How the Stratis.Guru Lottery Works ?
+For now it's a very simple process, you make a deposit with the amount that you want, and you put your nickname/withdraw address, when the lotery countdown end, I manually choose a winner by using random.org (this system will change in the future)
+All $STRAT coins are stored in cold wallet, by using an xpub.
+
+Proudly Crafted with 💖 by Clint.Network — Help me to maintain by sending $STRAT at [SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ](https://chainz.cryptoid.info/strat/address.dws?SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ.htm).

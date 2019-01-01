@@ -32,7 +32,7 @@
                                 <td><strong>Address</strong></td>
                                 <td>
                                     <a class="to-copy" asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@Model.address">@Model.address</a>
-                                    <a href="#" class="copy-me"><i class="fa fa-copy"></i></a>
+                                    <a href="#" data-value="@Model.address" class="copy-me"><i class="fa fa-copy"></i></a>
                                 </td>
                             </tr>
                             <tr>
@@ -108,3 +108,20 @@
         </div>
     </div>
 </section>
+@section Scripts
+{
+    <script type="text/javascript">
+    $(document).ready(function()
+    {
+        $(".copy-me").click(function()
+        {
+            var tempField = document.createElement("textarea");
+            tempField.value = $(this).attr("data-value");
+            $("body").parent().append(tempField);
+            tempField.select();
+            document.execCommand("copy");
+            tempField.remove();
+        })
+    });
+    </script>
+}

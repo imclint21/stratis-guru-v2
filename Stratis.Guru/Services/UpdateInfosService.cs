@@ -18,14 +18,16 @@ namespace Stratis.Guru.Services
         private readonly UpdateHub _hub;
         private readonly System.Timers.Timer _updateTimer;
         private readonly NakoApiSettings _nakoApiSettings;
+        private readonly TickerSettings _tickerSettings;
 
-        public UpdateInfosService(IMemoryCache memoryCache, UpdateHub hub, IHubContext<UpdateHub> hubContext, IOptions<NakoApiSettings> nakoApiSettings)
+        public UpdateInfosService(IMemoryCache memoryCache, UpdateHub hub, IHubContext<UpdateHub> hubContext, IOptions<NakoApiSettings> nakoApiSettings, IOptions<TickerSettings> tickerSettings)
         {
             _memoryCache = memoryCache;
             _hub = hub;
             _hubContext = hubContext;
             _updateTimer = new System.Timers.Timer();
             _nakoApiSettings = nakoApiSettings.Value;
+            _tickerSettings = tickerSettings.Value;
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
@@ -35,7 +37,7 @@ namespace Stratis.Guru.Services
             _updateTimer.Elapsed += async (sender, args) =>
             {
                 _updateTimer.Interval = TimeSpan.FromMinutes(10).TotalMilliseconds;
-                var coinmarketCapApiClient = new RestClient("https://api.coinmarketcap.com/v2/ticker/1343/");
+                var coinmarketCapApiClient = new RestClient(_tickerSettings.ApiUrl);
                 var coinmarketCapApiRequest = new RestRequest(Method.GET);
                 var coinmarketcapApi = coinmarketCapApiClient.Execute(coinmarketCapApiRequest);
                 _memoryCache.Set("Coinmarketcap", coinmarketcapApi.Content);

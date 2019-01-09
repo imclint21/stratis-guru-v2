@@ -61,6 +61,22 @@ To run the Stratis.Guru, you need a appsettings.json. This is currently not incl
     "Logging": {
       "MinimumBreadcrumbLevel": "Information"
     }
+  },
+  "Setup": {
+    "Title": "Stratis.guru",
+    "Chain": "Stratis",
+    "Footer": ""
+  },
+  "Features": {
+    "Home": true,
+    "Ticker":  false,
+    "Lottery": false,
+    "Explorer": true,
+    "Vanity": false,
+    "Generator": false,
+    "API": true,
+    "About": true,
+    "Footer": false
   }
 }
 ```

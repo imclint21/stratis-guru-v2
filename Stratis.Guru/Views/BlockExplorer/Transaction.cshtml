@@ -73,9 +73,9 @@
                                         }
                                         @foreach (var t in Model.Outputs)
                                         {
-                                            totalOutpus += (double) t.Balance;
+                                            totalOutpus += (double)t.Balance;
                                         }
-                                        @totalOutpus.ToString("N8") STRAT
+                                        @totalOutpus.ToString("N8") @Model.CoinTag
                                     </td>
                                 </tr>
                             }
@@ -140,7 +140,7 @@
                                     <td>@output.Index</td>
                                     <td><a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@output.Address">@output.Address</a></td>
                                     <td>@output.OutputType</td>
-                                    <td>@output.Balance.ToString("N8") STRAT</td>
+                                    <td>@output.Balance.ToString("N8") @Model.CoinTag</td>
                                 </tr>
                             }
                         </tbody>

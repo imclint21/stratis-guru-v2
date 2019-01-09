@@ -20,17 +20,29 @@ namespace Stratis.Guru.Controllers
         private readonly IMemoryCache _memoryCache;
         private readonly dynamic _stats;
         private readonly BlockIndexService _indexService;
+        private readonly SetupSettings _setupSettings;
+        private readonly FeaturesSettings _featuresSettings;
 
-        public BlockExplorerController(IMemoryCache memoryCache, IOptions<NakoApiSettings> nakoApiSettings, BlockIndexService indexService)
+        public BlockExplorerController(IMemoryCache memoryCache,
+            BlockIndexService indexService,
+            IOptions<NakoApiSettings> nakoApiSettings,
+            IOptions<SetupSettings> setupSettings,
+            IOptions<FeaturesSettings> featuresSettings)
         {
-            _nakoApiSettings = nakoApiSettings.Value;
             _memoryCache = memoryCache;
             _stats = JsonConvert.DeserializeObject(_memoryCache.Get("BlockchainStats").ToString());
             _indexService = indexService;
+
+            _nakoApiSettings = nakoApiSettings.Value;
+            _setupSettings = setupSettings.Value;
+            _featuresSettings = featuresSettings.Value;
         }
         
         public IActionResult Index()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             var latestBlock = _indexService.GetLatestBlock();
 
             ViewBag.LatestBlock = latestBlock;
@@ -53,6 +65,9 @@ namespace Stratis.Guru.Controllers
         [Route("search")]
         public IActionResult Search(SearchBlockExplorer searchBlockExplorer)
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             if (searchBlockExplorer.Query.Length == 34)
             {
                 return RedirectToAction("Address", new {address = searchBlockExplorer.Query});
@@ -71,6 +86,8 @@ namespace Stratis.Guru.Controllers
         [Route("block/{block}")]
         public IActionResult Block(string block)
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
             ViewBag.BlockchainHeight = _stats.SyncBlockIndex;
 
             var result = (block.ToLower() == "latest") ? _indexService.GetLatestBlock() : _indexService.GetBlockByHeight(int.Parse(block));
@@ -80,6 +97,8 @@ namespace Stratis.Guru.Controllers
         [Route("block/hash/{hash}")]
         public IActionResult BlockHash(string hash)
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
             ViewBag.BlockchainHeight = _stats.SyncBlockIndex;
 
             return View("Block", _indexService.GetBlockByHash(hash));
@@ -88,6 +107,8 @@ namespace Stratis.Guru.Controllers
         [Route("address/{address}")]
         public IActionResult Address(string address)
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
             ViewBag.BlockchainHeight = _stats.SyncBlockIndex;
 
             return View(_indexService.GetTransactionsByAddress(address));
@@ -96,6 +117,8 @@ namespace Stratis.Guru.Controllers
         [Route("transaction/{transactionId}")]
         public IActionResult Transaction(string transactionId)
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
             ViewBag.BlockchainHeight = _stats.SyncBlockIndex;
 
             return View(_indexService.GetTransaction(transactionId));

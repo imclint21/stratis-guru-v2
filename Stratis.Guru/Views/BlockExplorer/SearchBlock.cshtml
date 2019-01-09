@@ -4,10 +4,10 @@
         <div class="container text-center">
             <div class="row">
                 <div class="col-lg-12 align-self-center">
-                    <h1>Stratis Blockchain Explorer</h1>
+                    <h1>@ViewBag.Setup.Chain Block Explorer</h1>
                 </div>
                 <div class="offset-lg-3 col-lg-6">
-                    <p>Actual Stratis Blocks Height: @(ViewBag.BlockchainHeight??"Loading...") @*<i class="fa help fa-info-circle" data-toggle="tooltip" data-placement="right" title="Last Stratis Block Height, updated every 10 min."></i>*@</p>
+                    <p>Actual Blocks Height: @(ViewBag.BlockchainHeight ?? "Loading...") @*<i class="fa help fa-info-circle" data-toggle="tooltip" data-placement="right" title="Last Stratis Block Height, updated every 10 min."></i>*@</p>
                 </div>
             </div>
         </div>

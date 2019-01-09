@@ -35,8 +35,17 @@ namespace Stratis.Guru.Controllers
         private readonly IParticipation _participation;
         private readonly IDraws _draws;
         private readonly DrawSettings _drawSettings;
+        private readonly SetupSettings _setupSettings;
+        private readonly FeaturesSettings _featuresSettings;
 
-        public HomeController(IMemoryCache memoryCache, IAsk ask, ISettings settings, IParticipation participation, IDraws draws, IOptions<DrawSettings> drawSettings)
+        public HomeController(IMemoryCache memoryCache, 
+            IAsk ask, 
+            ISettings settings, 
+            IParticipation participation, 
+            IDraws draws, 
+            IOptions<DrawSettings> drawSettings, 
+            IOptions<SetupSettings> setupSettings,
+            IOptions<FeaturesSettings> featuresSettings)
         {
             _memoryCache = memoryCache;
             _ask = ask;
@@ -44,10 +53,15 @@ namespace Stratis.Guru.Controllers
             _participation = participation;
             _draws = draws;
             _drawSettings = drawSettings.Value;
+            _setupSettings = setupSettings.Value;
+            _featuresSettings = featuresSettings.Value;
         }
         
         public IActionResult Index()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             double displayPrice = 0;
             var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
             dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
@@ -83,6 +97,9 @@ namespace Stratis.Guru.Controllers
         [Route("lottery")]
         public IActionResult Lottery()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
             ViewBag.Jackpot = _memoryCache.Get("Jackpot");
             ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
@@ -94,6 +111,9 @@ namespace Stratis.Guru.Controllers
         [Route("lottery/participate")]
         public IActionResult Participate()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             if (ModelState.IsValid)
             {
                 var lastDraw = _draws.GetLastDraw();
@@ -111,7 +131,10 @@ namespace Stratis.Guru.Controllers
         [Route("lottery/participate/{id}")]
         public IActionResult Participate(string id)
         {
-            if(HttpContext.Session.GetString("HaveBeginParticipation") == null)
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
+            if (HttpContext.Session.GetString("HaveBeginParticipation") == null)
             {
                 return RedirectToAction("Lottery");
             }
@@ -130,6 +153,9 @@ namespace Stratis.Guru.Controllers
         [Route("lottery/check-payment")]
         public IActionResult CheckPayment()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             var pubkey = ExtPubKey.Parse(_drawSettings.PublicKey);
             var depositAddress = pubkey.Derive(0).Derive(_settings.GetIterator()).PubKey.GetAddress(Network.StratisMain).ToString();
             ViewBag.DepositAddress = depositAddress;
@@ -150,6 +176,9 @@ namespace Stratis.Guru.Controllers
         [Route("lottery/new-participation")]
         public IActionResult NewParticipation()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             var ticket = Guid.NewGuid().ToString();
             HttpContext.Session.SetString("Ticket", ticket);
             ViewBag.Ticket = ticket;
@@ -168,6 +197,9 @@ namespace Stratis.Guru.Controllers
         [Route("lottery/participated")]
         public IActionResult Participated()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             ViewBag.NextDraw = long.Parse(_memoryCache.Get("NextDraw").ToString());
             ViewBag.Jackpot = _memoryCache.Get("Jackpot");
             ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
@@ -178,12 +210,18 @@ namespace Stratis.Guru.Controllers
         [Route("about")]
         public IActionResult About()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             return View();
         }
 
         [Route("vanity")]
         public IActionResult Vanity()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             return View();
         }
 
@@ -191,6 +229,9 @@ namespace Stratis.Guru.Controllers
         [Route("vanity")]
         public IActionResult Vanity(Vanity vanity)
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             if (ModelState.IsValid)
             {
                 _ask.NewVanity(vanity);
@@ -202,6 +243,9 @@ namespace Stratis.Guru.Controllers
         [Route("generator")]
         public IActionResult Generator()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             var stratisAddress = new Key();
             return View(new StratisAddressPayload
             {
@@ -213,6 +257,9 @@ namespace Stratis.Guru.Controllers
         [Route("qr/{value}")]
         public IActionResult Qr(string value)
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             var memoryStream = new MemoryStream();
             var qrGenerator = new QRCodeGenerator();
             var qrCodeData = qrGenerator.CreateQrCode(value, QRCodeGenerator.ECCLevel.L);
@@ -223,6 +270,9 @@ namespace Stratis.Guru.Controllers
 
         public IActionResult Documentation()
         {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
             return Redirect("/documentation");
         }
     }

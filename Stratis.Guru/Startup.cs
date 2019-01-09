@@ -53,6 +53,8 @@ namespace Stratis.Guru
             services.Configure<FixerApiSettings>(Configuration.GetSection("FixerApi"));
             services.Configure<DrawSettings>(Configuration.GetSection("Draw"));
             services.Configure<TickerSettings>(Configuration.GetSection("Ticker"));
+            services.Configure<SetupSettings>(Configuration.GetSection("Setup"));
+            services.Configure<FeaturesSettings>(Configuration.GetSection("Features"));
 
             services.AddMemoryCache();
             

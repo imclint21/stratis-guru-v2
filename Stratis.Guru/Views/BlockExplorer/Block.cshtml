@@ -1,8 +1,8 @@
 @model dynamic
 @{
-    ViewBag.Title = $"Block {Model.blockIndex}";
+    ViewBag.Title = $"Block {Model.BlockIndex}";
     Layout = "_Layout";
-    ViewBag.Query = Model.blockHash;
+    ViewBag.Query = Model.BlockHash;
 }
 @section Style
 {
@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="center-heading">
-                    <h2 class="section-title">Details for Block #@Model.blockIndex</h2>
+                    <h2 class="section-title">Details for Block #@Model.BlockIndex</h2>
                 </div>
             </div>
         </div>			
@@ -31,28 +31,28 @@
                             <tr>
                                 <td><strong>Address</strong></td>
                                 <td>
-                                    <a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@Model.blockHash">@Model.blockHash</a>
+                                    <a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@Model.BlockHash">@Model.BlockHash</a>
                                     <a href="#" class="copy-me"><i class="fa fa-copy"></i></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><strong>Date/Time</strong></td>
-                                <td>@DateTimeOffset.FromUnixTimeSeconds((long)Model.blockTime).ToString("F")</td>
+                                <td>@DateTimeOffset.FromUnixTimeSeconds((long)Model.BlockTime).ToString("F")</td>
                             </tr>
                             <tr>
                                 <td><strong>Block Size</strong></td>
-                                <td>@Model.blockSize bytes</td>
+                                <td>@Model.BlockSize bytes</td>
                             </tr>
                             <tr>
                                 <td><strong>Previous Block Hash</strong></td>
                                 <td>
-                                    <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.previousBlockHash">@(Model.previousBlockHash??"-")</a>
+                                    <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.PreviousBlockHash">@(Model.PreviousBlockHash??"-")</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><strong>Next Block Hash</strong></td>
                                 <td>
-                                    <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.nextBlockHash">@(Model.nextBlockHash??"-")</a>
+                                    <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.NextBlockHash">@(Model.NextBlockHash??"-")</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -79,7 +79,7 @@
                         </thead>
                         <tbody>
                             @{ int i = 0;}
-                            @foreach (var transaction in Model.transactions)
+                            @foreach (var transaction in Model.Transactions)
                             {
                                 <tr>
                                     <td>@i</td>

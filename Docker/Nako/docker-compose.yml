@@ -8,7 +8,7 @@ services:
     image: coinvault/nako
     command: stratis
     ports: 
-        - 9040:9000
+        - 9030:9000
     depends_on:
         - mongo
         - client
@@ -20,7 +20,7 @@ services:
     image: stratisplatform/fullnode:StratisMain
     command: ["dotnet", "run", "--", "-server=1", "-rpcallowip=172.16.11.100", "-rpcbind=172.16.11.101", "-rpcport=5000", "-rpcuser=rpcuser", "-rpcpassword=rpcpassword", "-rpcthreads=300", "-txindex=1"]
     ports: 
-        - 5040:5000
+        - 5030:5000
         - 16178:16178
   mongo:
     container_name: stratis-mongo

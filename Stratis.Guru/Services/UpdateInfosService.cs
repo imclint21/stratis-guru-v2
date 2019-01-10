@@ -32,11 +32,16 @@ namespace Stratis.Guru.Services
         
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _updateTimer.Interval = 10;
-            _updateTimer.Enabled = true;
+            _updateTimer.AutoReset = false; // Make sure it only trigger once initially.
+
             _updateTimer.Elapsed += async (sender, args) =>
             {
-                _updateTimer.Interval = TimeSpan.FromMinutes(10).TotalMilliseconds;
+                if (_updateTimer.AutoReset == false)
+                {
+                    _updateTimer.Interval = TimeSpan.FromMinutes(10).TotalMilliseconds;
+                    _updateTimer.AutoReset = true;
+                }
+
                 var coinmarketCapApiClient = new RestClient(_tickerSettings.ApiUrl);
                 var coinmarketCapApiRequest = new RestRequest(Method.GET);
                 var coinmarketcapApi = coinmarketCapApiClient.Execute(coinmarketCapApiRequest);
@@ -48,6 +53,7 @@ namespace Stratis.Guru.Services
                 var blockchainStatsRequest = new RestRequest(Method.GET);
                 _memoryCache.Set("BlockchainStats", blockchainStatsClient.Execute(blockchainStatsRequest).Content);
             };
+            
             _updateTimer.Start();
             return Task.CompletedTask;
         }

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmSize": {
+      "value": "Standard_F4"
+    },
+    "username": {
+      "value": "GEN-UNIQUE"
+    },
+    "password": {
+      "value": "GEN-PASSWORD"
+    },
+    "name": {
+      "value": "GEN-UNIQUE"
+    },
+    "dns": {
+      "value": "GEN-UNIQUE"
+    },
+    "url": {
+      "value": "https://raw.githubusercontent.com/CityChainFoundation/city-chain/master/Docker/City.Chain/Explorer/docker-compose.yml"
+    }
+  }
+}

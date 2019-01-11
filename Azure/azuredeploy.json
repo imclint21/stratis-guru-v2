@@ -42,7 +42,7 @@
         },
         "name": {
             "type": "string",
-            "defaultValue": "myhost",
+            "defaultValue": "blockindexer",
             "metadata": {
                 "description": "The name used on all resources deployed."
             }

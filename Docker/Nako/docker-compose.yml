@@ -8,6 +8,8 @@ services:
     image: coinvault/nako
     command: stratis
     ports: 
+        - 80:9000
+        - 443:9000
         - 9030:9000
     depends_on:
         - mongo

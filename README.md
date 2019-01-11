@@ -1,4 +1,4 @@
-# Stratis.Guru | A Stratis Price Ticker
+# City Chain Explorer | Built on Stratis.Guru
 
 ![](https://travis-ci.org/clintnetwork/stratis-guru-v2.svg?branch=master)
 

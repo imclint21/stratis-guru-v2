@@ -37,7 +37,7 @@
         },
         "dns": {
             "type": "string",
-            "defaultValue": "[parameters('name')]",
+            "defaultValue": "blockindexer",
             "metadata": {
                 "description": "The DNS hostname to set during deployment. Defaults to same as name."
             }
@@ -62,7 +62,7 @@
         "subnetPrefix": "10.0.0.0/24",
         "diskStorageType": "Standard_LRS",
         "publicIPAddressType": "Dynamic",
-        "nsgID": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('name'))]",
+        "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('name'))]",
         "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('name'), variables('subnetName'))]"
     },
     "resources": [
@@ -150,7 +150,7 @@
             "name": "[parameters('name')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[variables('nsgID')]"
+                "[variables('nsgId')]"
             ],
             "properties": {
                 "addressSpace": {
@@ -164,7 +164,7 @@
                         "properties": {
                             "addressPrefix": "[variables('subnetPrefix')]",
                             "networkSecurityGroup": {
-                                "id": "[variables('nsgID')]"
+                                "id": "[variables('nsgId')]"
                             }
                         }
                     }

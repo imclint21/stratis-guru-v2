@@ -7,6 +7,7 @@
     <ItemGroup>
         <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
         <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.362" />
+        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
         <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.113" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -22,6 +23,10 @@
       <Content Update="hosting.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <WCFMetadata Include="Connected Services" />
     </ItemGroup>
 
 </Project>

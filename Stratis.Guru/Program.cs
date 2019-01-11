@@ -16,6 +16,8 @@ namespace Stratis.Guru
         {
             var chain = (args.Length == 0) ? "STRAT" : args[0].ToUpper();
 
+            chain = (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("CHAIN"))) ? "STRAT" : Environment.GetEnvironmentVariable("CHAIN").ToUpper();
+
             var config = new ConfigurationBuilder()
               .SetBasePath(Directory.GetCurrentDirectory())
               .AddJsonFile("hosting.json", optional: true)
@@ -26,6 +28,7 @@ namespace Stratis.Guru
               .Build();
 
             WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
                .UseConfiguration(config)
                .UseStartup<Startup>()
                .Build().Run();

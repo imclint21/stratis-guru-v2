@@ -3,4 +3,5 @@ bin
 obj
 .vscode
 Properties
+!Properties/launchSettings.json
 wwwroot/lib

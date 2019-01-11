@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -29,6 +30,7 @@
 		<link href="~/css/default.min.css" rel="stylesheet" type="text/css">
 	</environment>
 	@RenderSection("Style", false)
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
     <header class="header-area">

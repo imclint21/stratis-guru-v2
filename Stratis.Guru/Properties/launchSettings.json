@@ -1,0 +1,108 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:11732/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "STRAT": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "CITY": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CHAIN": "CITY"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "X42": {
+      "commandName": "Project",
+      "commandLineArgs": "X42",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "APIS": {
+      "commandName": "Project",
+      "commandLineArgs": "APIS",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "BBP": {
+      "commandName": "Project",
+      "commandLineArgs": "BBP",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "CIVX": {
+      "commandName": "Project",
+      "commandLineArgs": "CIVX",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "DST": {
+      "commandName": "Project",
+      "commandLineArgs": "DST",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "IMPL": {
+      "commandName": "Project",
+      "commandLineArgs": "IMPL",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "ODN": {
+      "commandName": "Project",
+      "commandLineArgs": "ODN",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
+    "RADS": {
+      "commandName": "Project",
+      "commandLineArgs": "RADS",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    }
+  }
+}

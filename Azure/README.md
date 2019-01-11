@@ -20,7 +20,7 @@ http://URL/api/stats
 
 This should return something like:
 
-´´´json
+```json
 {
   "CoinTag": "STRAT",
   "Progress": "11856/79000 - 67144",
@@ -43,7 +43,7 @@ This should return something like:
     "Errors": ""
   }
 }
-´´´
+```
 
 ## Configuration
 
@@ -73,11 +73,13 @@ Please open the TCP port for the blockchain's P2P communication, to make your de
 
 ### Standard Ports
 
+```
 Stratis: 16178
 
 City Chain: 4333
 
 Bitcoin: 8333
+```
 
 ## Remote Shell Connection
 

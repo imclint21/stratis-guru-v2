@@ -1,0 +1,22 @@
+﻿{
+  "Nako": {
+    "ApiUrl": "http://localhost:9019/api"
+  },
+  "Ticker": {
+    "WebUrl": "https://p2pb2b.io/trade/CITY_BTC",
+    "ApiUrl": "https://p2pb2b.io/api/v1/public/ticker?market=CITY_USD",
+    "PricePath": "result.last",
+    "PercentagePath": "result.change"
+  },
+  "Setup": {
+    "Title": "City Chain Explorer",
+    "Chain": "City Chain",
+    "Coin": "CITY",
+    "Footer": "https://city-chain.org"
+  },
+  "Features": {
+    "Lottery": false,
+    "Vanity": false,
+    "Generator": false
+  }
+}

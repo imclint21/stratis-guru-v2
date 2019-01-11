@@ -16,7 +16,7 @@ namespace Stratis.Guru.Controllers
     [Route("block-explorer")]
     public class BlockExplorerController : Controller
     {
-        private readonly NakoApiSettings _nakoApiSettings;
+        private readonly NakoSettings _nakoApiSettings;
         private readonly IMemoryCache _memoryCache;
         private readonly dynamic _stats;
         private readonly BlockIndexService _indexService;
@@ -25,7 +25,7 @@ namespace Stratis.Guru.Controllers
 
         public BlockExplorerController(IMemoryCache memoryCache,
             BlockIndexService indexService,
-            IOptions<NakoApiSettings> nakoApiSettings,
+            IOptions<NakoSettings> nakoApiSettings,
             IOptions<SetupSettings> setupSettings,
             IOptions<FeaturesSettings> featuresSettings)
         {

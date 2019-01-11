@@ -1,0 +1,22 @@
+﻿{
+  "Nako": {
+    "ApiUrl": "http://localhost:9019/api"
+  },
+  "Ticker": {
+    "ApiUrl": "https://api.coincap.io/v2/assets/stratis",
+    "WebUrl": "https://coincap.io/assets/stratis",
+    "PricePath": "data.priceUsd", // coincap.io
+    "PercentagePath": "data.changePercent24Hr", // coincap.io
+  },
+  "Setup": {
+    "Title": "DeStream Explorer",
+    "Chain": "DeStream",
+    "Coin": "DST",
+    "Footer": "https://destream.io/"
+  },
+  "Features": {
+    "Lottery": false,
+    "Vanity": false,
+    "Generator": false
+  }
+}

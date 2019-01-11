@@ -1,0 +1,27 @@
+﻿{
+  "Nako": {
+    "ApiUrl": "http://localhost:9030/api"
+  },
+  "Draw": {
+    "PublicKey": ""
+  },
+  "Currency": {
+    "AutoConvert": true
+  },
+  "Ticker": {
+     "ApiUrl": "https://api.coincap.io/v2/assets/stratis",
+     "WebUrl": "https://coincap.io/assets/stratis",
+     "PricePath": "data.priceUsd", // coincap.io
+     "PercentagePath": "data.changePercent24Hr" // coincap.io
+
+    // "ApiUrl": "https://api.coinmarketcap.com/v2/ticker/1343/",
+    // "WebUrl": "https://coinmarketcap.com/currencies/stratis/",
+    // "PricePath": "data.quotes.USD.price", // coinmarketcap
+    // "PercentagePath": "data.quotes.USD.percent_change_24h" // coinmarketcap
+  },
+  "Setup": {
+    "Title": "Stratis Explorer",
+    "Chain": "Stratis",
+    "Coin": "STRAT"
+  }
+}

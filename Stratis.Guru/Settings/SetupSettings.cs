@@ -17,6 +17,8 @@ namespace Stratis.Guru.Settings
 
         public string Chain { get; set; }
 
+        public string Coin { get; set; }
+
         public string Footer { get; set; }
     }
 }

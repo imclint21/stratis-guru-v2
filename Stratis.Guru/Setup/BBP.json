@@ -1,0 +1,22 @@
+﻿{
+  "Nako": {
+    "ApiUrl": "http://localhost:9030/api"
+  },
+  "Ticker": {
+    "ApiUrl": "https://api.coincap.io/v2/assets/stratis",
+    "WebUrl": "https://coincap.io/assets/stratis",
+    "PricePath": "data.priceUsd",
+    "PercentagePath": "data.changePercent24Hr"
+  },
+  "Setup": {
+    "Title": "BiblePay Explorer",
+    "Chain": "BiblePay",
+    "Coin": "BBP",
+    "Footer": "https://www.biblepay.org/"
+  },
+  "Features": {
+    "Lottery": false,
+    "Vanity": false,
+    "Generator": false
+  }
+}

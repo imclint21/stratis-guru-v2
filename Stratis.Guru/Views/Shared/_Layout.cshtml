@@ -88,11 +88,20 @@
 
     @if (ViewBag.Features.Footer)
     {
-    <div id="crafted">
-        <p class="text-center small">Proudly Crafted with 💖 by <a href="https://twitter.com/clint_network" target="_blank">Clint.Network</a> — Help me to maintain by sending some $STRAT at <a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ">SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ</a>.</p>
-    </div>
+        @if (string.IsNullOrWhiteSpace(ViewBag.Setup.Footer))
+        {
+            <div id="crafted">
+                <p class="text-center small">Proudly Crafted with 💖 by <a href="https://twitter.com/clint_network" target="_blank">Clint.Network</a> — Help me to maintain by sending some $STRAT at <a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ">SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ</a>.</p>
+            </div>
+        }
+        else
+        {
+            <div id="crafted">
+                <p class="text-center small">@ViewBag.Setup.Footer</p>
+            </div>
+        }
     }
-    
+
     <script src="~/js/jquery-2.1.0.min.js"></script>
     <script src="~/js/popper.js"></script>
     <script src="~/js/bootstrap.min.js"></script>

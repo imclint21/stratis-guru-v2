@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using Stratis.Guru.Models;
+using Stratis.Guru.Services;
 using Stratis.Guru.Settings;
 
 namespace Stratis.Guru.Controllers
@@ -19,11 +20,19 @@ namespace Stratis.Guru.Controllers
     [ApiController]
     public class ApiController : ControllerBase
     {
-        private readonly NakoApiSettings _nakoApiSettings;
+        private readonly NakoSettings _nakoApiSettings;
         private readonly IMemoryCache _memoryCache;
+        private readonly TickerService _tickerService;
+        private readonly CurrencyService _currencyService;
 
-        public ApiController(IMemoryCache memoryCache, IOptions<NakoApiSettings> nakoApiSettings)
+        public ApiController(
+            TickerService tickerService,
+            CurrencyService currencyService,
+            IMemoryCache memoryCache, 
+            IOptions<NakoSettings> nakoApiSettings)
         {
+            _tickerService = tickerService;
+            _currencyService = currencyService;
             _memoryCache = memoryCache;
             _nakoApiSettings = nakoApiSettings.Value;
         }
@@ -34,26 +43,24 @@ namespace Stratis.Guru.Controllers
         {
             try
             {
-                dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
+                var ticker = _tickerService.GetCachedTicker();
+
                 if (notApi)
                 {
                     var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
             
-                    double displayPrice = 0;
+                    double displayPrice = ticker.DisplayPrice;
             
-                    if (rqf.RequestCulture.UICulture.ThreeLetterISOLanguageName.Equals("eng"))
+                    if (!rqf.RequestCulture.UICulture.ThreeLetterISOLanguageName.Equals("eng"))
                     {
-                        displayPrice = coinmarketcap.data.quotes.USD.price;
-                    }
-                    else
-                    {
-                        dynamic fixerApiResponse = JsonConvert.DeserializeObject(_memoryCache.Get("Fixer").ToString());
+                        dynamic fixerApiResponse = JsonConvert.DeserializeObject(_currencyService.GetRates("USD"));
                         var dollarRate = fixerApiResponse.rates.USD;
+
                         try
                         {
                             var regionInfo = new RegionInfo(rqf.RequestCulture.UICulture.Name.ToUpper());
                             var browserCurrencyRate = (double) ((JObject) fixerApiResponse.rates)[regionInfo.ISOCurrencySymbol];
-                            displayPrice = 1 / (double) dollarRate * (double) coinmarketcap.data.quotes.USD.price * browserCurrencyRate;
+                            displayPrice = 1 / (double) dollarRate * (double)displayPrice * browserCurrencyRate;
                         }
                         catch
                         {
@@ -64,13 +71,13 @@ namespace Stratis.Guru.Controllers
                     return new TickerApi
                     {
                         UsdPrice = (displayPrice * amount).ToString("C"),
-                        Last24Change = (coinmarketcap.data.quotes.USD.percent_change_24h / 100).ToString("P2")
+                        Last24Change = (ticker.Last24Change / 100).ToString("P2")
                     };
                 }
                 return new Ticker
                 {
-                    DisplayPrice = coinmarketcap.data.quotes.USD.price * amount,
-                    Last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100
+                    DisplayPrice = ticker.DisplayPrice * amount,
+                    Last24Change = ticker.Last24Change / 100
                 };
             }
             catch
@@ -92,7 +99,7 @@ namespace Stratis.Guru.Controllers
         [Route("address/{address}")]
         public ActionResult<object> Address(string address)
         {
-            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/address/{address}/transactions");
+            var endpointClient = new RestClient($"{_nakoApiSettings.ApiUrl}query/address/{address}/transactions");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);
@@ -102,7 +109,7 @@ namespace Stratis.Guru.Controllers
         [Route("transaction/{transaction}")]
         public ActionResult<object> Transaction(string transaction)
         {
-            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/transaction/{transaction}");
+            var endpointClient = new RestClient($"{_nakoApiSettings.ApiUrl}query/transaction/{transaction}");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);
@@ -112,7 +119,7 @@ namespace Stratis.Guru.Controllers
         [Route("block/{block}")]
         public ActionResult<object> Block(string block)
         {
-            var endpointClient = new RestClient($"{_nakoApiSettings.Endpoint}query/block/index/{block}/transactions");
+            var endpointClient = new RestClient($"{_nakoApiSettings.ApiUrl}query/block/index/{block}/transactions");
             var enpointRequest = new RestRequest(Method.GET);
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);

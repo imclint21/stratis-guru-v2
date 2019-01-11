@@ -23,6 +23,7 @@ using QRCoder;
 using RestSharp;
 using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
+using Stratis.Guru.Services;
 using Stratis.Guru.Settings;
 
 namespace Stratis.Guru.Controllers
@@ -34,8 +35,10 @@ namespace Stratis.Guru.Controllers
         private readonly ISettings _settings;
         private readonly IParticipation _participation;
         private readonly IDraws _draws;
+        private readonly TickerService _tickerService;
         private readonly DrawSettings _drawSettings;
         private readonly SetupSettings _setupSettings;
+        private readonly TickerSettings _tickerSettings;
         private readonly FeaturesSettings _featuresSettings;
 
         public HomeController(IMemoryCache memoryCache, 
@@ -43,8 +46,10 @@ namespace Stratis.Guru.Controllers
             ISettings settings, 
             IParticipation participation, 
             IDraws draws, 
+            TickerService tickerService,
             IOptions<DrawSettings> drawSettings, 
             IOptions<SetupSettings> setupSettings,
+            IOptions<TickerSettings> tickerSettings,
             IOptions<FeaturesSettings> featuresSettings)
         {
             _memoryCache = memoryCache;
@@ -52,8 +57,10 @@ namespace Stratis.Guru.Controllers
             _settings = settings;
             _participation = participation;
             _draws = draws;
+            _tickerService = tickerService;
             _drawSettings = drawSettings.Value;
             _setupSettings = setupSettings.Value;
+            _tickerSettings = tickerSettings.Value;
             _featuresSettings = featuresSettings.Value;
         }
         
@@ -61,29 +68,43 @@ namespace Stratis.Guru.Controllers
         {
             ViewBag.Features = _featuresSettings;
             ViewBag.Setup = _setupSettings;
+            ViewBag.Ticker = _tickerSettings;
 
-            double displayPrice = 0;
             var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-            dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
-            var last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100;
-            
-            if (rqf.RequestCulture.UICulture.Name.Equals("en-US"))
+
+            // Whenever the culture has been specified in the URL, write it to a cookie. This ensures that the culture selection is
+            // available in the REST API/Web Socket call and updates, and when the user visits the website next time.
+            if (!string.IsNullOrWhiteSpace(this.Request.Query["culture"]))
             {
-                displayPrice = coinmarketcap.data.quotes.USD.price;
+                CookieRequestCultureProvider.MakeCookieValue(rqf.RequestCulture);
             }
-            else
+
+            var json = JObject.Parse(_memoryCache.Get("Ticker").ToString());
+
+            double displayPrice = (double)json.SelectToken(_tickerSettings.PricePath);
+            var last24Change = (double)json.SelectToken(_tickerSettings.PercentagePath) / 100;
+            
+            if (!rqf.RequestCulture.UICulture.Name.Equals("en-US") && !rqf.RequestCulture.UICulture.Name.Equals("en"))
             {
-                dynamic fixerApiResponse = JsonConvert.DeserializeObject(_memoryCache.Get("Fixer").ToString());
-                var dollarRate = fixerApiResponse.rates.USD;
                 try
                 {
-                    var regionInfo = new RegionInfo(rqf.RequestCulture.UICulture.Name.ToUpper());
+                    dynamic fixerApiResponse = JsonConvert.DeserializeObject(_memoryCache.Get("Currency").ToString());
+
+                    var dollarRate = fixerApiResponse.rates.USD;
+                    var culture = rqf.RequestCulture.UICulture.Name.ToUpper();
+
+                    if (culture == "NB" || culture == "NO")
+                    {
+                        culture = "NB-NO";
+                    }
+
+                    var regionInfo = new RegionInfo(culture);
                     var browserCurrencyRate = (double) ((JObject) fixerApiResponse.rates)[regionInfo.ISOCurrencySymbol];
-                    displayPrice = 1 / (double) dollarRate * (double) coinmarketcap.data.quotes.USD.price * browserCurrencyRate;
+
+                    displayPrice = 1 / (double) dollarRate * (double)displayPrice * browserCurrencyRate;
                 }
                 catch
                 {
-                    // ignored
                 }
             }
             

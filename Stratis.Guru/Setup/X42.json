@@ -1,0 +1,22 @@
+﻿{
+  "Nako": {
+    "ApiUrl": "http://localhost:9019/api"
+  },
+  "Ticker": {
+    "WebUrl": "https://start-ex.com/trade/X42_BTC",
+    "ApiUrl": "https://start-ex.com/api/market/X42_BTC",
+    "PricePath": "market.last_sell_price",
+    "PercentagePath": "market.change_24h"
+  },
+  "Setup": {
+    "Title": "x42 Explorer",
+    "Chain": "x42",
+    "Coin": "X42",
+    "Footer": "https://x42.tech/"
+  },
+  "Features": {
+    "Lottery": false,
+    "Vanity": false,
+    "Generator": false
+  }
+}

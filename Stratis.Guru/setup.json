@@ -1,0 +1,39 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "mongodb://localhost:27017"
+  },
+  "Nako": {
+    "ApiUrl": ""
+  },
+  "Draw": {
+    "PublicKey": ""
+  },
+  "Currency": {
+    "ApiUrl": "https://api.exchangeratesapi.io",
+    // Enable the auto convert to translate from USD to local currency based on the web browser culture.
+    "AutoConvert": false
+  },
+  "Ticker": {
+    "WebUrl": "",
+    "ApiUrl": "",
+    // The "Path" value are used to navigate the JSON structure retrieved from the APIs.
+    "PricePath": "",
+    "PercentagePath": ""
+  },
+  "Setup": {
+    "Title": "",
+    "Chain": "",
+    "Coin": ""
+  },
+  "Features": {
+    "Home": true,
+    "Ticker": true,
+    "Lottery": true,
+    "Explorer": true,
+    "Vanity": true,
+    "Generator": true,
+    "API": true,
+    "About": true,
+    "Footer": true
+  }
+}

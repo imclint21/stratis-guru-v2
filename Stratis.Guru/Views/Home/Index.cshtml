@@ -1,6 +1,6 @@
 ﻿@model Ticker
 @{
-    ViewBag.Title = "Online Stratis ($STRAT) price ticker";
+    ViewBag.Title = $"Online {ViewBag.Setup.Chain} (${ViewBag.Setup.Coin}) price ticker";
 }
 <div class="shadow-inset"></div>
 <section class="welcome-area pb-4" id="welcome-1">
@@ -11,10 +11,10 @@
 
                     @if (ViewBag.Features.Ticker)
                     {
-                        <h1 class="m-0">The <strong>$STRAT</strong> price in real time.</h1>
+                        <h1 class="m-0">The <strong>$@ViewBag.Setup.Coin</strong> price in real time.</h1>
                         <h1 class="align-middle">
                             <div class="d-lg-inline-block d-md-block align-middle">
-                                <span class="click-edit" spellcheck="false">1</span> STRAT <span class="d-none d-lg-inline-block">=</span>
+                                <span class="click-edit" spellcheck="false">1</span> @ViewBag.Setup.Coin <span class="d-none d-lg-inline-block">=</span>
                             </div>
                             <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.DisplayPrice.ToString("C2"))</span>
                             <span id="lastchange" class="d-block d-lg-inline-block change-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> <span class="d-none d-lg-inline-block">@((Model.Last24Change > 0 ? "+" : ""))</span> <span class="inner">@(Model.Last24Change.ToString("P2"))</span></sup></span>
@@ -22,6 +22,7 @@
                     }
 
                     <a asp-controller="BlockExplorer" asp-action="Index" class="btn-secondary-box"><i class="fa fa-cube"></i> Go to Block Explorer</a>
+                    <a href="@ViewBag.Ticker.WebUrl" class="btn-secondary-box" target="_blank"><i class="fa fa-cube"></i> Price Details</a>
                 </div>
             </div>
         </div>

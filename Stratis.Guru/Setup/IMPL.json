@@ -1,0 +1,22 @@
+﻿{
+  "Nako": {
+    "ApiUrl": "http://localhost:9030/api"
+  },
+  "Ticker": {
+    "ApiUrl": "https://api.coincap.io/v2/assets/stratis",
+    "WebUrl": "https://coincap.io/assets/stratis",
+    "PricePath": "data.priceUsd", // coincap.io
+    "PercentagePath": "data.changePercent24Hr", // coincap.io
+  },
+  "Setup": {
+    "Title": "Impleum Explorer",
+    "Chain": "Impleum",
+    "Coin": "IMPL",
+    "Footer": "https://impleum.com/"
+  },
+  "Features": {
+    "Lottery": false,
+    "Vanity": false,
+    "Generator": false
+  }
+}

@@ -4,8 +4,7 @@ You can easily deploy the Nako blockchain indexer to Microsoft Azure with a one-
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fclintnetwork%2Fstratis-guru-v2%2Ffeature%2Fmultichain%2FAzure%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fclintnetwork%2Fstratis-guru-v2%2Ffeature%2Fmultichain%2FAzure%2Fazuredeploy.json" target="_blank">
+</a><a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fclintnetwork%2Fstratis-guru-v2%2Ffeature%2Fmultichain%2FAzure%2Fazuredeploy.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
@@ -83,3 +82,9 @@ Bitcoin: 8333
 ## Remote Shell Connection
 
 You can connect to your docker host (Linux VM) by using SSH and supply the username and password you enter during deployment.
+
+## Connect Stratis.Guru to your Nako indexer
+
+You should consider locking down the NSG (firewall) on your deployed blockchain indexer, ensuring only your deployed Stratis.Guru instance is allowed to query the API.
+
+Change the setup.json and enter your Nako.ApiUrl there, to connect with your deployed indexer instance.

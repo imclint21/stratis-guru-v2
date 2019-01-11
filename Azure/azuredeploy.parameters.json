@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vmSize": {
-      "value": "Standard_F4"
+      "value": "Standard_F2"
     },
     "username": {
       "value": "GEN-UNIQUE"

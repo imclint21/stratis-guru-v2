@@ -12,6 +12,15 @@ Change the "url" property to change the blockchain to deploy.
 
 You need the Nako indexer for Stratis.Guru to get data.
 
+## VM Sizes
+
+Testing has shown that "Standard_F1" is not powerful enough to run the indexer, and the API endpoint never becomes available. Ensure you are running a good enough VM size for the full setup.
+
+Suggested sizes:
+
+- Standard_F2 (2 core, 4 GB, 32 GB disk)
+- Standard_F4 (4 core, 8 GB, 64 GB disk)
+
 ## Verification
 
 To test and verify that the deployment was successfully, locate the public IP address or DNS name of your virtual machine, and open the statistics part of the API:

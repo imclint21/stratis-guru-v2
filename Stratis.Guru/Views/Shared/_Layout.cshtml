@@ -7,16 +7,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Setup.Title | @ViewBag.Title</title>
 	<meta name="Content-Language" content="en">
-	<meta name="Description" content="@(ViewBag.Description ?? "Stratis.Guru is a Simple and Free $STRAT ticker, an Stratis Address Generator and a Vanity Address service.")">
-	<meta name="Keywords" content="stratis,bitcoin,cryptos,cryptocurrencies,coins,$STRAT,ticker,explorer,block explorer,vanity address,stratis block explorer,$strat block explorer,stratis generator,stratis price ticker,stratis preev,stratis vanity address,clint.network,SR2ZXnhRnMqJNoeDiCFUnaug7TKHJocwDd,">
+	<meta name="Description" content="@(ViewBag.Description ?? $"{ViewBag.Setup.Title} is a Simple and Free ${ViewBag.Setup.Coin} ticker, an Address Generator and a Vanity Address service.")">
+	<meta name="Keywords" content="stratis,bitcoin,cryptos,cryptocurrencies,coins,$@ViewBag.Setup.Coin,ticker,explorer,block explorer,vanity address,stratis block explorer,$strat block explorer,stratis generator,stratis price ticker,stratis preev,stratis vanity address,clint.network,SR2ZXnhRnMqJNoeDiCFUnaug7TKHJocwDd,">
 	<meta name="Author" content="Clint.Network">
-	<meta name="Identifier-Url" content="http://stratis.guru">
+	<meta name="Identifier-Url" content="//@ViewBag.Url">
 	<meta name="Reply-To" content="stratis-guru@volto.io">
 	<meta name="Revisit-After" content="1 day">
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:site" content="clint_network">
-	<meta name="twitter:title" content="@ViewBag.Setup.Title | Online Stratis ($STRAT) price ticker">
-	<meta name="twitter:description" content="Stratis.Guru is a Simple and Free $STRAT ticker, an Stratis Address Generator and a Vanity Address service.">
+	<meta name="twitter:title" content="@ViewBag.Setup.Title | Online @ViewBag.Setup.Chain ($@ViewBag.Setup.Coin) price ticker">
+	<meta name="twitter:description" content="@ViewBag.Setup.Title is a Simple and Free $@ViewBag.Setup.Coin ticker, an Address Generator and a Vanity Address service.">
 	<link rel="icon" href="~/favicon.ico" />
 	<link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -39,7 +39,7 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <a asp-controller="Home" asp-action="Index" class="logo ">
-                            <img src="~/images/logo.png" class="" alt="Stratis.guru" /> <span class="text-white">@ViewBag.Setup.Title</span> <span class="text-info text-hide">v2</span>
+                            <img src="~/images/logo.png" class="" alt="@ViewBag.Setup.Title" /> <span class="text-white">@ViewBag.Setup.Title</span> <span class="text-info text-hide">v2</span>
                         </a>
                         <ul class="nav">
                             @if (ViewBag.Features.Home)

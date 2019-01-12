@@ -2,6 +2,9 @@
   "Nako": {
     "ApiUrl": "http://localhost:9019/api"
   },
+  "Currency": {
+    "AutoConvert": true
+  },
   "Ticker": {
     "WebUrl": "https://p2pb2b.io/trade/CITY_BTC",
     "ApiUrl": "https://p2pb2b.io/api/v1/public/ticker?market=CITY_USD",

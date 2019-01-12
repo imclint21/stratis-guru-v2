@@ -1,4 +1,4 @@
-# Stratis.Guru | A Stratis Price Ticker
+# Stratus.Guru Block Explorer | Multi-Chain Block Explorer
 
 ![](https://travis-ci.org/clintnetwork/stratis-guru-v2.svg?branch=master)
 

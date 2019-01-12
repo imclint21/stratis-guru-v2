@@ -48,36 +48,19 @@ namespace Stratis.Guru.Controllers
                 if (notApi)
                 {
                     var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-            
-                    double displayPrice = ticker.DisplayPrice;
-            
-                    if (!rqf.RequestCulture.UICulture.ThreeLetterISOLanguageName.Equals("eng"))
-                    {
-                        dynamic fixerApiResponse = JsonConvert.DeserializeObject(_currencyService.GetRates("USD"));
-                        var dollarRate = fixerApiResponse.rates.USD;
+                    var regionInfo = _currencyService.GetRegionaInfo(rqf);
+                    var displayPrice = _currencyService.GetExchangePrice(ticker.DisplayPrice, regionInfo.ISOCurrencySymbol);
 
-                        try
-                        {
-                            var regionInfo = new RegionInfo(rqf.RequestCulture.UICulture.Name.ToUpper());
-                            var browserCurrencyRate = (double) ((JObject) fixerApiResponse.rates)[regionInfo.ISOCurrencySymbol];
-                            displayPrice = 1 / (double) dollarRate * (double)displayPrice * browserCurrencyRate;
-                        }
-                        catch
-                        {
-                            // ignored
-                        }
-                    }
-                    
                     return new TickerApi
                     {
                         UsdPrice = (displayPrice * amount).ToString("C"),
-                        Last24Change = (ticker.Last24Change / 100).ToString("P2")
+                        Last24Change = (ticker.Last24Change).ToString("P2")
                     };
                 }
                 return new Ticker
                 {
                     DisplayPrice = ticker.DisplayPrice * amount,
-                    Last24Change = ticker.Last24Change / 100
+                    Last24Change = ticker.Last24Change
                 };
             }
             catch

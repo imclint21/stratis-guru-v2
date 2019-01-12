@@ -36,6 +36,7 @@ namespace Stratis.Guru.Controllers
         private readonly IParticipation _participation;
         private readonly IDraws _draws;
         private readonly TickerService _tickerService;
+        private readonly CurrencyService _currencyService;
         private readonly DrawSettings _drawSettings;
         private readonly SetupSettings _setupSettings;
         private readonly TickerSettings _tickerSettings;
@@ -47,6 +48,7 @@ namespace Stratis.Guru.Controllers
             IParticipation participation, 
             IDraws draws, 
             TickerService tickerService,
+            CurrencyService currencyService,
             IOptions<DrawSettings> drawSettings, 
             IOptions<SetupSettings> setupSettings,
             IOptions<TickerSettings> tickerSettings,
@@ -58,10 +60,12 @@ namespace Stratis.Guru.Controllers
             _participation = participation;
             _draws = draws;
             _tickerService = tickerService;
+            _currencyService = currencyService;
             _drawSettings = drawSettings.Value;
             _setupSettings = setupSettings.Value;
             _tickerSettings = tickerSettings.Value;
             _featuresSettings = featuresSettings.Value;
+
         }
         
         public IActionResult Index()
@@ -69,50 +73,25 @@ namespace Stratis.Guru.Controllers
             ViewBag.Features = _featuresSettings;
             ViewBag.Setup = _setupSettings;
             ViewBag.Ticker = _tickerSettings;
+            ViewBag.Url = Request.Host.ToString();
 
-            var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-
-            // Whenever the culture has been specified in the URL, write it to a cookie. This ensures that the culture selection is
-            // available in the REST API/Web Socket call and updates, and when the user visits the website next time.
-            if (!string.IsNullOrWhiteSpace(this.Request.Query["culture"]))
+            if (_featuresSettings.Ticker)
             {
-                CookieRequestCultureProvider.MakeCookieValue(rqf.RequestCulture);
-            }
+                var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                var ticker = _tickerService.GetCachedTicker();
+                var regionInfo = _currencyService.GetRegionaInfo(rqf);
+                var displayPrice = _currencyService.GetExchangePrice(ticker.DisplayPrice, regionInfo.ISOCurrencySymbol);
 
-            var json = JObject.Parse(_memoryCache.Get("Ticker").ToString());
-
-            double displayPrice = (double)json.SelectToken(_tickerSettings.PricePath);
-            var last24Change = (double)json.SelectToken(_tickerSettings.PercentagePath) / 100;
-            
-            if (!rqf.RequestCulture.UICulture.Name.Equals("en-US") && !rqf.RequestCulture.UICulture.Name.Equals("en"))
-            {
-                try
+                return View(new Ticker
                 {
-                    dynamic fixerApiResponse = JsonConvert.DeserializeObject(_memoryCache.Get("Currency").ToString());
-
-                    var dollarRate = fixerApiResponse.rates.USD;
-                    var culture = rqf.RequestCulture.UICulture.Name.ToUpper();
-
-                    if (culture == "NB" || culture == "NO")
-                    {
-                        culture = "NB-NO";
-                    }
-
-                    var regionInfo = new RegionInfo(culture);
-                    var browserCurrencyRate = (double) ((JObject) fixerApiResponse.rates)[regionInfo.ISOCurrencySymbol];
-
-                    displayPrice = 1 / (double) dollarRate * (double)displayPrice * browserCurrencyRate;
-                }
-                catch
-                {
-                }
+                    DisplayPrice = displayPrice,
+                    Last24Change = ticker.Last24Change
+                });
             }
-            
-            return View(new Ticker
+            else
             {
-                DisplayPrice = displayPrice,
-                Last24Change = last24Change
-            });
+                return View();
+            }
         }
 
         [Route("lottery")]

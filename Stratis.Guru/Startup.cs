@@ -115,11 +115,12 @@ namespace Stratis.Guru
             RequestCulture defaultCulture = new RequestCulture("en-US");
             defaultCulture.UICulture.NumberFormat.CurrencySymbol = "$";
 
-            // Add some known cultures that doesn't parse in Chrome/Firefox.
-            allCultures.Add(new CultureInfo("en"));
-            allCultures.Add(new CultureInfo("no"));
-            allCultures.Add(new CultureInfo("nb"));
-
+            // Add some known cultures that doesn't parse well in Chrome/Firefox.
+            foreach (var culture in CurrencyService.CustomCultures)
+            {
+                allCultures.Add(new CultureInfo(culture.Key));
+            }
+            
             RequestLocalizationOptions requestOptions = new RequestLocalizationOptions
             {
                 DefaultRequestCulture = defaultCulture,

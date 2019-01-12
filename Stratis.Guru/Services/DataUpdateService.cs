@@ -20,11 +20,13 @@ namespace Stratis.Guru.Services
         private readonly IHubContext<UpdateHub> _hubContext;
         private readonly UpdateHub _hub;
         private readonly NakoSettings _nakoApiSettings;
+        private readonly FeaturesSettings _featuresSettings;
         private readonly TickerSettings _tickerSettings;
+        private readonly CurrencySettings _currencySettings;
 
-        private readonly System.Timers.Timer _nakoTimer;
-        private readonly System.Timers.Timer _tickerTimer;
-        private readonly System.Timers.Timer _currencyTimer;
+        private System.Timers.Timer _nakoTimer;
+        private System.Timers.Timer _tickerTimer;
+        private System.Timers.Timer _currencyTimer;
 
         public DataUpdateService(
             BlockIndexService blockIndexService,
@@ -33,7 +35,9 @@ namespace Stratis.Guru.Services
             IMemoryCache memoryCache, 
             UpdateHub hub, 
             IHubContext<UpdateHub> hubContext, 
-            IOptions<NakoSettings> nakoSettings, 
+            IOptions<NakoSettings> nakoSettings,
+            IOptions<FeaturesSettings> featuresSettings,
+            IOptions<CurrencySettings> currencySettings,
             IOptions<TickerSettings> tickerSettings)
         {
             _tickerService = tickerService;
@@ -42,21 +46,32 @@ namespace Stratis.Guru.Services
             _hub = hub;
             _hubContext = hubContext;
             _nakoApiSettings = nakoSettings.Value;
+            _featuresSettings = featuresSettings.Value;
+            _currencySettings = currencySettings.Value;
             _tickerSettings = tickerSettings.Value;
             _currencyService = currencyService;
-
-            _nakoTimer = new System.Timers.Timer();
-            _tickerTimer = new System.Timers.Timer();
-            _currencyTimer = new System.Timers.Timer();
+            
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            StartNakoTimer();
+            if (_featuresSettings.Explorer)
+            {
+                _nakoTimer = new System.Timers.Timer();
+                StartNakoTimer();
+            }
 
-            StartTickerTimer(cancellationToken);
+            if (_featuresSettings.Ticker)
+            {
+                _tickerTimer = new System.Timers.Timer();
+                StartTickerTimer(cancellationToken);
+            }
 
-            StartCurrencyTimer();
+            if (_currencySettings.AutoConvert)
+            {
+                _currencyTimer = new System.Timers.Timer();
+                StartCurrencyTimer();
+            }
 
             return Task.CompletedTask;
         }

@@ -75,16 +75,23 @@ namespace Stratis.Guru.Controllers
             ViewBag.Ticker = _tickerSettings;
             ViewBag.Url = Request.Host.ToString();
 
-            var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-            var ticker = _tickerService.GetCachedTicker();
-            var regionInfo = _currencyService.GetRegionaInfo(rqf);
-            var displayPrice = _currencyService.GetExchangePrice(ticker.DisplayPrice, regionInfo.ISOCurrencySymbol);
-
-            return View(new Ticker
+            if (_featuresSettings.Ticker)
             {
-                DisplayPrice = displayPrice,
-                Last24Change = ticker.Last24Change
-            });
+                var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                var ticker = _tickerService.GetCachedTicker();
+                var regionInfo = _currencyService.GetRegionaInfo(rqf);
+                var displayPrice = _currencyService.GetExchangePrice(ticker.DisplayPrice, regionInfo.ISOCurrencySymbol);
+
+                return View(new Ticker
+                {
+                    DisplayPrice = displayPrice,
+                    Last24Change = ticker.Last24Change
+                });
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [Route("lottery")]

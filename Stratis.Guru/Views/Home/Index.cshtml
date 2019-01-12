@@ -22,16 +22,22 @@
                     }
 
                     <a asp-controller="BlockExplorer" asp-action="Index" class="btn-secondary-box"><i class="fa fa-cube"></i> Go to Block Explorer</a>
-                    <a href="@ViewBag.Ticker.WebUrl" class="btn-secondary-box" target="_blank"><i class="fa fa-cube"></i> Price Details</a>
+                    @if (ViewBag.Features.Ticker)
+                    {
+                        <a href="@ViewBag.Ticker.WebUrl" class="btn-secondary-box" target="_blank"><i class="fa fa-cube"></i> Price Details</a>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </section>
 @section Scripts
-{
+    {
     <script src="~/lib/@@aspnet/signalr/dist/browser/signalr.min.js"></script>
+
+    @if (ViewBag.Features.Ticker) { 
     <script type="text/javascript">
+
         $(document).ready(function() {
             var stratisPrice = @Model.DisplayPrice.ToString("N", new CultureInfo("en-US"));
             var stratisAmount = 1;
@@ -40,7 +46,7 @@
                 $.getJSON("/api/price?notApi=true&amount=" + stratisAmount, function(e) {
                     $("#amount").text(e.usdPrice);
                     $("#lastchange").find(".inner").text(e.last24Change);
-                    NProgress.done(); 
+                    NProgress.done();
                 });
             }
             var signalr = new signalR.HubConnectionBuilder().withUrl("/update", { transport: signalR.HttpTransportType.LongPolling }).build();
@@ -68,4 +74,6 @@
             });
         })
     </script>
+    }
+
 }

@@ -15,8 +15,7 @@ namespace Stratis.Guru
         public static void Main(string[] args)
         {
             var chain = (args.Length == 0) ? "STRAT" : args[0].ToUpper();
-
-            chain = (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("CHAIN"))) ? "STRAT" : Environment.GetEnvironmentVariable("CHAIN").ToUpper();
+            chain = (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("CHAIN"))) ? chain : Environment.GetEnvironmentVariable("CHAIN").ToUpper();
 
             var config = new ConfigurationBuilder()
               .SetBasePath(Directory.GetCurrentDirectory())

@@ -65,6 +65,7 @@ namespace Stratis.Guru.Controllers
             _setupSettings = setupSettings.Value;
             _tickerSettings = tickerSettings.Value;
             _featuresSettings = featuresSettings.Value;
+
         }
         
         public IActionResult Index()
@@ -72,6 +73,7 @@ namespace Stratis.Guru.Controllers
             ViewBag.Features = _featuresSettings;
             ViewBag.Setup = _setupSettings;
             ViewBag.Ticker = _tickerSettings;
+            ViewBag.Url = Request.Host.ToString();
 
             var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
             var ticker = _tickerService.GetCachedTicker();

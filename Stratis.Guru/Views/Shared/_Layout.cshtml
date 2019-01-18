@@ -2,34 +2,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Setup.Title | @ViewBag.Title</title>
-	<meta name="Content-Language" content="en">
-	<meta name="Description" content="@(ViewBag.Description ?? $"{ViewBag.Setup.Title} is a Simple and Free ${ViewBag.Setup.Coin} ticker, an Address Generator and a Vanity Address service.")">
-	<meta name="Keywords" content="stratis,bitcoin,cryptos,cryptocurrencies,coins,$@ViewBag.Setup.Coin,ticker,explorer,block explorer,vanity address,stratis block explorer,$strat block explorer,stratis generator,stratis price ticker,stratis preev,stratis vanity address,clint.network,SR2ZXnhRnMqJNoeDiCFUnaug7TKHJocwDd,">
-	<meta name="Author" content="Clint.Network">
-	<meta name="Identifier-Url" content="//@ViewBag.Url">
-	<meta name="Reply-To" content="stratis-guru@volto.io">
-	<meta name="Revisit-After" content="1 day">
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:site" content="clint_network">
-	<meta name="twitter:title" content="@ViewBag.Setup.Title | Online @ViewBag.Setup.Chain ($@ViewBag.Setup.Coin) price ticker">
-	<meta name="twitter:description" content="@ViewBag.Setup.Title is a Simple and Free $@ViewBag.Setup.Coin ticker, an Address Generator and a Vanity Address service.">
-	<link rel="icon" href="~/favicon.ico" />
-	<link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link href="~/css/owl.carousel.min.css" rel="stylesheet" type="text/css">
-	<link href="~/css/owl.theme.default.min.css" rel="stylesheet" type="text/css">
-	<link href="~/lib/nprogress/nprogress.css" rel="stylesheet" type="text/css">
-	<environment include="Development">
-		<link href="~/css/default.css" rel="stylesheet" type="text/css">
-	</environment>
-	<environment exclude="Development">
-		<link href="~/css/default.min.css" rel="stylesheet" type="text/css">
-	</environment>
-	@RenderSection("Style", false)
+    <meta name="Content-Language" content="en">
+    <meta name="Description" content="@(ViewBag.Description ?? $"{ViewBag.Setup.Title} is a Simple and Free ${ViewBag.Setup.Coin} ticker, an Address Generator and a Vanity Address service.")">
+    <meta name="Keywords" content="stratis,bitcoin,cryptos,cryptocurrencies,coins,$@ViewBag.Setup.Coin,ticker,explorer,block explorer,vanity address,stratis block explorer,$strat block explorer,stratis generator,stratis price ticker,stratis preev,stratis vanity address,clint.network,SR2ZXnhRnMqJNoeDiCFUnaug7TKHJocwDd,">
+    <meta name="Author" content="Clint.Network">
+    <meta name="Identifier-Url" content="//@ViewBag.Url">
+    <meta name="Reply-To" content="stratis-guru@volto.io">
+    <meta name="Revisit-After" content="1 day">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="clint_network">
+    <meta name="twitter:title" content="@ViewBag.Setup.Title | Online @ViewBag.Setup.Chain ($@ViewBag.Setup.Coin) price ticker">
+    <meta name="twitter:description" content="@ViewBag.Setup.Title is a Simple and Free $@ViewBag.Setup.Coin ticker, an Address Generator and a Vanity Address service.">
+    <link rel="icon" href="~/favicon.ico" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/owl.carousel.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/owl.theme.default.min.css" rel="stylesheet" type="text/css">
+    <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" type="text/css">
+    <environment include="Development">
+        <link href="~/css/default.css" rel="stylesheet" type="text/css">
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/default.min.css" rel="stylesheet" type="text/css">
+    </environment>
+    <link href="~/css/explorer.css" rel="stylesheet" type="text/css">
+    @RenderSection("Style", false)
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>

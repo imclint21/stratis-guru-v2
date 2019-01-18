@@ -78,15 +78,10 @@ namespace Stratis.Guru.Controllers
             if (_featuresSettings.Ticker)
             {
                 var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-                var ticker = _tickerService.GetCachedTicker();
                 var regionInfo = _currencyService.GetRegionaInfo(rqf);
-                var displayPrice = _currencyService.GetExchangePrice(ticker.DisplayPrice, regionInfo.ISOCurrencySymbol);
+                var ticker = _tickerService.GetTicker(regionInfo.ISOCurrencySymbol);
 
-                return View(new Ticker
-                {
-                    DisplayPrice = displayPrice,
-                    Last24Change = ticker.Last24Change
-                });
+                return View(ticker);
             }
             else
             {
@@ -167,7 +162,7 @@ namespace Stratis.Guru.Controllers
             if(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance > 0)
             {
                 HttpContext.Session.SetString("Deposited", depositAddress);
-                HttpContext.Session.SetString("DepositedAmount", ((double)(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance)).ToString());
+                HttpContext.Session.SetString("DepositedAmount", ((decimal)(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance)).ToString());
                 return Json(true);
             }
             return BadRequest();
@@ -189,7 +184,7 @@ namespace Stratis.Guru.Controllers
         public IActionResult SaveParticipation(string nickname, string address)
         {
             _settings.IncrementIterator();
-            _participation.StoreParticipation(HttpContext.Session.GetString("Ticket"), nickname, address, double.Parse(HttpContext.Session.GetString("DepositedAmount")));
+            _participation.StoreParticipation(HttpContext.Session.GetString("Ticket"), nickname, address, decimal.Parse(HttpContext.Session.GetString("DepositedAmount")));
 
             return RedirectToAction("Participated");
         }

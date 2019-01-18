@@ -18,7 +18,7 @@ namespace Stratis.Guru.Models
 
         public List<Participation> GetPlayers(string draw) => _databaseContext.Participations.Find(x => x.Draw.Equals(draw)).ToList().OrderByDescending(x => x.CreationDate).ToList();
 
-        public void StoreParticipation(string ticket, string nickname, string address, double amount)
+        public void StoreParticipation(string ticket, string nickname, string address, decimal amount)
         {
             _databaseContext.Participations.InsertOne(new Participation
             {

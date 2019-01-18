@@ -53,7 +53,7 @@ namespace Stratis.Guru.Services
         {
             Task.Run(() => 
             {
-                var totalJackpot = 0.0;
+                decimal totalJackpot = 0;
                 var pubkey = ExtPubKey.Parse(_drawSettings.PublicKey);
                 for(int i=0; i<=_settings.GetIterator(); i++)
                 {
@@ -62,7 +62,7 @@ namespace Stratis.Guru.Services
                     var rq = new RestRequest(Method.GET);
                     var response = rc.Execute(rq);
                     dynamic stratisAdressRequest = JsonConvert.DeserializeObject(response.Content);
-                    totalJackpot += (double)stratisAdressRequest.balance;
+                    totalJackpot += (decimal)stratisAdressRequest.balance;
                 }
                 _memoryCache.Set("Jackpot", totalJackpot);
             });

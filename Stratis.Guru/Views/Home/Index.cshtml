@@ -13,11 +13,12 @@
                     {
                         <h1 class="m-0">The <strong>$@ViewBag.Setup.Coin</strong> price in real time.</h1>
                         <h1 class="align-middle">
-                            <div class="d-lg-inline-block d-md-block align-middle">
-                                <span class="click-edit" spellcheck="false">1</span> @ViewBag.Setup.Coin <span class="d-none d-lg-inline-block">=</span>
-                            </div>
-                            <span class="align-middle display-1 font-weight-bold" id="amount">@(Model.DisplayPrice.ToString("C2"))</span>
+                            @*<div class="d-lg-inline-block d-md-block align-middle">
+                          
+                            </div>*@
+                            <span class="align-middle display-1 font-weight-bold" id="amount">₿@(Model.PriceBtc)</span>
                             <span id="lastchange" class="d-block d-lg-inline-block change-@(Model.Last24Change > 0 ? "success":"danger") font-weight-bold"><sup> <span class="d-none d-lg-inline-block">@((Model.Last24Change > 0 ? "+" : ""))</span> <span class="inner">@(Model.Last24Change.ToString("P2"))</span></sup></span>
+                            <div class="align-middle display-3 font-weight-bold" id="amount">@(Model.Price.ToString("C2"))</div>
                         </h1>
                     }
 
@@ -39,7 +40,7 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            var stratisPrice = @Model.DisplayPrice.ToString("N", new CultureInfo("en-US"));
+            var stratisPrice = @Model.PriceBtc;
             var stratisAmount = 1;
             function UpdateTicker() {
                 NProgress.start();

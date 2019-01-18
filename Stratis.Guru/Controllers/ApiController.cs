@@ -39,29 +39,26 @@ namespace Stratis.Guru.Controllers
         
         [HttpGet]
         [Route("price")]
-        public ActionResult<object> Price(bool notApi = false, double amount = 1)
+        public ActionResult<object> Price(bool notApi = false, decimal amount = 1)
         {
             try
             {
-                var ticker = _tickerService.GetCachedTicker();
+                var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                var regionInfo = _currencyService.GetRegionaInfo(rqf);
+                var ticker = _tickerService.GetTicker(regionInfo.ISOCurrencySymbol);
 
                 if (notApi)
                 {
-                    var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-                    var regionInfo = _currencyService.GetRegionaInfo(rqf);
-                    var displayPrice = _currencyService.GetExchangePrice(ticker.DisplayPrice, regionInfo.ISOCurrencySymbol);
-
                     return new TickerApi
                     {
-                        UsdPrice = (displayPrice * amount).ToString("C"),
+                        Symbol = ticker.Symbol,
+                        PriceBtc = ticker.PriceBtc.ToString(),
+                        Price = ticker.Price.ToString("C2"),
                         Last24Change = (ticker.Last24Change).ToString("P2")
                     };
                 }
-                return new Ticker
-                {
-                    DisplayPrice = ticker.DisplayPrice * amount,
-                    Last24Change = ticker.Last24Change
-                };
+
+                return ticker;
             }
             catch
             {

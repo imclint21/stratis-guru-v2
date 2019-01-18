@@ -88,11 +88,11 @@
                         </thead>
                         <tbody>
                         @{
-                            double total = 0;
+                            decimal total = 0;
                         }
                         @foreach (var transaction in Model.Transactions)
                         {
-                            total += (double)transaction.Value;
+                            total += (decimal)transaction.Value;
                             <tr>
                                 <td><a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@transaction.TransactionHash">@transaction.TransactionHash.ToString().Substring(0, 25)...</a></td>
                                 <td><a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@transaction.BlockIndex">@transaction.BlockIndex</a></td>

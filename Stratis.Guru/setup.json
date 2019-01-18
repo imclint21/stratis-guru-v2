@@ -9,16 +9,17 @@
     "PublicKey": ""
   },
   "Currency": {
-    "ApiUrl": "https://api.exchangeratesapi.io",
+    "ApiUrl": "https://api.coincap.io/v2/rates",
     // Enable the auto convert to translate from USD to local currency based on the web browser culture.
-    "AutoConvert": false
+    "AutoConvert": true
   },
   "Ticker": {
     "WebUrl": "",
     "ApiUrl": "",
     // The "Path" value are used to navigate the JSON structure retrieved from the APIs.
     "PricePath": "",
-    "PercentagePath": ""
+    "PercentagePath": "",
+    "IsBitcoinPrice": false
   },
   "Setup": {
     "Title": "",

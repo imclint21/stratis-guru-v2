@@ -58,7 +58,7 @@
                                     @Model.Confirmations
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td><strong>Block Date/Time</strong></td>
                                 <td>@Model.Timestamp.ToString("F")</td>
@@ -69,11 +69,11 @@
                                     <td><strong>Total Output</strong></td>
                                     <td>
                                         @{
-                                            double totalOutpus = 0;
+                                            decimal totalOutpus = 0;
                                         }
                                         @foreach (var t in Model.Outputs)
                                         {
-                                            totalOutpus += (double)t.Balance;
+                                            totalOutpus += (decimal)t.Balance;
                                         }
                                         @totalOutpus.ToString("N8") @Model.CoinTag
                                     </td>

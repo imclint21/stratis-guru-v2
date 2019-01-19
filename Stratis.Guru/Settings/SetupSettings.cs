@@ -20,5 +20,7 @@ namespace Stratis.Guru.Settings
         public string Coin { get; set; }
 
         public string Footer { get; set; }
+
+        public string Icon { get; set; }
     }
 }

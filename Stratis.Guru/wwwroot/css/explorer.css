@@ -7,6 +7,10 @@
     margin-bottom: 6px;
 }
 
+.reduced-fab {
+    font-size: 0.8em;
+}
+
 @media (max-width: 1090px) {
     .display-1 {
         font-size: 4.6rem !important;

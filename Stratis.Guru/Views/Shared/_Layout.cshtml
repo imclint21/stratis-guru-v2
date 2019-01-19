@@ -19,7 +19,7 @@
     <meta name="twitter:description" content="@ViewBag.Setup.Title is a Simple and Free $@ViewBag.Setup.Coin ticker, an Address Generator and a Vanity Address service.">
     <link rel="icon" href="~/favicon.ico" />
     <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/all.css" rel="stylesheet" type="text/css">
     <link href="~/css/owl.carousel.min.css" rel="stylesheet" type="text/css">
     <link href="~/css/owl.theme.default.min.css" rel="stylesheet" type="text/css">
     <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" type="text/css">
@@ -40,7 +40,16 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <a asp-controller="Home" asp-action="Index" class="logo ">
-                            <img src="~/images/logo.png" class="" alt="@ViewBag.Setup.Title" /> <span class="text-white">@ViewBag.Setup.Title</span> <span class="text-info text-hide">v2</span>
+                            @if (!string.IsNullOrWhiteSpace(ViewBag.Setup.Icon))
+                            {
+                                <img src="@ViewBag.Setup.Icon" class="" alt="@ViewBag.Setup.Title" />
+                            }
+                            else
+                            {
+                                <img src="~/images/logo.png" class="" alt="@ViewBag.Setup.Title" />
+                            }
+                            <span class="text-white">@ViewBag.Setup.Title</span> <span class="text-info text-hide">v2</span>
+
                         </a>
                         <ul class="nav">
                             @if (ViewBag.Features.Home)

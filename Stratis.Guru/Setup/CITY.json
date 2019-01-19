@@ -13,7 +13,8 @@
     "Title": "City Chain Explorer",
     "Chain": "City Chain",
     "Coin": "CITY",
-    "Footer": "https://city-chain.org"
+    "Footer": "https://city-chain.org",
+    "Icon": "https://city-chain.org/images/icons/city-coin-128x128.png"
   },
   "Features": {
     "Lottery": false,

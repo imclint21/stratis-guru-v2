@@ -1,6 +1,5 @@
-site_name: Stratis.Guru
-site_description: Strati.Guru API Documentation
+site_name: City.Chain.Explorer
+site_description: City Chain Explorer API Documentation
 site_author: Clint Mourlevat
-repo_url: https://github.com/clintnetwork/stratis-guru-v2.git
-google_analytics: ["UA-111742056-1", "stratis.guru"]
+repo_url: https://github.com/CityChainFoundation/city-explorer.git
 theme: readthedocs

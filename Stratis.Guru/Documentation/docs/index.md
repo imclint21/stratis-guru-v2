@@ -1,9 +1,9 @@
-# Stratis.Guru Documentation
+# City Chain Explorer Documentation
 
-This documentation describes how to use the Stratis.Guru API.
+This documentation describes how to use the City Chain Explorer API.
 
 ## Create Stratis Key Pair
-This endpoint generate a new Stratis Address and returns a public and private key pair.    
+This endpoint generate a new City Chain Address and returns a public and private key pair.    
 ```
 GET https://stratis.guru/api/create-address
 ```

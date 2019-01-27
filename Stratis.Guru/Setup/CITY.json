@@ -14,7 +14,8 @@
     "Chain": "City Chain",
     "Coin": "CITY",
     "Footer": "https://city-chain.org",
-    "Icon": "https://city-chain.org/images/icons/city-coin-128x128.png"
+    "Icon": "https://city-chain.org/images/icons/city-coin-128x128.png",
+    "DocumentationUrl": "https://citychain.gitbook.io/explorer/"
   },
   "Features": {
     "Lottery": false,

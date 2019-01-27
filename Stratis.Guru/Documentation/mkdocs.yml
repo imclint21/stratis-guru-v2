@@ -1,5 +1,0 @@
-site_name: BlockExplorer
-site_description: Block Explorer API Documentation
-site_author: Clint Mourlevat
-repo_url: https://github.com/CityChainFoundation/city-explorer.git
-theme: readthedocs

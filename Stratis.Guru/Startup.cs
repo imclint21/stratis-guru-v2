@@ -101,14 +101,14 @@ namespace Stratis.Guru
             app.UseCors(builder => builder.WithOrigins("http:/localhost:1989"));
 
             // Add Documentation (MkDocs) Support
-            app.UseFileServer(new FileServerOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Documentation/site/")),
-                RequestPath = "/documentation",
-                EnableDirectoryBrowsing = false,
-                EnableDefaultFiles = true,
-                DefaultFilesOptions = { DefaultFileNames = { "index.html" } }
-            });
+            //app.UseFileServer(new FileServerOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Documentation/site/")),
+            //    RequestPath = "/documentation",
+            //    EnableDirectoryBrowsing = false,
+            //    EnableDefaultFiles = true,
+            //    DefaultFilesOptions = { DefaultFileNames = { "index.html" } }
+            //});
 
             // Add Culture Detection Support
             List<CultureInfo> allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => !x.IsNeutralCulture).ToList();

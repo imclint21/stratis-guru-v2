@@ -79,7 +79,7 @@
 
                             @if (ViewBag.Features.API)
                             {
-                                <li class="@(Context.Request.Path.Equals(Url.Action("Documentation", "Home")) ? "active":"")"><a asp-action="Documentation" asp-controller="Home"><i class="fa fa-book"></i> API</a></li>
+                                <li><a href="@ViewBag.Setup.DocumentationUrl"><i class="fa fa-book"></i> API</a></li>
                             }
 
                             @if (ViewBag.Features.About)

@@ -4,3 +4,4 @@ obj
 .vscode
 Properties
 wwwroot/lib
+**.min.css

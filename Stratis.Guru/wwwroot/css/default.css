@@ -3289,9 +3289,18 @@ h2 {
     display: inline;
     white-space: nowrap;
 }
-
 @media (min-width: 1200px) {
     .container {
         max-width: 1250px;
     }
+}
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1300px;
+    }
+}
+
+p.lead
+{
+    font-size: 1.15rem !important;
 }

@@ -37,6 +37,7 @@ namespace Stratis.Guru.Controllers
         private readonly DrawSettings _drawSettings;
         private readonly SetupSettings _setupSettings;
         private readonly FeaturesSettings _featuresSettings;
+        private readonly ColdStakingSettings _coldStakingSettings;
 
         public HomeController(IMemoryCache memoryCache, 
             IAsk ask, 
@@ -45,7 +46,8 @@ namespace Stratis.Guru.Controllers
             IDraws draws, 
             IOptions<DrawSettings> drawSettings, 
             IOptions<SetupSettings> setupSettings,
-            IOptions<FeaturesSettings> featuresSettings)
+            IOptions<FeaturesSettings> featuresSettings,
+            IOptions<ColdStakingSettings> coldStakingSettings)
         {
             _memoryCache = memoryCache;
             _ask = ask;
@@ -55,6 +57,7 @@ namespace Stratis.Guru.Controllers
             _drawSettings = drawSettings.Value;
             _setupSettings = setupSettings.Value;
             _featuresSettings = featuresSettings.Value;
+            _coldStakingSettings = coldStakingSettings.Value;
         }
         
         public IActionResult Index()
@@ -92,6 +95,28 @@ namespace Stratis.Guru.Controllers
                 DisplayPrice = displayPrice,
                 Last24Change = last24Change
             });
+        }
+
+        [Route("coldstaking-progress/{testnet?}")]
+        public IActionResult ColdStakingProgress(string testnet = null)
+        {
+            ViewBag.Testnet = testnet;
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
+            string lastColdStakingStatus;
+
+            if (!_memoryCache.TryGetValue(testnet == null ? "cold-staking-mainnet":"cold-staking-testnet", out lastColdStakingStatus))
+            {
+                var client = new RestClient(testnet == null ? _coldStakingSettings.Mainnet : _coldStakingSettings.Testnet);
+                var request = new RestRequest(Method.GET);
+                lastColdStakingStatus = client.Execute(request).Content;
+                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(5));
+                _memoryCache.Set(testnet == null ? "cold-staking-mainnet" : "cold-staking-testnet", lastColdStakingStatus, cacheEntryOptions);
+            }
+            ViewBag.Status = (JsonConvert.DeserializeObject(lastColdStakingStatus) as dynamic)[0];
+
+            return View();
         }
 
         [Route("lottery")]

@@ -1,8 +1,12 @@
-[
-  {
+[{
     "outputFileName": "wwwroot/css/default.min.css",
     "inputFiles": [
       "wwwroot/css/default.css"
+    ]
+  }, {
+    "outputFileName": "wwwroot/css/progressbar.min.css",
+    "inputFiles": [
+      "wwwroot/css/progressbar.css"
     ]
   },
   {

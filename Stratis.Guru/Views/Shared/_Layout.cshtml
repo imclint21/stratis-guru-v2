@@ -52,7 +52,12 @@
 
                             @if (ViewBag.Features.Explorer)
                             {
-                                <li class="@(Context.Request.Path.Equals(Url.Action("Index", "BlockExplorer")) ? "active":"")"><a asp-action="Index" asp-controller="BlockExplorer"><i class="fa fa-cube"></i> BLOCK EXPLORER</a></li>
+                                <li class="@(Context.Request.Path.Equals(Url.Action("Index", "BlockExplorer")) ? "active":"")"><a asp-action="Index" asp-controller="BlockExplorer"><i class="fa fa-cube"></i> EXPLORER</a></li>
+                            }
+
+                            @if (ViewBag.Features.ColdStaking)
+                            {
+                                <li class="@(Context.Request.Path.Equals(Url.Action("ColdStakingProgress", "Home")) ? "active":"")"><a asp-action="ColdStakingProgress" asp-controller="Home"><i class="fa fa-snowflake-o"></i> COLD STAKING</a></li>
                             }
 
                             @if (ViewBag.Features.Vanity)

@@ -1,0 +1,59 @@
+@{
+    ViewBag.Title = "Cold Staking Activation Progress";
+    ViewBag.Description = "Stratis.guru reborn from the first version developed in ASP.Net MVC, the new version is made with Microsoft(R) .Net Core and use the NStratis Library.";
+    Layout = "_Layout";
+}
+@section Style
+{
+	<environment include="Development">
+        <link rel="stylesheet" href="~/css/progressbar.css" />
+	</environment>
+	<environment exclude="Development">
+        <link rel="stylesheet" href="~/css/progressbar.min.css" />
+	</environment>
+}
+<div class="shadow-inset"></div>
+<section class="welcome-area pb-4" id="welcome-1">
+    <div class="header-token">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
+                    <h1 class="mt-lg-5"><strong>Cold Staking</strong> Activation Progress</h1>
+                    <p class="mb-3 lead">The current period will end at block @(ViewBag.Status.periodStartHeight), in another @((int)ViewBag.Status.periodEndHeight - (int)ViewBag.Status.height) blocks.<br />Since block @(ViewBag.Status.periodStartHeight) there where @(ViewBag.Status.votes) blocks (@(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks).ToString("P0"))) that signalled to activate cold staking</p>
+                    <div class="row">
+                        <div class="col-lg-8 col-xs-6 col-sm-6 col-offset-xs-2 offset-lg-2">
+                            <div class="chart mb-5">
+                                <div class="bar bar-@(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100).ToString("N0")) @(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100) == 100 ? "lime":"cyan")">
+                                    <div class="face top">
+                                        <div class="growing-bar"></div>
+                                    </div>
+                                    <div class="face side-0">
+                                        <div class="growing-bar"></div>
+                                    </div>
+                                    <div class="face floor">
+                                        <div class="growing-bar"></div>
+                                    </div>
+                                    <div class="face side-a"></div>
+                                    <div class="face side-b"></div>
+                                    <div class="face side-1">
+                                        <div class="growing-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="small">Cold Staking is a safe way to stake coins online since coins are not susceptible<br />to online attack while they are held in an off-line wallet. <a class="text-warning" href="https://academy.stratisplatform.com/FullNode/ColdStaking/ColdStaking.html">Read More on Stratis Academy</a></p>
+                    <div class="dropdown mb-0">
+                        <button class="btn btn-outline-light btn-lg dropdown-toggle" type="button"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Stratis @(ViewBag.Testnet == null ? "Mainnet" : "Testnet")
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-action="ColdStakingProgress" asp-route-testnet="@(null)">Switch to MainNet</a>
+                            <a class="dropdown-item" asp-action="ColdStakingProgress" asp-route-testnet="testnet">Switch to TestNet</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -14,6 +14,7 @@ namespace Stratis.Guru.Settings
         public bool Lottery { get; set; } = true;
 
         public bool Explorer { get; set; } = true;
+        public bool ColdStaking { get; set; } = true;
 
         public bool Vanity { get; set; } = true;
 

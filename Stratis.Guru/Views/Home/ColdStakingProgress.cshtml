@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
                     <h1 class="mt-lg-5"><strong>Cold Staking</strong> Activation Progress</h1>
-                    <p class="mb-3 lead">The current activation period will end on block @(ViewBag.Status.periodStartHeight), there are @((int)ViewBag.Status.periodEndHeight - (int)ViewBag.Status.height) blocks remaining for this period.<br />Since block @(ViewBag.Status.periodStartHeight) there were @(ViewBag.Status.votes) blocks (@(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks).ToString("P0"))) that signalled to activate cold staking</p>
+                    <p class="mb-3 lead">The current activation period will end on block @(ViewBag.Status.periodStartHeight), and there are @((int)ViewBag.Status.periodEndHeight - (int)ViewBag.Status.height) blocks remaining for this period.<br />Since the start of the activation period, @(ViewBag.Status.votes) blocks, which is @(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks).ToString("P0")) of the blocks already mined, have signalled to activate cold staking.</p>
                     <div class="row">
                         <div class="col-lg-8 col-xs-6 col-sm-6 col-offset-xs-2 offset-lg-2">
                             <div class="chart mb-5">

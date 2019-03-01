@@ -90,7 +90,7 @@ namespace Stratis.Guru.Controllers
                 }
             }
             
-            return View(new Ticker
+            return View("Index", new Ticker
             {
                 DisplayPrice = displayPrice,
                 Last24Change = last24Change
@@ -117,6 +117,15 @@ namespace Stratis.Guru.Controllers
             ViewBag.Status = (JsonConvert.DeserializeObject(lastColdStakingStatus) as dynamic)[0];
 
             return View();
+        }
+
+        [Route("donation/{address}")]
+        public IActionResult Donation(string address)
+        {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+            ViewBag.DonationAddress = address;
+            return Index();
         }
 
         [Route("lottery")]

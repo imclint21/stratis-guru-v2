@@ -2,6 +2,32 @@
 @{
     ViewBag.Title = "Online Stratis ($STRAT) price ticker";
 }
+@if(ViewBag.DonationAddress != null)
+{
+    <div class="modal fade" id="donation-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-qrcode"></i> Send a Tips</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <h2 class="text-dark mb-1">Make a Donation</h2>
+                    <p>Feel free to send a donation at this address.</p>
+                    <img class="my-4" src="@Url.Action("Qr", "Home", new {value=ViewBag.DonationAddress})" style="width: 250px;" />
+                    <h4>Send your donation to this address: <code>@ViewBag.DonationAddress</code></h4>
+                    <p class="mt-3">@(Context.Request.Query.Any(x => x.Key == "message") ? Context.Request.Query["message"].ToString() : "")</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a asp-action="Index" class="btn btn-primary"><i class="fa fa-check"></i> It's Done</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 <div class="shadow-inset"></div>
 <section class="welcome-area pb-4" id="welcome-1">
     <div class="header-token">
@@ -32,6 +58,8 @@
     <script src="~/lib/@@aspnet/signalr/dist/browser/signalr.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            $("#donation-modal").modal("show");
+
             var stratisPrice = @Model.DisplayPrice.ToString("N", new CultureInfo("en-US"));
             var stratisAmount = 1;
             function UpdateTicker() {

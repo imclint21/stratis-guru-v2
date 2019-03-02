@@ -1,3 +1,4 @@
+@using Stratis.Guru.Models
 @{
     ViewBag.Title = "Cold Staking Activation Progress";
     ViewBag.Description = "Cold Staking is a safe way to stake coins online since coins are not susceptible to online attack while they are held in an off-line wallet.";
@@ -23,7 +24,25 @@
                     <div class="row">
                         <div class="col-lg-8 col-xs-6 col-sm-6 col-offset-xs-2 offset-lg-2">
                             <div class="chart mb-5">
-                                <div class="bar bar-@(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100).ToString("N0")) @(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100) >= 95 ? "lime":"cyan")">
+                                <div class="bar bar-@(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100).ToString("N0")) @switch((ThresholdState)ViewBag.Status.thresholdState)
+                                {
+                                    default:
+                                    @("navy")
+                                    break;
+
+                                    case ThresholdState.Started:
+                                    @("cyan")
+                                    break;
+
+                                    case ThresholdState.Failed:
+                                    @("red")
+                                    break;
+
+                                    case ThresholdState.LockedIn:
+                                    case ThresholdState.Active:
+                                    @("green")
+                                    break;
+                                }">
                                     <div class="face top">
                                         <div class="growing-bar"></div>
                                     </div>

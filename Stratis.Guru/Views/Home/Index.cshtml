@@ -22,7 +22,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <a asp-action="Index" class="btn btn-primary"><i class="fa fa-check"></i> It's Done</a>
+                    <a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@ViewBag.DonationAddress" class="btn btn-primary"><i class="fa fa-check"></i> It's Done</a>
                 </div>
             </div>
         </div>

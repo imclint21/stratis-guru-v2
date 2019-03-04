@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
-                    @if((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.LockedIn)
+                    @if((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.LockedIn || (ThresholdState)ViewBag.Status.thresholdState == ThresholdState.Active) 
                     {
                         <h1 class="mt-lg-5"><strong>Cold Staking</strong> is Active</h1>
                     }

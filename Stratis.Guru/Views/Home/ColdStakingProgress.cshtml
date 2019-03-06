@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-lg-8 col-xs-6 col-sm-6 col-offset-xs-2 offset-lg-2">
                             <div class="chart mb-5">
-                                <div class="bar bar-@(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100).ToString("N0")) @switch((ThresholdState)ViewBag.Status.thresholdState)
+                                <div class="bar bar-@((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.Active ? "100" : ((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100).ToString("N0")) @switch((ThresholdState)ViewBag.Status.thresholdState)
                                 {
                                     default:
                                     @("navy")

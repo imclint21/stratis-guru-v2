@@ -113,7 +113,7 @@ namespace Stratis.Guru
             });
 
             // Add Culture Detection Support
-            var allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => !x.IsNeutralCulture).ToList();
+            var allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures).ToList();   //.Where(x => !x.IsNeutralCulture)
             var defaultCulture = new RequestCulture("en-US");
             defaultCulture.UICulture.NumberFormat.CurrencySymbol = "$";
             app.UseRequestLocalization(new RequestLocalizationOptions

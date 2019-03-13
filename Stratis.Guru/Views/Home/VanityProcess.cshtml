@@ -1,0 +1,46 @@
+@{
+    ViewBag.Title = "Vanity Address Generator";
+    ViewBag.Description = "Generate a vanity address with a prefix that you define, by example STRATnhRnMqJNoeDiCFUnaug7TKHJocwDd.";
+    Layout = "_Layout";
+}
+<div class="shadow-inset"></div>
+<section class="welcome-area pb-4" id="welcome-1">
+    <form class="header-token" method="post" asp-controller="Home" asp-action="BeginVanity">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
+                    @if(ViewBag.Succeed)
+                    {
+                        <i class="fa fa-check text-success fa-5x mb-3"></i>
+                        <h1>Vanity Process Ended</h1>
+                        <p class="small mb-2">We have found a stratis address <span class="text-warning">@(ViewBag.PublicKey)</span><br />with the <span class="text-warning">@(ViewBag.PrivateKey)</span> associated private key.</p>
+                        <p class="extra small">A total of @(ViewBag.Count) iteration has been needed to get this address.</p>
+                        <a asp-controller="Home" asp-action="DropVanity" asp-route-prefix="@ViewBag.Prefix" class="btn-white-line mt-3"><i class="fa fa-ban"></i> Drop from the Memory</a>
+                    }
+                    else
+                    {
+                        <i class="fa fa-circle-o-notch fa-spin text-success fa-5x mb-3"></i>
+                        <h1>Vanity Process Started</h1>
+                        <p class="m-2">The vanity processs has been started, please wait for a couple of minutes.</p>
+                        <p class="small text-muted extra mb-5">Please don't close this page during the process.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+@section Scripts
+{
+    @if(ViewBag.Succeed)
+    {
+        <script type="text/javascript">
+            window.onbeforeunload = function () {return false;}
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            setInterval(function(){ window.location.reload(); }, 5000);
+        </script>
+    }
+}

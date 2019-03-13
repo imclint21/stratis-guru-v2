@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
@@ -21,6 +22,7 @@ using Newtonsoft.Json.Linq;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using QRCoder;
 using RestSharp;
+using Stratis.Guru.Hubs;
 using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
 using Stratis.Guru.Settings;
@@ -34,6 +36,8 @@ namespace Stratis.Guru.Controllers
         private readonly ISettings _settings;
         private readonly IParticipation _participation;
         private readonly IDraws _draws;
+        private readonly IHubContext<UpdateHub> _hubContext;
+        private readonly UpdateHub _hub;
         private readonly DrawSettings _drawSettings;
         private readonly SetupSettings _setupSettings;
         private readonly FeaturesSettings _featuresSettings;
@@ -43,7 +47,9 @@ namespace Stratis.Guru.Controllers
             IAsk ask, 
             ISettings settings, 
             IParticipation participation, 
-            IDraws draws, 
+            IDraws draws,
+            IHubContext<UpdateHub> hubContext,
+            UpdateHub hub,
             IOptions<DrawSettings> drawSettings, 
             IOptions<SetupSettings> setupSettings,
             IOptions<FeaturesSettings> featuresSettings,
@@ -54,6 +60,8 @@ namespace Stratis.Guru.Controllers
             _settings = settings;
             _participation = participation;
             _draws = draws;
+            _hub = hub;
+            _hubContext = hubContext;
             _drawSettings = drawSettings.Value;
             _setupSettings = setupSettings.Value;
             _featuresSettings = featuresSettings.Value;
@@ -266,12 +274,44 @@ namespace Stratis.Guru.Controllers
             ViewBag.Features = _featuresSettings;
             ViewBag.Setup = _setupSettings;
 
+            vanity.Prefix = $"s{vanity.Prefix}";
+            
             if (ModelState.IsValid)
             {
                 _ask.NewVanity(vanity);
-                ViewBag.Succeed = true;
+                return RedirectToAction(nameof(VanityProcess), new { prefix = vanity.Prefix });
             }
+            return View(vanity);
+        }
+
+        [Route("vanity/begin-process/{prefix}")]
+        public IActionResult VanityProcess(string prefix)
+        {
+            ViewBag.Features = _featuresSettings;
+            ViewBag.Setup = _setupSettings;
+
+            ViewBag.Prefix = prefix;
+            ViewBag.Succeed = (_memoryCache.Get($"vanity[{prefix}]-pub") != null);
+            ViewBag.PublicKey = _memoryCache.Get($"vanity[{prefix}]-pub");
+            ViewBag.PrivateKey = _memoryCache.Get($"vanity[{prefix}]-pri");
+            ViewBag.Count = _memoryCache.Get($"vanity[{prefix}]-count");
+
             return View();
+        }
+
+        [Route("vanity/drop/{prefix}")]
+        public IActionResult DropVanity(string prefix)
+        {
+            try
+            {
+                _memoryCache.Remove($"vanity[{prefix}]-pub");
+                _memoryCache.Remove($"vanity[{prefix}]-pri");
+                _memoryCache.Remove($"vanity[{prefix}]-count");
+            }
+            catch
+            {
+            }
+            return RedirectToAction(nameof(Vanity));
         }
 
         [Route("generator")]

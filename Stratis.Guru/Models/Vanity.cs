@@ -8,11 +8,12 @@ namespace Stratis.Guru.Models
         public DateTime CreationDatetime { get; set; } = DateTime.Now;
         
         [Required(ErrorMessage = "The prefix is required.")]
-        [StringLength(4, MinimumLength = 1, ErrorMessage = "You connat overflow the size.")]
+        // [DataType(DataType.)]
+        [StringLength(4, MinimumLength = 1, ErrorMessage = "4 chars is the maximum allowed prefix.")]
         public string Prefix { get; set; }
         
-        [Required(ErrorMessage = "The email address is required.")]
-        [EmailAddress]
-        public string Email { get; set; }
+        // [Required(ErrorMessage = "The email address is required.")]
+        // [EmailAddress]
+        // public string Email { get; set; }
     }
 }

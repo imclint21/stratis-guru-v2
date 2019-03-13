@@ -82,4 +82,4 @@ To run the Stratis.Guru, you need a appsettings.json. This is currently not incl
 ```
 
 ## About the Author
-Proudly Crafted with 💖 by Clint.Network — Help me to maintain by sending $STRAT at [SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ](https://chainz.cryptoid.info/strat/address.dws?SXDaQGs56aC9ZjFzTdbhudNXTbyxU5aNXJ.htm).
+Proudly Crafted with 💖 by Clint.Network — Help me to maintain by sending $STRAT at [SjJCRWmwh1SU5TkDDCpkoHCZSKATcPwA1E](https://stratis.guru/donation/SjJCRWmwh1SU5TkDDCpkoHCZSKATcPwA1E).

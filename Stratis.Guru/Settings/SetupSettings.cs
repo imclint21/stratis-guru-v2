@@ -9,7 +9,7 @@ namespace Stratis.Guru.Settings
     {
         public SetupSettings()
         {
-            Title = "Stratis.guru";
+            Title = "Stratis.Guru";
             Chain = "Stratis";
         }
 

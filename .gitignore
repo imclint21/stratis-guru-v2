@@ -407,3 +407,5 @@ fabric.properties
 appsettings.Development.json
 appsettings.json
 Stratis.Guru/Startup.cs
+Stratis.Guru/wwwroot/css/*.min.css
+Stratis.Guru/wwwroot/js/*.min.js

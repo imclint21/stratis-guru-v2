@@ -25,6 +25,10 @@
     {
       "library": "moment@2.23.0",
       "destination": "wwwroot/lib/moment"
+    },
+    {
+      "library": "push.js@1.0.9",
+      "destination": "wwwroot/lib/push.js"
     }
   ]
 }

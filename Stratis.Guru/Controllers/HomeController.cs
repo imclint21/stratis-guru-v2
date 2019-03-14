@@ -75,8 +75,8 @@ namespace Stratis.Guru.Controllers
 
             double displayPrice = 0;
             var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-            dynamic current_price = double.Parse(_memoryCache.Get("coin_price").ToString(), CultureInfo.InvariantCulture);
-            var last24Change = double.Parse(_memoryCache.Get("last_change").ToString(), CultureInfo.InvariantCulture) / 100;
+            dynamic current_price = double.Parse(_memoryCache.Get("coin_price")?.ToString() ?? "0", CultureInfo.InvariantCulture);
+            var last24Change = double.Parse(_memoryCache.Get("last_change")?.ToString() ?? "0", CultureInfo.InvariantCulture) / 100;
             
             if (rqf.RequestCulture.UICulture.Name.Equals("en-US"))
             {

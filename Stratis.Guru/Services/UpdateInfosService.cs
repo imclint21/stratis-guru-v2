@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using RestSharp;
 using Stratis.Guru.Hubs;
 using Stratis.Guru.Settings;
@@ -42,12 +43,21 @@ namespace Stratis.Guru.Services
                     _updateTimer.AutoReset = true;
                 }
 
-                var coinmarketCapApiClient = new RestClient(_tickerSettings.ApiUrl);
-                var coinmarketCapApiRequest = new RestRequest(Method.GET);
-                var coinmarketcapApi = coinmarketCapApiClient.Execute(coinmarketCapApiRequest);
-                _memoryCache.Set("Coinmarketcap", coinmarketcapApi.Content);
-                Console.WriteLine(DateTime.Now + " - Ticker Updated");
+                var tickerApiClient = new RestClient(_tickerSettings.ApiUrl + "/simple/price?ids=stratis&vs_currencies=usd");
+                var tickerApiRequest = new RestRequest(Method.GET);
+                var tickerApiResponse = tickerApiClient.Execute(tickerApiRequest);
+                dynamic ticker_response = JsonConvert.DeserializeObject(tickerApiResponse.Content);
+                _memoryCache.Set("coin_price", (string)ticker_response.stratis.usd);
+
+                var lastChangeApiClient = new RestClient(_tickerSettings.ApiUrl + "/coins/stratis?localization=false");
+                var lastChangeApiRequest = new RestRequest(Method.GET);
+                var lastChangeApiResponse = lastChangeApiClient.Execute(lastChangeApiRequest);
+                dynamic last_change_response = JsonConvert.DeserializeObject(lastChangeApiResponse.Content);
+                // Console.WriteLine(lastChangeApiResponse.Content);
+                _memoryCache.Set("last_change", (string)last_change_response.market_data.price_change_percentage_24h);
+
                 await _hubContext.Clients.All.SendAsync("UpdateTicker", cancellationToken);
+                Console.WriteLine(DateTime.Now + " - Ticker Updated");
 
                 var blockchainStatsClient = new RestClient($"{_nakoApiSettings.Endpoint}stats");
                 var blockchainStatsRequest = new RestRequest(Method.GET);

@@ -75,12 +75,12 @@ namespace Stratis.Guru.Controllers
 
             double displayPrice = 0;
             var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-            dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
-            var last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100;
+            dynamic current_price = double.Parse(_memoryCache.Get("coin_price").ToString(), CultureInfo.InvariantCulture);
+            var last24Change = double.Parse(_memoryCache.Get("last_change").ToString(), CultureInfo.InvariantCulture) / 100;
             
             if (rqf.RequestCulture.UICulture.Name.Equals("en-US"))
             {
-                displayPrice = coinmarketcap.data.quotes.USD.price;
+                displayPrice = current_price;
             }
             else
             {
@@ -90,7 +90,7 @@ namespace Stratis.Guru.Controllers
                 {
                     var regionInfo = new RegionInfo(rqf.RequestCulture.UICulture.Name.ToUpper());
                     var browserCurrencyRate = (double) ((JObject) fixerApiResponse.rates)[regionInfo.ISOCurrencySymbol];
-                    displayPrice = 1 / (double) dollarRate * (double) coinmarketcap.data.quotes.USD.price * browserCurrencyRate;
+                    displayPrice = 1 / (double) dollarRate * (double) current_price * browserCurrencyRate;
                 }
                 catch
                 {
@@ -275,7 +275,7 @@ namespace Stratis.Guru.Controllers
             ViewBag.Setup = _setupSettings;
 
             vanity.Prefix = $"s{vanity.Prefix}";
-            
+
             if (ModelState.IsValid)
             {
                 _ask.NewVanity(vanity);

@@ -34,7 +34,8 @@ namespace Stratis.Guru.Controllers
         {
             try
             {
-                dynamic coinmarketcap = JsonConvert.DeserializeObject(_memoryCache.Get("Coinmarketcap").ToString());
+                var current_price = double.Parse(_memoryCache.Get("coin_price").ToString(), CultureInfo.InvariantCulture);
+                var last24Change = double.Parse(_memoryCache.Get("last_change").ToString(), CultureInfo.InvariantCulture) / 100;
                 if (notApi)
                 {
                     var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
@@ -43,7 +44,7 @@ namespace Stratis.Guru.Controllers
             
                     if (rqf.RequestCulture.UICulture.ThreeLetterISOLanguageName.Equals("eng"))
                     {
-                        displayPrice = coinmarketcap.data.quotes.USD.price;
+                        displayPrice = current_price;
                     }
                     else
                     {
@@ -53,7 +54,7 @@ namespace Stratis.Guru.Controllers
                         {
                             var regionInfo = new RegionInfo(rqf.RequestCulture.UICulture.Name.ToUpper());
                             var browserCurrencyRate = (double) ((JObject) fixerApiResponse.rates)[regionInfo.ISOCurrencySymbol];
-                            displayPrice = 1 / (double) dollarRate * (double) coinmarketcap.data.quotes.USD.price * browserCurrencyRate;
+                            displayPrice = 1 / (double) dollarRate * current_price * browserCurrencyRate;
                         }
                         catch
                         {
@@ -64,13 +65,13 @@ namespace Stratis.Guru.Controllers
                     return new TickerApi
                     {
                         UsdPrice = (displayPrice * amount).ToString("C"),
-                        Last24Change = (coinmarketcap.data.quotes.USD.percent_change_24h / 100).ToString("P2")
+                        Last24Change = last24Change.ToString("P2")
                     };
                 }
                 return new Ticker
                 {
-                    DisplayPrice = coinmarketcap.data.quotes.USD.price * amount,
-                    Last24Change = coinmarketcap.data.quotes.USD.percent_change_24h / 100
+                    DisplayPrice = current_price * amount,
+                    Last24Change = last24Change
                 };
             }
             catch

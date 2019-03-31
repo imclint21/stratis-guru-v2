@@ -63,21 +63,26 @@ namespace Stratis.Guru.Services
             {
                 var json = JObject.Parse(cachedTickerResult);
 
-                var last24Change = (double)json.SelectToken(_tickerSettings.PercentagePath) / 100;
+				var token = json.SelectToken(_tickerSettings.PercentagePath);
 
-                if (_tickerSettings.IsBitcoinPrice)
-                {
-                    Money price;
-                    Money.TryParse(json.SelectToken(_tickerSettings.PricePath).ToString(), out price);
-                    ticker.PriceBtc = price;
-                }
-                else
-                {
-                    var price = (decimal)json.SelectToken(_tickerSettings.PricePath);
-                    ticker.Price = price; // Set the USD price, might be replaced with local currency price.
-                }
-                
-                ticker.Last24Change = last24Change;
+				if (token != null)
+				{
+					var last24Change = (double)token / 100;
+
+					if (_tickerSettings.IsBitcoinPrice)
+					{
+						Money price;
+						Money.TryParse(json.SelectToken(_tickerSettings.PricePath).ToString(), out price);
+						ticker.PriceBtc = price;
+					}
+					else
+					{
+						var price = (decimal)json.SelectToken(_tickerSettings.PricePath);
+						ticker.Price = price; // Set the USD price, might be replaced with local currency price.
+					}
+
+					ticker.Last24Change = last24Change;
+				}
             }
 
             var cachedRateResult = _memoryCache.Get<string>("Rates"); // Responsibility of caching is put on UpdateInfosService.
@@ -94,11 +99,14 @@ namespace Stratis.Guru.Services
 
                 if (_tickerSettings.IsBitcoinPrice)
                 {
-                    // First calculate the price of the BTC in USD.
-                    var usdPrice = ticker.PriceBtc.ToDecimal(MoneyUnit.BTC) * btcUsdRate;
+					if (ticker.PriceBtc != null)
+					{
+						// First calculate the price of the BTC in USD.
+						var usdPrice = ticker.PriceBtc.ToDecimal(MoneyUnit.BTC) * btcUsdRate;
 
-                    // Calculate the price of the USD in the local currency, if different than USD.
-                    ticker.Price = (1 / currencyUsdRate) * usdPrice;
+						// Calculate the price of the USD in the local currency, if different than USD.
+						ticker.Price = (1 / currencyUsdRate) * usdPrice;
+					}
                 }
                 else
                 {

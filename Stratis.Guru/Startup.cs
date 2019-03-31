@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using Stratis.Guru.Hubs;
 using Stratis.Guru.Models;
@@ -12,13 +11,12 @@ using Stratis.Guru.Services;
 using Stratis.Guru.Settings;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using static Microsoft.AspNetCore.Http.SameSiteMode;
 
 namespace Stratis.Guru
 {
-    public class Startup
+	public class Startup
     {
         private IConfiguration Configuration { get; }
 

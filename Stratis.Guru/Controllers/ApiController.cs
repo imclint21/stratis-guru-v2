@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using RestSharp;
 using Stratis.Guru.Models;
 using Stratis.Guru.Settings;
+using Stratis.Guru.Services;
 
 namespace Stratis.Guru.Controllers
 {

@@ -180,3 +180,12 @@ GET https://stratis.guru/api/block/1063868
     ]
 }
 ```
+
+## Block Height
+```
+GET https://stratis.guru/api/block-height
+```
+
+```json
+1285050
+```

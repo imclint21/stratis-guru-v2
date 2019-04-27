@@ -21,11 +21,13 @@ namespace Stratis.Guru.Controllers
     {
         private readonly NakoApiSettings _nakoApiSettings;
         private readonly IMemoryCache _memoryCache;
+        private readonly BlockIndexService _indexService;
 
-        public ApiController(IMemoryCache memoryCache, IOptions<NakoApiSettings> nakoApiSettings)
+        public ApiController(IMemoryCache memoryCache, IOptions<NakoApiSettings> nakoApiSettings, BlockIndexService indexService)
         {
             _memoryCache = memoryCache;
             _nakoApiSettings = nakoApiSettings.Value;
+            _indexService = indexService;
         }
         
         [HttpGet]
@@ -87,6 +89,13 @@ namespace Stratis.Guru.Controllers
         {
             var key = new Key();
             return new{PublicKey=key.PubKey.GetAddress(new StratisMain()).ToString(), PrivateKey=key.GetWif(new StratisMain()).ToString()};
+        }
+        
+        [HttpGet]
+        [Route("block-height")]
+        public ActionResult<object> BlockHeight()
+        {
+            return _indexService.GetLatestBlock().BlockIndex;
         }
 
         [HttpGet]

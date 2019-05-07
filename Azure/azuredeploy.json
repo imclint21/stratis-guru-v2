@@ -55,7 +55,7 @@
         "subnetName": "Subnet",
         "subnetPrefix": "10.0.0.0/24",
         "diskStorageType": "Standard_LRS",
-        "publicIPAddressType": "Dynamic",
+        "publicIPAddressType": "Static",
         "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('name'))]",
         "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('name'), variables('subnetName'))]"
     },
@@ -179,7 +179,7 @@
                     {
                         "name": "ipconfig1",
                         "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAllocationMethod": "[variables('publicIPAddressType')]",
                             "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('name'))]"
                             },
@@ -207,7 +207,7 @@
                     "computerName": "[parameters('name')]",
                     "adminUsername": "[parameters('username')]",
                     "adminPassword": "[parameters('password')]",
-                    "customData": "[base64(concat('#!/bin/bash', '\n', 'sudo apt-get remove docker docker-engine docker.io', '\n', 'sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common', '\n', 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -', '\n', 'sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable\"', '\n', 'sudo apt-get update', '\n', 'sudo apt-get install -y docker-ce', '\n', 'sudo apt-get install -y docker-compose', '\n', 'curl -L -o docker-compose.yml ', parameters('url'), ' && docker-compose up', '\n'))]"
+                    "customData": "[base64(concat('#!/bin/bash', '\n', 'sudo apt-get remove docker docker-engine docker.io', '\n', 'sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common', '\n', 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -', '\n', 'sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable\"', '\n', 'sudo apt-get update', '\n', 'sudo apt-get install -y docker-ce', '\n', 'sudo apt-get install -y docker-compose', '\n', 'curl -L -o docker-compose.yml ', parameters('url'), ' && docker-compose up -d', '\n'))]"
                 },
                 "storageProfile": {
                     "imageReference": {

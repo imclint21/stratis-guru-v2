@@ -19,59 +19,88 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-self-center text-center">
-                    @if((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.LockedIn) 
+                    @if(ViewBag.Testnet == null)
                     {
-                        <h1 class="mt-lg-5"><strong>Cold Staking</strong> is Activated and will be Enabled in @((int)ViewBag.Status.periodEndHeight - (int)ViewBag.Status.height) blocks</h1>
-                    }
-                    else if((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.Active) 
-                    {
-                        <h1 class="mt-lg-5"><strong>Cold Staking</strong> is Active</h1>
-                    }
-                    else
-                    {
-                        <h1 class="mt-lg-5"><strong>Cold Staking</strong> Activation Progress</h1>
-                        <p class="mb-3 lead">The current activation period will end on block @(ViewBag.Status.periodEndHeight), and there are @((int)ViewBag.Status.periodEndHeight - (int)ViewBag.Status.height) blocks remaining for this period.<br />Since the start of the activation period, @(ViewBag.Status.votes) blocks, which is @(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks).ToString("P0")) of the blocks already mined, have signalled to activate cold staking.</p>
-                    }
-                    <div class="row">
-                        <div class="col-lg-8 col-xs-6 col-sm-6 col-offset-xs-2 offset-lg-2">
-                            <div class="chart mb-5">
-                                <div class="bar bar-@((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.Active ? "100" : ((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100).ToString("N0")) @switch((ThresholdState)ViewBag.Status.thresholdState)
-                                {
-                                    default:
-                                    @("navy")
-                                    break;
+                        @if((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.LockedIn) 
+                        {
+                            <h1 class="mt-lg-5"><strong>Cold Staking</strong> is Activated and will be Enabled in @((int)ViewBag.Status.periodEndHeight - (int)ViewBag.Status.height) blocks</h1>
+                        }
+                        else if((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.Active) 
+                        {
+                            <h1 class="mt-lg-5"><strong>Cold Staking</strong> is Active</h1>
+                        }
+                        else
+                        {
+                            <h1 class="mt-lg-5"><strong>Cold Staking</strong> Activation Progress</h1>
+                            <p class="mb-3 lead">The current activation period will end on block @(ViewBag.Status.periodEndHeight), and there are @((int)ViewBag.Status.periodEndHeight - (int)ViewBag.Status.height) blocks remaining for this period.<br />Since the start of the activation period, @(ViewBag.Status.votes) blocks, which is @(((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks).ToString("P0")) of the blocks already mined, have signalled to activate cold staking.</p>
+                        }
+                        <div class="row">
+                            <div class="col-lg-8 col-xs-6 col-sm-6 col-offset-xs-2 offset-lg-2">
+                                <div class="chart mb-5">
+                                    <div class="bar bar-@((ThresholdState)ViewBag.Status.thresholdState == ThresholdState.Active ? "100" : ((float)ViewBag.Status.votes/(float)ViewBag.Status.blocks*100).ToString("N0")) @switch((ThresholdState)ViewBag.Status.thresholdState)
+                                    {
+                                        default:
+                                        @("navy")
+                                        break;
 
-                                    case ThresholdState.Started:
-                                    @("cyan")
-                                    break;
+                                        case ThresholdState.Started:
+                                        @("cyan")
+                                        break;
 
-                                    case ThresholdState.Failed:
-                                    @("red")
-                                    break;
+                                        case ThresholdState.Failed:
+                                        @("red")
+                                        break;
 
-                                    case ThresholdState.LockedIn:
-                                    case ThresholdState.Active:
-                                    @("lime")
-                                    break;
-                                }">
-                                    <div class="face top">
-                                        <div class="growing-bar"></div>
-                                    </div>
-                                    <div class="face side-0">
-                                        <div class="growing-bar"></div>
-                                    </div>
-                                    <div class="face floor">
-                                        <div class="growing-bar"></div>
-                                    </div>
-                                    <div class="face side-a"></div>
-                                    <div class="face side-b"></div>
-                                    <div class="face side-1">
-                                        <div class="growing-bar"></div>
+                                        case ThresholdState.LockedIn:
+                                        case ThresholdState.Active:
+                                        @("lime")
+                                        break;
+                                    }">
+                                        <div class="face top">
+                                            <div class="growing-bar"></div>
+                                        </div>
+                                        <div class="face side-0">
+                                            <div class="growing-bar"></div>
+                                        </div>
+                                        <div class="face floor">
+                                            <div class="growing-bar"></div>
+                                        </div>
+                                        <div class="face side-a"></div>
+                                        <div class="face side-b"></div>
+                                        <div class="face side-1">
+                                            <div class="growing-bar"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <h1 class="mt-lg-5"><strong>Cold Staking</strong> is Active</h1>
+                        <div class="row">
+                            <div class="col-lg-8 col-xs-6 col-sm-6 col-offset-xs-2 offset-lg-2">
+                                <div class="chart mb-5">
+                                    <div class="bar bar-100 lime">
+                                        <div class="face top">
+                                            <div class="growing-bar"></div>
+                                        </div>
+                                        <div class="face side-0">
+                                            <div class="growing-bar"></div>
+                                        </div>
+                                        <div class="face floor">
+                                            <div class="growing-bar"></div>
+                                        </div>
+                                        <div class="face side-a"></div>
+                                        <div class="face side-b"></div>
+                                        <div class="face side-1">
+                                            <div class="growing-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <p class="small">Cold Staking is a safe way to stake coins since they are not susceptible<br />to online attack while they are held in an offline wallet. <a class="text-warning" href="https://academy.stratisplatform.com/FullNode/ColdStaking/ColdStaking.html">Read More on Stratis Academy</a></p>
                     <div class="dropup mb-0">
                         <button class="btn btn-outline-light btn-lg dropdown-toggle" type="button"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

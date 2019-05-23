@@ -114,6 +114,12 @@ namespace Stratis.Guru.Controllers
 
             string lastColdStakingStatus;
 
+            if(testnet != null)
+            {
+                ViewBag.Testnet = true;
+                return View();
+            }
+
             if (!_memoryCache.TryGetValue(testnet == null ? "cold-staking-mainnet":"cold-staking-testnet", out lastColdStakingStatus))
             {
                 var client = new RestClient(testnet == null ? _coldStakingSettings.Mainnet : _coldStakingSettings.Testnet);

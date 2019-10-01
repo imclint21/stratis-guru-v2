@@ -222,7 +222,8 @@
                         "createOption": "FromImage",
                         "managedDisk": {
                             "storageAccountType": "[variables('diskStorageType')]"
-                        }
+                        },
+                        "diskSizeGB": 120
                     }
                 },
                 "networkProfile": {

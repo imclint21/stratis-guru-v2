@@ -54,6 +54,7 @@
         "addressPrefix": "10.0.0.0/16",
         "subnetName": "Subnet",
         "subnetPrefix": "10.0.0.0/24",
+        "privateIPAddress": "10.0.0.4",
         "diskStorageType": "Standard_LRS",
         "publicIPAddressType": "Static",
         "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('name'))]",
@@ -180,6 +181,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "privateIPAllocationMethod": "[variables('publicIPAddressType')]",
+                            "privateIPAddress": "[variables('privateIPAddress')]",
                             "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('name'))]"
                             },

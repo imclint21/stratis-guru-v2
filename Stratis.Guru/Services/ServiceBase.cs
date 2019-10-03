@@ -48,6 +48,7 @@ namespace Stratis.Guru.Services
         protected RestRequest GetRequest(string resource)
         {
             var request = new RestRequest();
+            request.AddQueryParameter("api-version", "1.0");
             request.Method = Method.GET;
             request.Resource = resource;
             return request;

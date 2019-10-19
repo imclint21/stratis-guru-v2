@@ -81,6 +81,7 @@ namespace Stratis.Guru.Controllers
         {
             var endpointClient = new RestClient($"{_nakoApiSettings.ApiUrl}query/address/{address}/transactions");
             var enpointRequest = new RestRequest(Method.GET);
+            enpointRequest.AddQueryParameter("api-version", "1.0");
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);
         }
@@ -91,6 +92,7 @@ namespace Stratis.Guru.Controllers
         {
             var endpointClient = new RestClient($"{_nakoApiSettings.ApiUrl}query/transaction/{transaction}");
             var enpointRequest = new RestRequest(Method.GET);
+            enpointRequest.AddQueryParameter("api-version", "1.0");
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);
         }
@@ -101,6 +103,7 @@ namespace Stratis.Guru.Controllers
         {
             var endpointClient = new RestClient($"{_nakoApiSettings.ApiUrl}query/block/index/{block}/transactions");
             var enpointRequest = new RestRequest(Method.GET);
+            enpointRequest.AddQueryParameter("api-version", "1.0");
             var endpointResponse = endpointClient.Execute(enpointRequest);
             return JsonConvert.DeserializeObject(endpointResponse.Content);
         }

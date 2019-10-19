@@ -1,6 +1,6 @@
 ﻿{
   "Nako": {
-    "ApiUrl": "http://indexer.city-chain.org/api"
+    "ApiUrl": "http://indexer.city-chain.org/api/"
   },
   "Ticker": {
     "WebUrl": "https://p2pb2b.io/trade/CITY_BTC",

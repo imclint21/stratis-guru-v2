@@ -121,7 +121,9 @@ namespace Stratis.Guru.Controllers
             ViewBag.Setup = _setupSettings;
             ViewBag.BlockchainHeight = _stats.SyncBlockIndex;
 
-            return View(_indexService.GetTransaction(transactionId));
+            var trx = _indexService.GetTransaction(transactionId);
+
+            return View(trx);
         }
     }
 }

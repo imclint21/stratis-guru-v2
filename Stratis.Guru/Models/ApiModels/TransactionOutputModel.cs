@@ -11,7 +11,7 @@ namespace Stratis.Guru.Models.ApiModels
 
         public string Address { get; set; }
 
-        public decimal Balance { get; set; }
+        public long Balance { get; set; }
 
         public string OutputType { get; set; }
     }

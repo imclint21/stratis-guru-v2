@@ -19,7 +19,7 @@ namespace Stratis.Guru.Models.ApiModels
 
         public string CoinBase { get; set; }
 
-        public decimal Value { get; set; }
+        public long Value { get; set; }
 
         public long BlockIndex { get; set; }
 

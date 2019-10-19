@@ -22,7 +22,7 @@
                     <h2 class="section-title">Details for Address</h2>
                 </div>
             </div>
-        </div>			
+        </div>
         <div class="row m-bottom-70">
             <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="table-responsive">
@@ -41,20 +41,20 @@
                             </tr>
                             <tr>
                                 <td><strong>Balance</strong></td>
-                                <td>@Model.Balance.ToString("N8") @Model.CoinTag</td>
+                                <td><coin>@Model.Balance</coin></td>
                             </tr>
-                            
+
                             <tr>
                                 <td><strong>Unconfirmed Balance</strong></td>
-                                <td>@Model.UnconfirmedBalance.ToString("N8") @Model.CoinTag</td>
+                                <td><coin>@Model.UnconfirmedBalance</coin></td>
                             </tr>
                             <tr>
                                 <td><strong>Total Received</strong></td>
-                                <td>@Model.TotalReceived.ToString("N8") @Model.CoinTag</td>
+                                <td><coin>@Model.TotalReceived</coin></td>
                             </tr>
                             <tr>
                                 <td><strong>Total Sent</strong></td>
-                                <td>@Model.TotalSent.ToString("N8") @Model.CoinTag</td>
+                                <td><coin>@Model.TotalSent</coin></td>
                             </tr>
                         </tbody>
                     </table>
@@ -72,7 +72,7 @@
                     <h2 class="section-title">Transactions</h2>
                 </div>
             </div>
-        </div>			
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
@@ -87,20 +87,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @{
-                            decimal total = 0;
-                        }
-                        @foreach (var transaction in Model.Transactions)
-                        {
-                            total += (decimal)transaction.Value;
-                            <tr>
-                                <td><a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@transaction.TransactionHash">@transaction.TransactionHash.ToString().Substring(0, 25)...</a></td>
-                                <td><a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@transaction.BlockIndex">@transaction.BlockIndex</a></td>
-                                <td>-</td>
-                                <td><span class="@(transaction.Value > 0 ? "green" : "red")">@transaction.Value.ToString("N8") @Model.CoinTag</span></td>
-                                <td>@total.ToString("N8") @Model.CoinTag</td>
-                            </tr>
-                        }
+                            @{
+                                long total = 0;
+                            }
+                            @foreach (var transaction in Model.Transactions)
+                            {
+                                total += (long)transaction.Value;
+                                <tr>
+                                    <td><a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@transaction.TransactionHash">@transaction.TransactionHash.ToString().Substring(0, 25)...</a></td>
+                                    <td><a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@transaction.BlockIndex">@transaction.BlockIndex</a></td>
+                                    <td>-</td>
+                                    <td><span class="@(transaction.Value > 0 ? "green" : "red")"><coin positive="@transaction.Value > 0">@transaction.Value</coin></span></td>
+                                    <td><coin>@total</coin></td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -111,17 +111,15 @@
 @section Scripts
 {
     <script type="text/javascript">
-    $(document).ready(function()
-    {
-        $(".copy-me").click(function()
-        {
-            var tempField = document.createElement("textarea");
-            tempField.value = $(this).attr("data-value");
-            $("body").parent().append(tempField);
-            tempField.select();
-            document.execCommand("copy");
-            tempField.remove();
-        })
-    });
+        $(document).ready(function () {
+            $(".copy-me").click(function () {
+                var tempField = document.createElement("textarea");
+                tempField.value = $(this).attr("data-value");
+                $("body").parent().append(tempField);
+                tempField.select();
+                document.execCommand("copy");
+                tempField.remove();
+            })
+        });
     </script>
 }

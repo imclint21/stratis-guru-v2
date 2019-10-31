@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using NBitcoin;
@@ -41,8 +42,10 @@ namespace Stratis.Guru.Controllers
         private readonly SetupSettings _setupSettings;
         private readonly TickerSettings _tickerSettings;
         private readonly FeaturesSettings _featuresSettings;
+        private readonly ILogger<HomeController> log;
 
-        public HomeController(IMemoryCache memoryCache, 
+        public HomeController(IMemoryCache memoryCache,
+            ILogger<HomeController> log,
             IAsk ask, 
             ISettings settings, 
             IParticipation participation, 
@@ -55,6 +58,7 @@ namespace Stratis.Guru.Controllers
             IOptions<FeaturesSettings> featuresSettings)
         {
             _memoryCache = memoryCache;
+            this.log = log;
             _ask = ask;
             _settings = settings;
             _participation = participation;
@@ -79,7 +83,17 @@ namespace Stratis.Guru.Controllers
             {
                 var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
                 var regionInfo = _currencyService.GetRegionaInfo(rqf);
-                var ticker = _tickerService.GetTicker(regionInfo.ISOCurrencySymbol);
+                Ticker ticker = null;
+
+                try
+                {
+                    ticker = _tickerService.GetTicker(regionInfo.ISOCurrencySymbol);
+                }
+                catch (Exception ex)
+                {
+                    log.LogError(ex, "Failed to get ticker information.");
+                    ticker = new Ticker();
+                }
 
                 return View(ticker);
             }

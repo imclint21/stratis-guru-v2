@@ -18,18 +18,18 @@
     <meta name="twitter:title" content="@ViewBag.Setup.Title | Online @ViewBag.Setup.Chain ($@ViewBag.Setup.Coin) price ticker">
     <meta name="twitter:description" content="@ViewBag.Setup.Title is a Simple and Free $@ViewBag.Setup.Coin ticker, an Address Generator and a Vanity Address service.">
     <link rel="icon" href="~/favicon.ico" />
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="~/css/all.css" rel="stylesheet" type="text/css">
+    <link href="~/css/bootstrap.min.css?v2" rel="stylesheet" type="text/css">
+    <link href="~/css/all.css?v2" rel="stylesheet" type="text/css">
     @*<link href="~/css/owl.carousel.min.css" rel="stylesheet" type="text/css">
     <link href="~/css/owl.theme.default.min.css" rel="stylesheet" type="text/css">*@
     <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" type="text/css">
     <environment include="Development">
-        <link href="~/css/default.css" rel="stylesheet" type="text/css">
+        <link href="~/css/default.css?v2" rel="stylesheet" type="text/css">
     </environment>
     <environment exclude="Development">
-        <link href="~/css/default.min.css" rel="stylesheet" type="text/css">
+        <link href="~/css/default.min.css?v2" rel="stylesheet" type="text/css">
     </environment>
-    <link href="~/css/explorer.css" rel="stylesheet" type="text/css">
+    <link href="~/css/explorer.css?v2" rel="stylesheet" type="text/css">
     @RenderSection("Style", false)
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>

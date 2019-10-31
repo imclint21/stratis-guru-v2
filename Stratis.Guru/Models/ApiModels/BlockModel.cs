@@ -22,6 +22,20 @@ namespace Stratis.Guru.Models.ApiModels
 
         public long BlockTime { get; set; }
 
+        public string Merkleroot { get; set; }
+
+        public string PosModifierv2 { get; set; }
+
+        public string Confirmations { get; set; }
+
+        public string PosChainTrust { get; set; }
+
+        public string PosBlockTrust { get; set; }
+
+        public string PosFlags { get; set; }
+
+        public string PosBlockSignature { get; set; }
+
         public string NextBlockHash { get; set; }
 
         public string PreviousBlockHash { get; set; }

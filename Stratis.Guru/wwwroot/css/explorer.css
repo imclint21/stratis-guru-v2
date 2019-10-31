@@ -23,11 +23,11 @@
 }
 
 .coin-value-positive {
-    color: #23A236
+    color: #c7254e
 }
 
 .coin-value-negative {
-    color: #c7254e
+    color: #23A236
 }
 
 @media (max-width: 1090px) {

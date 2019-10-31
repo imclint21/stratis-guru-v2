@@ -34,7 +34,7 @@
                     <table class="table table-striped table-latests table-detail">
                         <tbody>
                             <tr>
-                                <td><strong>Transaction ID</strong></td>
+                                <td><strong>Transaction Hash</strong></td>
                                 <td>
                                     <a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@Model.TransactionId">@Model.TransactionId</a>
                                     <a href="#" class="copy-me"><i class="fa fa-copy"></i></a>
@@ -53,15 +53,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td><strong>Block Date/Time</strong></td>
+                                <td>@Model.Timestamp.ToString("F")</td>
+                            </tr>
+                            <tr>
                                 <td><strong>Confirmations</strong></td>
                                 <td>
                                     @Model.Confirmations
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Block Date/Time</strong></td>
-                                <td>@Model.Timestamp.ToString("F")</td>
                             </tr>
                             @if (Model.Outputs != null)
                             {

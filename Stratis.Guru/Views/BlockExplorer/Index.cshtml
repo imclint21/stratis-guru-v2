@@ -30,9 +30,9 @@
                             <tr>
                                 <td>Block Height</td>
                                 <td>Age</td>
-                                <td>No. Transactions</td>
-                                <td>Block Size</td>
-                                <td>Block Hash</td>
+                                <td>Transactions</td>
+                                <td>Size</td>
+                                @*<td>Block Hash</td>*@
                             </tr>
                         </thead>
                         <tbody>
@@ -41,9 +41,9 @@
                                 <tr>
                                     <td><a asp-controller="BlockExplorer" asp-action="Block" asp-route-block="@block.BlockIndex">@block.BlockIndex</a></td>
                                     <td>@((DateTime.Now - DateTimeOffset.FromUnixTimeSeconds((long)block.BlockTime)).TotalMinutes.ToString("N0")) Minutes</td>
-                                    <td class="text-center">@block.TransactionCount</td>
+                                    <td>@block.TransactionCount</td>
                                     <td>@block.BlockSize bytes</td>
-                                    <td><a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@block.BlockHash">@block.BlockHash</a></td>
+                                    @*<td><a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@block.BlockHash">@block.BlockHash</a></td>*@
                                 </tr>
                             }
                         </tbody>

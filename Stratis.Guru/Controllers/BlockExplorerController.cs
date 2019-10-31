@@ -18,7 +18,7 @@ namespace Stratis.Guru.Controllers
     {
         private readonly NakoSettings _nakoApiSettings;
         private readonly IMemoryCache _memoryCache;
-        private readonly dynamic _stats;
+        private readonly Status _stats;
         private readonly BlockIndexService _indexService;
         private readonly SetupSettings _setupSettings;
         private readonly FeaturesSettings _featuresSettings;
@@ -30,7 +30,7 @@ namespace Stratis.Guru.Controllers
             IOptions<FeaturesSettings> featuresSettings)
         {
             _memoryCache = memoryCache;
-            _stats = JsonConvert.DeserializeObject(_memoryCache.Get("BlockchainStats").ToString());
+            _stats = JsonConvert.DeserializeObject<Status>(_memoryCache.Get("BlockchainStats").ToString());
             _indexService = indexService;
 
             _nakoApiSettings = nakoApiSettings.Value;

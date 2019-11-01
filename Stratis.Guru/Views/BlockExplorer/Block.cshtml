@@ -60,7 +60,14 @@
                             <tr>
                                 <td><strong>Next Block Hash</strong></td>
                                 <td>
-                                    <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.NextBlockHash">@(Model.NextBlockHash ?? "-")</a>
+                                    @if (Model.NextBlockHash != null)
+                                    { 
+                                        <a asp-controller="BlockExplorer" asp-action="BlockHash" asp-route-hash="@Model.NextBlockHash">@(Model.NextBlockHash)</a>
+                                    }
+                                    else
+                                    {
+                                    <span>-</span>
+                                    }
                                 </td>
                             </tr>
                             <tr>

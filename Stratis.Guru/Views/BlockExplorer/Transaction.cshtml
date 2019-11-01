@@ -198,7 +198,10 @@
                                                 <div style="padding: .55rem .55rem; margin-bottom: 10px;" class="list-group-item list-group-item-action">
                                                     <table class="table table-sm table-borderless table-sm">
                                                         <tbody>
-                                                            <tr><td>Address:</td><td><a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@output.Address">@output.Address</a></td></tr>
+                                                            @if (@output.Address != null)
+                                                            {
+                                                                <tr><td>Address:</td><td><a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@output.Address">@output.Address</a></td></tr>
+                                                            }
                                                             <tr><td>OutputType</td><td>@(output.OutputType == "TX_NULL_DATA" ? "OP_RETURN" : output.OutputType)</td></tr>
                                                             <tr><td>Value</td><td><coin>@output.Balance</coin></td></tr>
                                                             <tr><td colspan="2"><strong>ScriptPubKey:</strong></td></tr>

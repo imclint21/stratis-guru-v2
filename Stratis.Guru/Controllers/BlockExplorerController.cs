@@ -68,7 +68,11 @@ namespace Stratis.Guru.Controllers
             ViewBag.Features = _featuresSettings;
             ViewBag.Setup = _setupSettings;
 
-            if (searchBlockExplorer.Query.Length == 34)
+            if (searchBlockExplorer.Query == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else if (searchBlockExplorer.Query.Length == 34)
             {
                 return RedirectToAction("Address", new {address = searchBlockExplorer.Query});
             }
@@ -80,6 +84,7 @@ namespace Stratis.Guru.Controllers
             {
                 return RedirectToAction("Block", new {block = searchBlockExplorer.Query});
             }
+
             return RedirectToAction("Index");
         }
 

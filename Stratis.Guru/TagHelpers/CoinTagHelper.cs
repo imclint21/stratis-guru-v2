@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Stratis.Guru.Settings;
 using System;
@@ -12,12 +13,15 @@ namespace Stratis.Guru.TagHelpers
     {
         private readonly SetupSettings setupSettings;
 
+        private readonly ILogger<CoinTagHelper> log;
+
         [HtmlAttributeName("Positive")]
         public bool? Positive { get; set; }
 
-        public CoinTagHelper(IOptions<SetupSettings> setupSettings)
+        public CoinTagHelper(IOptions<SetupSettings> setupSettings, ILogger<CoinTagHelper> log)
         {
             this.setupSettings = setupSettings.Value;
+            this.log = log;
         }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -35,14 +39,21 @@ namespace Stratis.Guru.TagHelpers
 
             if (success)
             {
-                var values = (value / 100000000d).ToString("N8").Split('.');
-                var html = $"<span class=\"coin-value-upper {cssExtra}\">{values[0]}</span><span class=\"coin-value-lower {cssExtra}\">.{values[1]}</span> <span class=\"coin-value-tag {cssExtra}\">{this.setupSettings.Coin}</span>";
-
-                output.Content.SetHtmlContent(html);
+                try
+                {
+                    var values = (value / 100000000d).ToString("N8").Split('.');
+                    var html = $"<span class=\"coin-value-upper {cssExtra}\">{values[0]}</span><span class=\"coin-value-lower {cssExtra}\">.{values[1]}</span> <span class=\"coin-value-tag {cssExtra}\">{this.setupSettings.Coin}</span>";
+                    output.Content.SetHtmlContent(html);
+                }
+                catch (Exception ex)
+                {
+                    log.LogError(ex, $"Failed to parse in CoinTagHelper. Input was {input} and parsed value was {value}.");
+                    output.Content.SetContent(input);
+                }
             }
             else
             {
-                output.Content.SetContent("");
+                output.Content.SetContent(input);
             }
         }
     }

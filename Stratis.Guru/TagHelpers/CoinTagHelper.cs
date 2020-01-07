@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Stratis.Guru.Settings;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,8 +42,8 @@ namespace Stratis.Guru.TagHelpers
             {
                 try
                 {
-                    var values = (value / 100000000d).ToString("N8").Split('.');
-                    var html = $"<span class=\"coin-value-upper {cssExtra}\">{values[0]}</span><span class=\"coin-value-lower {cssExtra}\">.{values[1]}</span> <span class=\"coin-value-tag {cssExtra}\">{this.setupSettings.Coin}</span>";
+                    var values = (value / 100000000d).ToString("N8").Split(NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
+                    var html = $"<span class=\"coin-value-upper {cssExtra}\">{values[0]}</span><span class=\"coin-value-lower {cssExtra}\">{NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator}{values[1]}</span> <span class=\"coin-value-tag {cssExtra}\">{this.setupSettings.Coin}</span>";
                     output.Content.SetHtmlContent(html);
                 }
                 catch (Exception ex)

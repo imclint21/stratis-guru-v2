@@ -11,8 +11,14 @@ namespace Stratis.Guru.Models.ApiModels
 
         public string Address { get; set; }
 
-        public decimal Balance { get; set; }
+        public long Balance { get; set; }
 
         public string OutputType { get; set; }
+
+        public string ScriptPubKey { get; set; }
+
+        public string ScriptPubKeyAsm { get; set; }
+
+        public string SpentInTransaction { get; set; }
     }
 }

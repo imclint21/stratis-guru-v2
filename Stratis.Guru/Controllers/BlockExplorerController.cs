@@ -18,7 +18,7 @@ namespace Stratis.Guru.Controllers
     {
         private readonly NakoSettings _nakoApiSettings;
         private readonly IMemoryCache _memoryCache;
-        private readonly dynamic _stats;
+        private readonly Status _stats;
         private readonly BlockIndexService _indexService;
         private readonly SetupSettings _setupSettings;
         private readonly FeaturesSettings _featuresSettings;
@@ -30,7 +30,7 @@ namespace Stratis.Guru.Controllers
             IOptions<FeaturesSettings> featuresSettings)
         {
             _memoryCache = memoryCache;
-            _stats = JsonConvert.DeserializeObject(_memoryCache.Get("BlockchainStats").ToString());
+            _stats = JsonConvert.DeserializeObject<Status>(_memoryCache.Get("BlockchainStats").ToString());
             _indexService = indexService;
 
             _nakoApiSettings = nakoApiSettings.Value;
@@ -68,7 +68,11 @@ namespace Stratis.Guru.Controllers
             ViewBag.Features = _featuresSettings;
             ViewBag.Setup = _setupSettings;
 
-            if (searchBlockExplorer.Query.Length == 34)
+            if (searchBlockExplorer.Query == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else if (searchBlockExplorer.Query.Length == 34)
             {
                 return RedirectToAction("Address", new {address = searchBlockExplorer.Query});
             }
@@ -80,6 +84,7 @@ namespace Stratis.Guru.Controllers
             {
                 return RedirectToAction("Block", new {block = searchBlockExplorer.Query});
             }
+
             return RedirectToAction("Index");
         }
 
@@ -121,7 +126,9 @@ namespace Stratis.Guru.Controllers
             ViewBag.Setup = _setupSettings;
             ViewBag.BlockchainHeight = _stats.SyncBlockIndex;
 
-            return View(_indexService.GetTransaction(transactionId));
+            var trx = _indexService.GetTransaction(transactionId);
+
+            return View(trx);
         }
     }
 }

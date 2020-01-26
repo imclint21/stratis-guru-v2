@@ -17,13 +17,13 @@ namespace Stratis.Guru.Models.ApiModels
 
         public string Address { get; set; }
 
-        public decimal Balance { get; set; }
+        public long Balance { get; set; }
 
-        public decimal TotalReceived { get; set; }
+        public long TotalReceived { get; set; }
 
-        public decimal TotalSent { get; set; }
+        public long TotalSent { get; set; }
 
-        public decimal UnconfirmedBalance { get; set; }
+        public long UnconfirmedBalance { get; set; }
 
         public List<TransactionModel> Transactions { get; set; }
 

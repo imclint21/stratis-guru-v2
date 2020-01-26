@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using Stratis.Guru.Hubs;
 using Stratis.Guru.Models;
@@ -12,13 +11,12 @@ using Stratis.Guru.Services;
 using Stratis.Guru.Settings;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using static Microsoft.AspNetCore.Http.SameSiteMode;
 
 namespace Stratis.Guru
 {
-    public class Startup
+	public class Startup
     {
         private IConfiguration Configuration { get; }
 
@@ -101,14 +99,14 @@ namespace Stratis.Guru
             app.UseCors(builder => builder.WithOrigins("http:/localhost:1989"));
 
             // Add Documentation (MkDocs) Support
-            app.UseFileServer(new FileServerOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Documentation/site/")),
-                RequestPath = "/documentation",
-                EnableDirectoryBrowsing = false,
-                EnableDefaultFiles = true,
-                DefaultFilesOptions = { DefaultFileNames = { "index.html" } }
-            });
+            //app.UseFileServer(new FileServerOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Documentation/site/")),
+            //    RequestPath = "/documentation",
+            //    EnableDirectoryBrowsing = false,
+            //    EnableDefaultFiles = true,
+            //    DefaultFilesOptions = { DefaultFileNames = { "index.html" } }
+            //});
 
             // Add Culture Detection Support
             List<CultureInfo> allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => !x.IsNeutralCulture).ToList();

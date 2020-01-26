@@ -32,6 +32,15 @@
       },
       "applicationUrl": "http://localhost:1989/"
     },
+    "XDS": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CHAIN": "XDS"
+      },
+      "applicationUrl": "http://localhost:1989/"
+    },
     "X42": {
       "commandName": "Project",
       "commandLineArgs": "X42",

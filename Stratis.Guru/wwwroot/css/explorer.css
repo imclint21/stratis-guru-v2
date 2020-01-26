@@ -1,0 +1,78 @@
+﻿
+#lastchange {
+    display: inline-block !important;
+}
+
+.btn-secondary-box {
+    margin-bottom: 6px;
+}
+
+.reduced-fab {
+    font-size: 0.8em;
+}
+
+.coin-value-upper {
+}
+
+.coin-value-lower {
+    color: gray;
+}
+
+.coin-value-tag {
+    color: gray;
+}
+
+.coin-value-positive {
+    color: #23A236
+}
+
+.coin-value-negative {
+    color: #c7254e
+}
+
+.multiline-text {
+    word-break: break-all
+}
+
+@media (max-width: 1090px) {
+    .display-1 {
+        font-size: 4.6rem !important;
+    }
+
+    .display-3 {
+        font-size: 2.8rem !important;
+    }
+
+    .welcome-area .header-token h1 {
+        font-size: 36px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .display-1 {
+        font-size: 2.4rem !important;
+    }
+
+    .display-3 {
+        font-size: 1.8rem !important;
+    }
+
+    .welcome-area .header-token h1 {
+        font-size: 24px !important;
+    }
+}
+
+@media (max-width: 479px) {
+
+    .display-1 {
+        font-size: 2rem !important;
+    }
+
+    .display-3 {
+        font-size: 1.2rem !important;
+    }
+
+    .welcome-area .header-token h1 {
+        font-size: 18px !important;
+    }
+}

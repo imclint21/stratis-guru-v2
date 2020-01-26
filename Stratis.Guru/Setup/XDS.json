@@ -1,0 +1,25 @@
+﻿{
+  "Nako": {
+    "ApiUrl": "http://localhost:9000/api/"
+  },
+  "Ticker": {
+    "WebUrl": "",
+    "ApiUrl": "",
+    "PricePath": "result.last",
+    "PercentagePath": "result.change",
+    "IsBitcoinPrice": true
+  },
+  "Setup": {
+    "Title": "XDS Explorer",
+    "Chain": "XDS",
+    "Coin": "XDS",
+    "Footer": "",
+    "Icon": "https://www.city-chain.org/images/icons/city-coin-128x128.png",
+    "DocumentationUrl": ""
+  },
+  "Features": {
+    "Lottery": false,
+    "Vanity": false,
+    "Generator": false
+  }
+}

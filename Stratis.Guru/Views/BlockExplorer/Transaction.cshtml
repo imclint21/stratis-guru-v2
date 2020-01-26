@@ -27,16 +27,16 @@
                     <p>Fusce placerat pretium mauris, vel sollicitudin elit lacinia vitae. Quisque sit amet nisi erat.</p>
                 </div>
             </div>*@
-        </div>			
+        </div>
         <div class="row m-bottom-70">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="table-responsive">
                     <table class="table table-striped table-latests table-detail">
                         <tbody>
                             <tr>
-                                <td><strong>Transaction ID</strong></td>
+                                <td><strong>Transaction Hash</strong></td>
                                 <td>
-                                    <a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@Model.TransactionId">@Model.TransactionId</a>
+                                    <a class="to-copy">@Model.TransactionId</a>
                                     <a href="#" class="copy-me"><i class="fa fa-copy"></i></a>
                                 </td>
                             </tr>
@@ -53,15 +53,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td><strong>Block Date/Time</strong></td>
+                                <td>@Model.Timestamp.ToString("F")</td>
+                            </tr>
+                            <tr>
                                 <td><strong>Confirmations</strong></td>
                                 <td>
                                     @Model.Confirmations
                                 </td>
-                            </tr>
-                            
-                            <tr>
-                                <td><strong>Block Date/Time</strong></td>
-                                <td>@Model.Timestamp.ToString("F")</td>
                             </tr>
                             @if (Model.Outputs != null)
                             {
@@ -69,13 +68,13 @@
                                     <td><strong>Total Output</strong></td>
                                     <td>
                                         @{
-                                            double totalOutpus = 0;
+                                            long totalOutpus = 0;
                                         }
                                         @foreach (var t in Model.Outputs)
                                         {
-                                            totalOutpus += (double)t.Balance;
+                                            totalOutpus += (long)t.Balance;
                                         }
-                                        @totalOutpus.ToString("N8") @Model.CoinTag
+                                        <coin>@totalOutpus</coin>
                                     </td>
                                 </tr>
                             }
@@ -84,6 +83,7 @@
                 </div>
             </div>
         </div>
+        @*
         <div class="row">
             <div class="col-lg-12">
                 <div class="center-heading">
@@ -96,10 +96,10 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-latests">
                         <thead>
-                        <tr>
-                            <th>Index</th>
-                            <th>Input Transaction ID</th>
-                        </tr>
+                            <tr>
+                                <th>Index</th>
+                                <th>Input Transaction ID</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @foreach (var input in Model.Inputs)
@@ -121,17 +121,19 @@
                 </div>
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
                     <table class="table table-striped table-latests">
                         <thead>
-                        <tr>
-                            <th>Index</th>
-                            <th>Output Address</th>
-                            <th>Output Type</th>
-                            <th>Amount</th>
-                        </tr>
+                            <tr>
+                                <th>Index</th>
+                                <th>Output Address</th>
+                                <th>Output Type</th>
+                                <th>Amount</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @foreach (var output in Model.Outputs)
@@ -140,9 +142,90 @@
                                     <td>@output.Index</td>
                                     <td><a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@output.Address">@output.Address</a></td>
                                     <td>@output.OutputType</td>
-                                    <td>@output.Balance.ToString("N8") @Model.CoinTag</td>
+                                    <td><coin>@output.Balance</coin></td>
                                 </tr>
                             }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>*@
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-latest table-sm ">
+                        <thead>
+                            <tr>
+                                <th>Inputs</th>
+                                <th>Outputs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="w-50">
+                                    <div class="list-group">
+                                        @foreach (var input in Model.Inputs)
+                                        {
+                                            <small>
+                                                <div style="padding: .55rem .55rem" class="list-group-item list-group-item-action">
+                                                    <table class="table table-sm table-borderless table-sm">
+                                                        <tbody>
+                                                            <tr><td colspan="2"><strong>Prevout</strong></td></tr>
+                                                            <tr><td colspan="2"># @input.InputIndex - <a asp-controller="BlockExplorer" asp-action="Transaction" asp-route-transactionId="@input.InputTransactionId">@input.InputTransactionId</a></td></tr>
+                                                            <tr><td colspan="2"><strong>ScriptSig</strong></td></tr>
+                                                            <tr><td colspan="2" class="multiline-text">@input.ScriptSig:</td></tr>
+                                                            <tr><td colspan="2"><strong>ScriptSig(Asm)</strong></td></tr>
+                                                            <tr><td colspan="2" class="multiline-text">@input.ScriptSigAsm:</td></tr>
+                                                            @if (!string.IsNullOrEmpty(@input.WitScript))
+                                                            {
+                                                                <tr><td colspan="2"><strong>WitScript</strong></td></tr>
+                                                                <tr><td colspan="2" class="multiline-text">@input.WitScript</td></tr>
+                                                            }
+                                                            <tr><td>SequenceLock</td><td>@input.SequenceLock</td></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </small>
+                                        }
+                                    </div>
+                                </td>
+                                <td class="w-50">
+                                    <div class="list-group">
+                                        @foreach (var output in Model.Outputs)
+                                        {
+                                            <small>
+                                                <div style="padding: .55rem .55rem; margin-bottom: 10px;" class="list-group-item list-group-item-action">
+                                                    <table class="table table-sm table-borderless table-sm">
+                                                        <tbody>
+                                                            @if (@output.Address != null)
+                                                            {
+                                                                <tr><td>Address:</td><td><a asp-controller="BlockExplorer" asp-action="Address" asp-route-address="@output.Address">@output.Address</a></td></tr>
+                                                            }
+                                                            <tr><td>OutputType</td><td>@(output.OutputType == "TX_NULL_DATA" ? "OP_RETURN" : output.OutputType)</td></tr>
+                                                            <tr><td>Value</td><td><coin>@output.Balance</coin></td></tr>
+                                                            <tr><td colspan="2"><strong>ScriptPubKey:</strong></td></tr>
+                                                            <tr><td colspan="2" class="multiline-text">@output.ScriptPubKey</td></tr>
+                                                            <tr><td colspan="2"><strong>ScriptPubKey(Asm):</strong></td></tr>
+                                                            <tr><td colspan="2" class="multiline-text">@output.ScriptPubKeyAsm</td></tr>
+
+                                                            @if (!string.IsNullOrEmpty(output.SpentInTransaction))
+                                                            {
+                                                                <tr><td colspan="2"><strong>Spent in</strong></td></tr>
+                                                                <tr><td colspan="2" class=" mousepointer">@output.SpentInTransaction</td></tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                <tr><td colspan="2">unspent</td></tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </small>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

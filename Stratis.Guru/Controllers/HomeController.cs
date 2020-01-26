@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using NBitcoin;
@@ -41,8 +42,10 @@ namespace Stratis.Guru.Controllers
         private readonly SetupSettings _setupSettings;
         private readonly TickerSettings _tickerSettings;
         private readonly FeaturesSettings _featuresSettings;
+        private readonly ILogger<HomeController> log;
 
-        public HomeController(IMemoryCache memoryCache, 
+        public HomeController(IMemoryCache memoryCache,
+            ILogger<HomeController> log,
             IAsk ask, 
             ISettings settings, 
             IParticipation participation, 
@@ -55,6 +58,7 @@ namespace Stratis.Guru.Controllers
             IOptions<FeaturesSettings> featuresSettings)
         {
             _memoryCache = memoryCache;
+            this.log = log;
             _ask = ask;
             _settings = settings;
             _participation = participation;
@@ -78,15 +82,20 @@ namespace Stratis.Guru.Controllers
             if (_featuresSettings.Ticker)
             {
                 var rqf = Request.HttpContext.Features.Get<IRequestCultureFeature>();
-                var ticker = _tickerService.GetCachedTicker();
                 var regionInfo = _currencyService.GetRegionaInfo(rqf);
-                var displayPrice = _currencyService.GetExchangePrice(ticker.DisplayPrice, regionInfo.ISOCurrencySymbol);
+                Ticker ticker = null;
 
-                return View(new Ticker
+                try
                 {
-                    DisplayPrice = displayPrice,
-                    Last24Change = ticker.Last24Change
-                });
+                    ticker = _tickerService.GetTicker(regionInfo.ISOCurrencySymbol);
+                }
+                catch (Exception ex)
+                {
+                    log.LogError(ex, "Failed to get ticker information.");
+                    ticker = new Ticker();
+                }
+
+                return View(ticker);
             }
             else
             {
@@ -167,7 +176,7 @@ namespace Stratis.Guru.Controllers
             if(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance > 0)
             {
                 HttpContext.Session.SetString("Deposited", depositAddress);
-                HttpContext.Session.SetString("DepositedAmount", ((double)(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance)).ToString());
+                HttpContext.Session.SetString("DepositedAmount", ((decimal)(stratisAdressRequest.unconfirmedBalance + stratisAdressRequest.balance)).ToString());
                 return Json(true);
             }
             return BadRequest();
@@ -189,7 +198,7 @@ namespace Stratis.Guru.Controllers
         public IActionResult SaveParticipation(string nickname, string address)
         {
             _settings.IncrementIterator();
-            _participation.StoreParticipation(HttpContext.Session.GetString("Ticket"), nickname, address, double.Parse(HttpContext.Session.GetString("DepositedAmount")));
+            _participation.StoreParticipation(HttpContext.Session.GetString("Ticket"), nickname, address, decimal.Parse(HttpContext.Session.GetString("DepositedAmount")));
 
             return RedirectToAction("Participated");
         }

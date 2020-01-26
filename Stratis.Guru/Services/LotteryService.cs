@@ -22,19 +22,26 @@ namespace Stratis.Guru.Services
         private readonly IDraws _draws;
         private readonly DrawSettings _drawSettings;
         private readonly System.Timers.Timer _updateTimer;
+        private readonly FeaturesSettings _features;
         private DateTime _nextDraw;
 
-        public LotteryService(IMemoryCache memoryCache, ISettings settings, IDraws draws, IOptions<DrawSettings> drawSettings)
+        public LotteryService(IMemoryCache memoryCache, ISettings settings, IDraws draws, IOptions<DrawSettings> drawSettings, IOptions<FeaturesSettings> features)
         {
             _memoryCache = memoryCache;
             _settings = settings;
             _draws = draws;
             _drawSettings = drawSettings.Value;
             _updateTimer = new System.Timers.Timer();
+            _features = features.Value;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            if (!_features.Lottery)
+            {
+                return;
+            }
+
             JackpotCounter();
             await InitLotteryAsync();
             await CalculateNextDrawAsync();
@@ -51,18 +58,18 @@ namespace Stratis.Guru.Services
 
         private void JackpotCounter()
         {
-            Task.Run(() => 
+            Task.Run(() =>
             {
-                var totalJackpot = 0.0;
+                decimal totalJackpot = 0;
                 var pubkey = ExtPubKey.Parse(_drawSettings.PublicKey);
-                for(int i=0; i<=_settings.GetIterator(); i++)
+                for (int i = 0; i <= _settings.GetIterator(); i++)
                 {
                     var depositAddress = pubkey.Derive(0).Derive((uint)i).PubKey.GetAddress(Network.StratisMain).ToString();
                     var rc = new RestClient($"https://stratis.guru/api/address/{depositAddress}");
                     var rq = new RestRequest(Method.GET);
                     var response = rc.Execute(rq);
                     dynamic stratisAdressRequest = JsonConvert.DeserializeObject(response.Content);
-                    totalJackpot += (double)stratisAdressRequest.balance;
+                    totalJackpot += (decimal)stratisAdressRequest.balance;
                 }
                 _memoryCache.Set("Jackpot", totalJackpot);
             });

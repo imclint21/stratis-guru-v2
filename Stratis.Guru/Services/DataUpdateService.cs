@@ -15,41 +15,29 @@ namespace Stratis.Guru.Services
     {
         private readonly BlockIndexService _blockIndexService;
         private readonly TickerService _tickerService;
-        private readonly CurrencyService _currencyService;
         private readonly IMemoryCache _memoryCache;
         private readonly IHubContext<UpdateHub> _hubContext;
         private readonly UpdateHub _hub;
-        private readonly NakoSettings _nakoApiSettings;
         private readonly FeaturesSettings _featuresSettings;
-        private readonly TickerSettings _tickerSettings;
-        private readonly CurrencySettings _currencySettings;
 
         private System.Timers.Timer _nakoTimer;
         private System.Timers.Timer _tickerTimer;
-        private System.Timers.Timer _currencyTimer;
 
         public DataUpdateService(
             BlockIndexService blockIndexService,
             TickerService tickerService,
-            CurrencyService currencyService,
             IMemoryCache memoryCache, 
             UpdateHub hub, 
             IHubContext<UpdateHub> hubContext, 
             IOptions<NakoSettings> nakoSettings,
-            IOptions<FeaturesSettings> featuresSettings,
-            IOptions<CurrencySettings> currencySettings,
-            IOptions<TickerSettings> tickerSettings)
+            IOptions<FeaturesSettings> featuresSettings)
         {
             _tickerService = tickerService;
             _blockIndexService = blockIndexService;
             _memoryCache = memoryCache;
             _hub = hub;
             _hubContext = hubContext;
-            _nakoApiSettings = nakoSettings.Value;
             _featuresSettings = featuresSettings.Value;
-            _currencySettings = currencySettings.Value;
-            _tickerSettings = tickerSettings.Value;
-            _currencyService = currencyService;
             
         }
         
@@ -65,12 +53,6 @@ namespace Stratis.Guru.Services
             {
                 _tickerTimer = new System.Timers.Timer();
                 StartTickerTimer(cancellationToken);
-            }
-
-            if (_currencySettings.AutoConvert)
-            {
-                _currencyTimer = new System.Timers.Timer();
-                StartCurrencyTimer();
             }
 
             return Task.CompletedTask;
@@ -109,36 +91,13 @@ namespace Stratis.Guru.Services
                 }
 
                 // Get ticker and cache it.
-                _memoryCache.Set("Ticker", _tickerService.GetTicker());
-                
+                _memoryCache.Set("Ticker", _tickerService.DownloadTicker());
+                _memoryCache.Set("Rates", _tickerService.DownloadRates());
+
                 await _hubContext.Clients.All.SendAsync("UpdateTicker", cancellationToken);
             };
 
             _tickerTimer.Start();
-        }
-
-        private void StartCurrencyTimer()
-        {
-            _currencyTimer.AutoReset = false; // Make sure it only trigger once initially.
-
-            _currencyTimer.Elapsed += (sender, args) =>
-            {
-                if (_currencyTimer.AutoReset == false)
-                {
-                    // https://github.com/exchangeratesapi/exchangeratesapi
-                    // The reference rates are usually updated around 16:00 CET on every working day, except on TARGET closing days. They are based on a regular daily concertation procedure between central banks across Europe, which normally takes place at 14:15 CET.
-
-                    _currencyTimer.Interval = TimeSpan.FromHours(1).TotalMilliseconds;
-                    _currencyTimer.AutoReset = true;
-                }
-
-                // Get ticker and cache it.
-                _memoryCache.Set("Currency", _currencyService.GetRates("USD"));
-
-                //await _hubContext.Clients.All.SendAsync("UpdateTicker", cancellationToken);
-            };
-
-            _currencyTimer.Start();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -153,9 +112,6 @@ namespace Stratis.Guru.Services
 
             _tickerTimer?.Stop();
             _tickerTimer?.Dispose();
-            
-            _currencyTimer?.Stop();
-            _currencyTimer?.Dispose();
         }
     }
 }

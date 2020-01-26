@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Stratis.Guru.Settings;
 using System.Collections.Generic;
 using System.Globalization;
@@ -58,34 +56,6 @@ namespace Stratis.Guru.Services
             }
 
             return regionInfo;
-        }
-
-
-        public double GetExchangePrice(double usd, string currency)
-        {
-            if (currency != "USD")
-            {
-                try
-                {
-                    dynamic fixerApiResponse = JsonConvert.DeserializeObject(_memoryCache.Get("Currency").ToString());
-
-                    dynamic dollarRate = fixerApiResponse.rates.USD;
-
-                    double browserCurrencyRate = (double)((JObject)fixerApiResponse.rates)[currency];
-
-                    double displayPrice = 1 / (double)dollarRate * usd * browserCurrencyRate;
-
-                    return displayPrice;
-                }
-                catch { }
-            }
-
-            return usd;
-        }
-
-        public string GetRates(string currency)
-        {
-            return Execute(GetRequest($"/latest?base={currency}"));
         }
     }
 }

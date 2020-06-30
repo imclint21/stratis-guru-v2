@@ -7,8 +7,10 @@
     <ItemGroup>
         <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
         <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.362" />
+        <PackageReference Include="BuildBundlerMinifier" Version="3.0.415" />
+        <PackageReference Include="BundlerMinifier.Core" Version="3.0.415" />
         <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-        <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.113" />
+        <!-- <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.113" /> -->
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
         <PackageReference Include="mongocsharpdriver" Version="2.7.2" />

@@ -14,11 +14,11 @@ namespace Stratis.Guru
 
         public DatabaseContext(IConfiguration configuration)
         {
-            var client = new MongoClient(configuration.GetConnectionString("DefaultConnection"));
-            if (client != null)
-            {
-                _database = client.GetDatabase("stratis-guru");
-            }
+            // var client = new MongoClient(configuration.GetConnectionString("DefaultConnection"));
+            // if (client != null)
+            // {
+            //     _database = client.GetDatabase("stratis-guru");
+            // }
         }
 
         public IMongoCollection<Draw> Draws => _database.GetCollection<Draw>("draws");

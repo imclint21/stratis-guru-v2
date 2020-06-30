@@ -27,12 +27,12 @@ namespace Stratis.Guru
     public class Startup
     {
         private IConfiguration Configuration { get; }
-        
+
         public Startup(IConfiguration configuration)
         {
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
-            
+
             Configuration = configuration;
         }
 
@@ -58,7 +58,7 @@ namespace Stratis.Guru
             services.Configure<ColdStakingSettings>(Configuration.GetSection("ColdStaking"));
 
             services.AddMemoryCache();
-            
+
             services.AddTransient<UpdateHub>();
             services.AddSingleton<IAsk, Ask>();
             services.AddTransient<DatabaseContext>();
@@ -71,9 +71,9 @@ namespace Stratis.Guru
             services.AddHostedService<FixerService>();
             services.AddHostedService<LotteryService>();
             services.AddHostedService<VanityService>();
-            
+
             services.AddLocalization();
-            
+
             services.AddMvc();
 
             services.AddRecaptcha(new RecaptchaOptions
@@ -81,7 +81,7 @@ namespace Stratis.Guru
                 SiteKey = "6LfmOIQUAAAAAIEsH2nG6kEiL-bpLhvm0ibhHnol",    //Configuration["Recaptcha:SiteKey"],
                 SecretKey = "6LfmOIQUAAAAAO06PpD8MmndjrjfBr7x-fgnDt2G"  //Configuration["Recaptcha:SecretKey"]
             });
-            
+
             services.AddSignalR();
         }
 
@@ -101,7 +101,7 @@ namespace Stratis.Guru
             app.UseSession();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            
+
             // Add Documentation (MkDocs) Support
             app.UseFileServer(new FileServerOptions
             {
@@ -122,13 +122,13 @@ namespace Stratis.Guru
                 SupportedCultures = allCultures,
                 SupportedUICultures = allCultures
             });
-            
+
             // Add SignalR support for automatically update ticker price
             app.UseSignalR(routes =>
             {
                 routes.MapHub<UpdateHub>("/update");
             });
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

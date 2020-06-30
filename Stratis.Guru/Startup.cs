@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using Stratis.Guru.Hubs;
 using Stratis.Guru.Models;
 using Stratis.Guru.Modules;
 using Stratis.Guru.Services;
 using Stratis.Guru.Settings;
-using static Microsoft.AspNetCore.Http.SameSiteMode;
 
 namespace Stratis.Guru
 {
@@ -41,7 +35,7 @@ namespace Stratis.Guru
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = None;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddSession(options =>
@@ -61,20 +55,20 @@ namespace Stratis.Guru
 
             services.AddTransient<UpdateHub>();
             services.AddSingleton<IAsk, Ask>();
-            services.AddTransient<DatabaseContext>();
-            services.AddSingleton<ISettings, Models.Settings>();
-            services.AddSingleton<IDraws, Draws>();
-            services.AddSingleton<IParticipation, Participations>();
+            //services.AddTransient<DatabaseContext>();
+            //services.AddSingleton<ISettings, Models.Settings>();
+            //services.AddSingleton<IDraws, Draws>();
+            //services.AddSingleton<IParticipation, Participations>();
             services.AddSingleton<BlockIndexService>();
 
             services.AddHostedService<UpdateInfosService>();
             services.AddHostedService<FixerService>();
-            services.AddHostedService<LotteryService>();
+            //services.AddHostedService<LotteryService>();
             services.AddHostedService<VanityService>();
 
             services.AddLocalization();
 
-            services.AddMvc();
+            services.AddControllersWithViews();
 
             services.AddRecaptcha(new RecaptchaOptions
             {
@@ -85,7 +79,7 @@ namespace Stratis.Guru
             services.AddSignalR();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -123,18 +117,19 @@ namespace Stratis.Guru
                 SupportedUICultures = allCultures
             });
 
-            // Add SignalR support for automatically update ticker price
-            app.UseSignalR(routes =>
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapHub<UpdateHub>("/update");
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<UpdateHub>("/update");
             });
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
         }
     }
 }

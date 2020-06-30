@@ -33,36 +33,24 @@ namespace Stratis.Guru.Controllers
     {
         private readonly IMemoryCache _memoryCache;
         private readonly IAsk _ask;
-        private readonly ISettings _settings;
-        private readonly IParticipation _participation;
-        private readonly IDraws _draws;
         private readonly IHubContext<UpdateHub> _hubContext;
         private readonly UpdateHub _hub;
-        private readonly DrawSettings _drawSettings;
         private readonly SetupSettings _setupSettings;
         private readonly FeaturesSettings _featuresSettings;
         private readonly ColdStakingSettings _coldStakingSettings;
 
         public HomeController(IMemoryCache memoryCache, 
             IAsk ask, 
-            ISettings settings, 
-            IParticipation participation, 
-            IDraws draws,
             IHubContext<UpdateHub> hubContext,
             UpdateHub hub,
-            IOptions<DrawSettings> drawSettings, 
             IOptions<SetupSettings> setupSettings,
             IOptions<FeaturesSettings> featuresSettings,
             IOptions<ColdStakingSettings> coldStakingSettings)
         {
             _memoryCache = memoryCache;
             _ask = ask;
-            _settings = settings;
-            _participation = participation;
-            _draws = draws;
             _hub = hub;
             _hubContext = hubContext;
-            _drawSettings = drawSettings.Value;
             _setupSettings = setupSettings.Value;
             _featuresSettings = featuresSettings.Value;
             _coldStakingSettings = coldStakingSettings.Value;
@@ -142,7 +130,7 @@ namespace Stratis.Guru.Controllers
             return Index();
         }
 
-        [Route("lottery")]
+        /*[Route("lottery")]
         public IActionResult Lottery()
         {
             ViewBag.Features = _featuresSettings;
@@ -253,7 +241,7 @@ namespace Stratis.Guru.Controllers
             ViewBag.Players = _participation.GetPlayers(_draws.GetLastDraw());
             ViewBag.Participated = true;
             return View("Lottery");
-        }
+        }*/
 
         [Route("about")]
         public IActionResult About()

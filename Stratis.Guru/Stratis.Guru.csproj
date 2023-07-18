@@ -15,7 +15,7 @@
         <PackageReference Include="NStratis" Version="4.0.0.60" />
         <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.2" />
         <PackageReference Include="QRCoder" Version="1.3.9" />
-        <PackageReference Include="RestSharp" Version="106.11.4" />
+        <PackageReference Include="RestSharp" Version="106.12.0" />
         <PackageReference Include="Sentry.AspNetCore" Version="2.1.4" />
     </ItemGroup>
 
